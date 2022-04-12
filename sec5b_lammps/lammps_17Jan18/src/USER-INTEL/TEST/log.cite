@@ -1,0 +1,33 @@
+This LAMMPS simulation made specific use of work described in the
+following references.  See http://lammps.sandia.gov/cite.html
+for details.
+
+GPU package (short-range, long-range and three-body potentials):
+
+@Article{Brown11,
+ author = {W. M. Brown, P. Wang, S. J. Plimpton, A. N. Tharrington},
+ title = {Implementing Molecular Dynamics on Hybrid High Performance Computers - Short Range Forces},
+ journal = {Comp.~Phys.~Comm.},
+ year =    2011,
+ volume =  182,
+ pages =   {898--911}
+}
+
+@Article{Brown12,
+ author = {W. M. Brown, A. Kohlmeyer, S. J. Plimpton, A. N. Tharrington},
+ title = {Implementing Molecular Dynamics on Hybrid High Performance Computers - Particle-Particle Particle-Mesh},
+ journal = {Comp.~Phys.~Comm.},
+ year =    2012,
+ volume =  183,
+ pages =   {449--459}
+}
+
+@Article{Brown13,
+ author = {W. M. Brown, Y. Masako},
+ title = {Implementing Molecular Dynamics on Hybrid High Performance Computers – Three-Body Potentials},
+ journal = {Comp.~Phys.~Comm.},
+ year =    2013,
+ volume =  184,
+ pages =   {2785--2793}
+}
+

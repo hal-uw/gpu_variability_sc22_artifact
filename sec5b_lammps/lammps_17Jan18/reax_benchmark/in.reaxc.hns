@@ -1,0 +1,46 @@
+# Pure HNS crystal, ReaxFF tests for benchmarking LAMMPS
+# See README for more info
+
+units             real
+atom_style        charge
+atom_modify sort  100 0.0 # optional
+dimension         3
+boundary          p p p
+box               tilt large
+
+read_data         data.hns-equil
+replicate         $x $y $z bbox
+
+
+pair_style        reax/c NULL
+pair_coeff        * * ffield.reax.hns C H O N
+
+compute           reax all pair reax/c
+
+neighbor          1.0 bin
+neigh_modify      every 10 delay 0 check no
+
+timestep          0.1
+
+thermo_style      custom step temp pe press evdwl ecoul vol
+thermo_modify     norm yes
+thermo            100
+
+velocity          all create 300.0 41279 loop geom
+
+fix               1 all nve
+fix               2 all qeq/reax 1 0.0 10.0 1e-6 reax/c dual # remove "dual" if not using USER-OMP
+
+info              time out screen
+info              time out log
+
+run               100
+
+info              time out screen
+info              time out log
+
+#write_dump        all cfg/mpiio *.cfg.mpiio mass type xs ys zs vx vy vz fx fy fz modify element C H O N # optional
+
+info              time out screen
+info              time out log
+
