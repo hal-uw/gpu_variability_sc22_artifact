@@ -52,6 +52,7 @@
 #include "compute_temp_chunk.h"
 #include "compute_temp_com.h"
 #include "compute_temp_deform.h"
+#include "compute_temp_kokkos.h"
 #include "compute_temp_partial.h"
 #include "compute_temp_profile.h"
 #include "compute_temp_ramp.h"

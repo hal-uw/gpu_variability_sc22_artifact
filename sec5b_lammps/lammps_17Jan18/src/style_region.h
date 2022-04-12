@@ -1,4 +1,5 @@
 #include "region_block.h"
+#include "region_block_kokkos.h"
 #include "region_cone.h"
 #include "region_cylinder.h"
 #include "region_intersect.h"
