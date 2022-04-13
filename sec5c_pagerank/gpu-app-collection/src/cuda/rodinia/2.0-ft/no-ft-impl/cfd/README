@@ -1,0 +1,6 @@
+Four versions of CFD:
+
+euler3d <-- redundant flux computation (GPU)   
+euler3d_double <-- redundant flux computation double precision (GPU)
+pre_euler3d <-- pre-computed fluxes (GPU)
+pre_euler3d_double <-- pre-computed fluxes double precision (GPU)

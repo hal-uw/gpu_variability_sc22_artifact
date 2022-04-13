@@ -23,4 +23,14 @@ echo "$PWD"
 echo "LAMMPS Run Completed" 
 
 # PageRank
-
+echo "Running PageRank SPMV..."
+cd sec5c_pagerank/gpu-app-collection
+for ((num_run=1; num_run<=2; num_run++))
+do
+    echo "Run Number: ${num_run}, Device: 0"
+    #run-lammps gpu_num run_num node_num
+    run-pagerank.sh 0 $num_run 0
+done
+cd ../../
+echo "$PWD"
+echo "PageRank Run Completed"

@@ -16,4 +16,8 @@ echo "Done building packages for LAMMPS"
 echo ${PWD}
 
 # PageRank
-
+echo "Compiling PageRank SPMV" 
+cd sec5c_pagerank/gpu-app-collection
+./build-pagerank.sh
+echo "Done compiling binary for Pagerank"
+echo "Build Completed"
