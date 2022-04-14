@@ -28,7 +28,7 @@ We wrote a benchmark that utilizes SGEMM kernels in NVIDIA's cuBLAS library to p
 Both `build-sgemm-nvidia.sh` and `run-sgemm-nvidia.sh` are called by `build-all.sh` and `run-all.sh`, respectively (See [Install and Build](#install-and-build)). By default, `build-all.sh` builds two input matrices of size `25536x25536` and runs 100 kernels of SGEMM on one GPU (GPU or device ID 0). The `nvprof` profiled output can be found in `out/sgemm-nvidia-*.csv`. To make changes to the default input size, number of kernels run, or which GPU the kernels are run on, edit [`sec4bc_sgemm_nvidia/run-sgemm-nvidia.sh`](). More instructions can be found in [this applications README](/sec4bc_sgemm_nvidia/README.md).
 
 ### Section 4D: SGEMM on AMD GPUs
-In addition to writing an SGEMM application for NVIDIA GPUs, we also wrote an equivalent version for AMD GPUs. Below is a breakdown of the `sec4d_sgemm_amd` directory.
+In addition to writing an SGEMM application for NVIDIA GPUs, we also wrote an equivalent version for AMD GPUs. We use the SGEMM kernel from AMD's hipBLAS library. Below is a breakdown of the `sec4d_sgemm_amd` directory.
 ```
 ├── sec4d_sgemm_amd
 │   ├── gen_data.cpp: generates two input matrices of a size the user specifies
