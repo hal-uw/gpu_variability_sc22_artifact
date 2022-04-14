@@ -1,3 +1,0 @@
-bin/
-data_dirs
-src/cuda/parboil/driver/*.pyc
