@@ -4,11 +4,11 @@ This artifact contains code to reproduce the experiments carried out in "Not All
 
 ## Table of Contents
 
-- [Experiments] (#experiments)
-- [Install and Build] (#install-build)
-- [Usage] (#usage)
-- [Related Code] (#related)
-- [Citation] (#citation)
+- [Experiments](#experiments)
+- [Install and Build](#install-build)
+- [Usage](#usage)
+- [Related Code](#related)
+- [Citation](#citation)
 
 ## Experiments
 
