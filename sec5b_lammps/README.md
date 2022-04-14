@@ -1,4 +1,4 @@
-# Section 5.B. LAMMPS
+# Section 5B: LAMMPS on NVIDIA GPUs
 
 Public development project for the LAMMPS MD simulation package is hosted on GitHub at https://github.com/lammps/lammps. We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks)
 We added the following build and running scripts:

@@ -1,1 +1,1 @@
-# Section 5.D. PageRank
+# Section 5D: PageRank on NVIDIA GPUs
