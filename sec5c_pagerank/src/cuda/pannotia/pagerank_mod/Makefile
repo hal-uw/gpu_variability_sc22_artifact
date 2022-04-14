@@ -8,17 +8,17 @@
 #GENCODE_SM62 ?= -gencode=arch=compute_62,code=\"sm_62,compute_62\"
 GENCODE_SM70 ?= -gencode=arch=compute_70,code=\"sm_70,compute_70\"
 
-BINSUBDIR ?= release
+BINDIR ?= ../../../../bin
 CPPSRC = ../graph_parser/util.cpp ../graph_parser/parse.cpp
 CUSRC = 
 BASEEXE = pagerank
 VARIANT ?= DEFAULT
 # CUDA source files (compiled with cudacc)
 ifeq ($(VARIANT),DEFAULT)
-    EXECUTABLE = $(BINDIR)/$(BINSUBDIR)/$(BASEEXE)
+    EXECUTABLE = $(BINDIR)/$(BASEEXE)
     CUSRC += pagerank.cu
 else ifeq ($(VARIANT),SPMV)
-    EXECUTABLE = $(BINDIR)/$(BINSUBDIR)/$(BASEEXE)_spmv
+    EXECUTABLE = $(BINDIR)/$(BASEEXE)_spmv
     CUSRC += pagerank_spmv.cu
 endif
 OPTS = -O3
