@@ -9,5 +9,5 @@ We added the following build and running scripts:
 | lammps_17Jan18/reax_benchmark/run-lammps.sh | Runs lammps with nvprof for profiling data          |
 
 The scripts `build-all.sh` and `run-all.sh` internally call the above shell scripts to compile relevant lammps binaries and launch them as single-GPU jobs.
-Profiling output can be observed in out/lammps-<UUID>_run<run_num>_<timestamp>.csv 
+Profiling output can be observed in `out/lammps-<UUID>_run<run_num>_<timestamp>.csv` 
 To modify the number of runs, device to run on etc, only run-all.sh needs to be updated. 
