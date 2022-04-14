@@ -27,7 +27,7 @@ replicate         16 8 12 bbox
   triclinic box = (0 0 0) to (357.216 89.1296 165.348) with tilt (0 -60.3124 0)
   1 by 1 by 1 MPI processor grid
   466944 atoms
-  Time spent = 0.0474422 secs
+  Time spent = 0.0460831 secs
 
 
 pair_style        reax/c NULL
@@ -53,12 +53,12 @@ info              time out screen
 info              time out log
 
 Info-Info-Info-Info-Info-Info-Info-Info-Info-Info-Info
-Printed on Tue Apr 12 16:36:39 2022
+Printed on Wed Apr 13 17:26:06 2022
 
 
 Total time information (MPI rank 0):
   CPU time:    0:00:00
- Wall time:    0:00:01
+ Wall time:    0:00:00
 
 Info-Info-Info-Info-Info-Info-Info-Info-Info-Info-Info
 
@@ -85,21 +85,21 @@ WARNING: Fixes cannot yet send data in Kokkos communication, switching to classi
 Per MPI rank memory allocation (min/avg/max) = 5329 | 5329 | 5329 Mbytes
 Step Temp PotEng Press E_vdwl E_coul Volume 
        0          300   -113.27833     439.0125   -111.57687   -1.7014647    5264422.5 
-     100    302.56392   -113.28525    10193.962    -111.5865   -1.6987481    5264422.5 
-Loop time of 54.7659 on 1 procs for 100 steps with 466944 atoms
+     100    302.56392   -113.28525    10193.963    -111.5865   -1.6987481    5264422.5 
+Loop time of 54.742 on 1 procs for 100 steps with 466944 atoms
 
-Performance: 0.016 ns/day, 1521.274 hours/ns, 1.826 timesteps/s
+Performance: 0.016 ns/day, 1520.610 hours/ns, 1.827 timesteps/s
 91.6% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 14.815     | 14.815     | 14.815     |   0.0 | 27.05
-Neigh   | 2.5807     | 2.5807     | 2.5807     |   0.0 |  4.71
-Comm    | 0.26429    | 0.26429    | 0.26429    |   0.0 |  0.48
-Output  | 9.1391e-05 | 9.1391e-05 | 9.1391e-05 |   0.0 |  0.00
-Modify  | 37.047     | 37.047     | 37.047     |   0.0 | 67.65
-Other   |            | 0.05812    |            |       |  0.11
+Pair    | 14.838     | 14.838     | 14.838     |   0.0 | 27.11
+Neigh   | 2.5802     | 2.5802     | 2.5802     |   0.0 |  4.71
+Comm    | 0.27415    | 0.27415    | 0.27415    |   0.0 |  0.50
+Output  | 9.1459e-05 | 9.1459e-05 | 9.1459e-05 |   0.0 |  0.00
+Modify  | 36.984     | 36.984     | 36.984     |   0.0 | 67.56
+Other   |            | 0.06481    |            |       |  0.12
 
 Nlocal:    466944 ave 466944 max 466944 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -119,7 +119,7 @@ info              time out screen
 info              time out log
 
 Info-Info-Info-Info-Info-Info-Info-Info-Info-Info-Info
-Printed on Tue Apr 12 16:37:41 2022
+Printed on Wed Apr 13 17:27:08 2022
 
 
 Total time information (MPI rank 0):
@@ -135,7 +135,7 @@ info              time out screen
 info              time out log
 
 Info-Info-Info-Info-Info-Info-Info-Info-Info-Info-Info
-Printed on Tue Apr 12 16:37:41 2022
+Printed on Wed Apr 13 17:27:08 2022
 
 
 Total time information (MPI rank 0):
