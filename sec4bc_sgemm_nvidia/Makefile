@@ -1,13 +1,10 @@
-all: sgemm dgemm gen_data
+all: sgemm_nvidia gen_data
+
+sgemm_nvidia: sgemm.cu
+	nvcc -arch=compute_70 -code=sm_70 -o $@ $< -lcurand -lcudart -lcublas
 
 gen_data: gen_data.cpp
-	g++ -o $@ $<
-
-sgemm: simple_sgemm.cu
-	nvcc -arch=compute_70 -code=sm_70 -o $@ $< -lcurand -lcudart -lcublas
-
-dgemm: simple_dgemm.cu
-	nvcc -arch=compute_70 -code=sm_70 -o $@ $< -lcurand -lcudart -lcublas
+    g++ -o $@ $<
 
 clean:
-	rm sgemm dgemm
+	rm sgemm_nvidia gen_data
