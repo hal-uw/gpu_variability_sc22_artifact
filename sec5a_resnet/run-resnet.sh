@@ -43,12 +43,14 @@ ts=`date '+%s'`
 __PREFETCH=off nvprof --print-gpu-trace \
     --profile-child-processes \
     --system-profiling on --kernel-latency-timestamps on \
-    --csv --log-file ../out/resnet_%p_${ts}_${HOSTNAME}.csv \
+    --csv --log-file resnet_%p_${ts}_${HOSTNAME}.csv \
     --device-buffer-size 128 \
     --continuous-sampling-interval 1 \
     -f python -m torch.distributed.launch \
     --nproc_per_node=$NGPUS \
-torch_imagenet_resnet.py $KWARGS > ../out/resnet_iterdur_${ts}_${HOSTNAME}.txt                                                                                                                                                                                                        
-
+torch_imagenet_resnet.py $KWARGS > resnet_iterdur_${ts}_${HOSTNAME}.txt                                                                                                                                                                                                        
+echo resnet_%p_${ts}_${HOSTNAME}.csv
+echo resnet_iterdur_${ts}_${HOSTNAME}.txt
+echo Completed ResNet Run
 echo ResNet-50 Application complete!
 echo ----------------------------------------------------------------------------------
