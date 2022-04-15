@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
   }
 
   int dim = atoi(argv[1]);
-  cout << dim << endl;
+  // cout << dim << endl;
 
   int nr_rows_A, nr_cols_A, nr_rows_B, nr_cols_B, nr_rows_C, nr_cols_C;
 
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
   float *h_B = (float *)malloc(nr_rows_B * nr_cols_B * sizeof(float));
   // float *h_C = (float *)malloc(nr_rows_C * nr_cols_C * sizeof(float));
   //
-  cout << "SIZE: " << nr_rows_A << " " << sizeof(float) << endl;
+  // cout << "SIZE: " << nr_rows_A << " " << sizeof(float) << endl;
 
   fill_sin(h_A, nr_rows_A, nr_cols_A);
   fill_cos(h_B, nr_rows_B, nr_cols_B);

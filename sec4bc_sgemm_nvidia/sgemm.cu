@@ -193,15 +193,15 @@ int def(int value, int reps, int device)
 	// Optionally we can copy the data back on CPU and print the arrays
 	cudaMemcpyAsync(d_A, h_A, nr_rows_A * nr_cols_A * sizeof(float), cudaMemcpyHostToDevice, computeStream);
 	cudaMemcpyAsync(d_B, h_B, nr_rows_B * nr_cols_B * sizeof(float), cudaMemcpyHostToDevice, computeStream);
-	std::cout << "A =" << std::endl;
+	// std::cout << "A =" << std::endl;
 	// print_matrix(h_A, nr_rows_A, nr_cols_A);
-	std::cout << "B =" << std::endl;
+	// std::cout << "B =" << std::endl;
 	// print_matrix(h_B, nr_rows_B, nr_cols_B);
 
 	// Ensure memcpy completes before kernel launches
 	cudaStreamSynchronize(computeStream);
 	memcpy_timer.Stop();
-	std::cout << "Memcpy Runtime (ms) = " << memcpy_timer.Elapsed() << std::endl;
+	// std::cout << "Memcpy Runtime (ms) = " << memcpy_timer.Elapsed() << std::endl;
 
 	// Create a handle for CUBLAS
 	cublasHandle_t handle;
@@ -216,7 +216,7 @@ int def(int value, int reps, int device)
 		gpu_blas_mmul(handle, d_A, d_B, d_C, nr_rows_A, nr_cols_A, nr_cols_B);
 		cudaStreamSynchronize(computeStream);
 		timer.Stop();
-		std::cout << "Kernel " << i << " Runtime = " << timer.Elapsed() << std::endl;
+		// std::cout << "Kernel " << i << " Runtime = " << timer.Elapsed() << std::endl;
 	}
 
 	// Destroy the handle
@@ -224,7 +224,7 @@ int def(int value, int reps, int device)
 
 	// Copy (and print) the result on host memory
 	cudaMemcpyAsync(h_C, d_C, nr_rows_C * nr_cols_C * sizeof(float), cudaMemcpyDeviceToHost, computeStream);
-	std::cout << "C =" << std::endl;
+	// std::cout << "C =" << std::endl;
 	// print_matrix(h_C, nr_rows_C, nr_cols_C);
 
 	// Free GPU memory
