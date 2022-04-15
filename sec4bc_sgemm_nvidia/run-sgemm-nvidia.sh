@@ -24,6 +24,7 @@ FILE_NAME=sgemm_nvidia_${SIZE}_${NUM_KERN}_${UUID}_${DEVICE_ID}_${ts}.csv
 echo "Output file name: ${FILE_NAME}"
 
 # Run application with profiling via nvprof
+./gen_data ${SIZE}
 __PREFETCH=off nvprof --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file ${FILE_NAME} --device-buffer-size 128 --continuous-sampling-interval 1 -f ./sgemm_nvidia ${SIZE} ${NUM_KERN} ${DEVICE_ID}
 
 # Move output csv file to ../out/
