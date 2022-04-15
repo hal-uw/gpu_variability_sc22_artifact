@@ -1,10 +1,12 @@
 FROM nvcr.io/nvidia/pytorch:22.03-py3
 
+#Uncomment this when trying on a machine with GPU
+#RUN apt-get update && apt-get install -y --no-install-recommends build-essential  cuda-nvprof-10-1
+
 #Root directory of the container
 ENV ROOT=/sec5c 
 WORKDIR ${ROOT}
 COPY ./ $ROOT/
-
 
 RUN echo "cd to src directory for pannotia"
 RUN cd ${ROOT}/src/cuda/pannotia/pagerank_mod/ && make clean
