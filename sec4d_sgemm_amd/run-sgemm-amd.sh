@@ -18,6 +18,16 @@ echo "GPU UUID: ${UUID}"
 # Get timestamp at the time of the run
 ts=`date '+%s'`
 
+# Generate data
+echo ""
+echo "Generating 2 matrices of size ${SIZE}. This will take a few minutes."
+./gen_data ${SIZE}
+echo "Completed generating 2 matrices"
+
+# Begin SGEMM application
+echo ""
+echo "Running ${NUM_KERN} kernels of SGEMM on GPU ${DEVICE_ID}. This will takes a few minutes."
+
 # Run rocm-smi in the background and then kill it once rocprof is done
 ROCM_SMI_ARGS="-t -c -P -d ${DEVICE_ID} --repeat 0.001"
 ROCM_SMI_CMD="python3 rocm_smi.py $ROCM_SMI_ARGS"
@@ -41,6 +51,7 @@ echo "Output text file name: sgemm_amd_${SIZE}_${NUM_KERN}_${UUID}_${DEVICE_ID}_
 
 # Kill rocm_smi.py
 kill $ROCM_SMI_PID
+echo "Completed SGEMM. Outputs in ../out"
 
 # Remove extra output files not used in analysis - uncomment if you want to look at these!
 rm sgemm_amd_${SIZE}_${NUM_KERN}_${UUID}_${DEVICE_ID}_${ts}.db 

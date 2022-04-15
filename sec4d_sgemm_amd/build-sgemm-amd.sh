@@ -2,5 +2,8 @@
 
 # Usage: ./build-sgemm-amd.sh
 
-make clean
+SGEMM_BIN=./sgemm_amd
+if [[ -f "$SGEMM_BIN" ]]; then
+    make clean
+fi
 make all

@@ -16,10 +16,11 @@ We ran the training phase of ResNet-50 CNN. We chose the 50-layer version becaus
 To adjust configuration parameters, update `run-resnet.sh`. Specifically, update `NGPUS` and `NNODES` to adjust the number of gpus and/or nodes, respectively. Update line 19 to adjust the batch size. The default number of gpus is 4, number of nodes is 1, and batch size is 64. Finally, to adjust the number of training iterations, change line 38 in `sec5a_resnet/cnn_utils/engine.py`.
 
 ## Running ResNet-50 on NVIDIA GPUs
-There are 3 steps to take to run ResNet-50 successfully. 
+There are 4 steps to take to run ResNet-50 successfully. 
 1. Download the ImageNet data set from [this link](https://image-net.org/download-images). We do not provide the data set in this artifact repo because it is so large. 
 2. Update line 28 to provide the directory where the training data set is located on your machine.
-3. Run `run-resnet.sh`.
+3. Run `chmod u+x run-resnet.sh`.
+4. Run `run-resnet.sh`.
 
 You will find two output files in `../out`:
   - `out/resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature
