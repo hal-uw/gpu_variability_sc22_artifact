@@ -25,8 +25,8 @@ KWARGS+="--model resnet50 "
 KWARGS+="--checkpoint-freq 90 "
 KWARGS+="--kfac-comm-method comm-opt "
 KWARGS+="--kfac-grad-worker-fraction 0.0 "
-KWARGS+="--train-dir [provide path to training image set directory here] "
-# KWARGS+="--val-dir [providing validation directory ] "
+KWARGS+="--train-dir [provide path to training image set directory here (e.g, /tmp/imagenet/imagenet-tiny/ILSVRC2012_img_train)] "
+KWARGS+="--val-dir [providing validation directory (e.g., /tmp/imagenet/imagenet-tiny/ILSVRC2012_img_val)] "
 # KWARGS+="--log-dir logs "
 #KWARGS+="--fp16 "
 
@@ -40,10 +40,10 @@ KWARGS+="--lr-decay 30 60 80 "
 # Get timestamp and device number (0, 1, 2, 3) for the node that is running ResNet
 ts=`date '+%s'`
 
-__PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace \
+__PREFETCH=off nvprof --print-gpu-trace \
     --profile-child-processes \
     --system-profiling on --kernel-latency-timestamps on \
-    --csv --log-file ../out/resnet_${ts}_${HOSTNAME}.csv \
+    --csv --log-file ../out/resnet_%p_${ts}_${HOSTNAME}.csv \
     --device-buffer-size 128 \
     --continuous-sampling-interval 1 \
     -f python -m torch.distributed.launch \

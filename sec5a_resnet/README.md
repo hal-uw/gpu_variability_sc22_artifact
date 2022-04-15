@@ -22,7 +22,7 @@ There are 4 steps to take to run ResNet-50 successfully.
 3. Run `chmod u+x run-resnet.sh`.
 4. Run `run-resnet.sh`.
 
-You will find two output files in `../out`:
-  - `out/resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature
-  - `out/resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`.
+You will find a few output files in `../out`:
+  - `out/resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
+  - `out/resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
 
