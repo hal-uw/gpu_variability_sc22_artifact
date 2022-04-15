@@ -50,9 +50,18 @@ We ran the training phase of ResNet-50 CNN. We chose the 50-layer version becaus
 │   ├── torch_imagenet_resnet.py: main python file called to launch ResNet
 │   ├── utils.py: utility functions imported into torch_imagenet_resnet.py
 │   ├── README.md: contains ResNet-50 specific instructions on running the application and adjusting input configurations
-│   ├── run-resnet.sh: runs ResNet-50 on NVIDIA GPUs
+│   ├── run-resnet.sh: runs ResNet-50 on NVIDIA GPUs (UPDATE BEFORE RUNNING)
 ```
-Note that there is not build script (e.g., `build-resnet.sh`), as the application is written in Python. The `run-resnet.sh` script is called by `run-all.sh` (See [Install and Build](#install-and-build)). To adjust input configuration parameters (e.g., number of iterations, batch size), update run-resnet.sh. There are two output files for our ResNet-50 application. Kernel duration, GPU SM frequency, power, and temperature can all be found in `out/resnet_*.csv`. We also print out iteration duration directly from the Python application and pipe it to `out/resnet_iterdur_*.csv`. More information can be found in [the ResNet-50 README](sec5a_resnet/README.md).
+There are a couple of things to keep in mind: 
+- There is no build script (e.g., `build-resnet.sh`), as the application is written in Python.
+- Before attempting to run the ResNet-50 application, the ImageNet set must be downloaded to your machine. We do not provide the data set in this artifact repo because it is so large. 
+- Before attempting to run the ResNet-50 application, `run-resnet.sh` must be updated. Specifically, update lin 28 to provide the directory where the training data set is located on your machine. 
+- To adjust configuration parameters (e.g., number of gpus, number of nodes, batch size), update `run-resnet.sh`. 
+- To adjust the number of training iterations (default is 500), change line 38 in `sec5a_resnet/cnn_utils/engine.py`.
+- The `run-resnet.sh` script is called by `run-all.sh` (See [Install and Build](#install-and-build)). If bullets 2 and 3 are not completed, `run-all.sh` will fail.
+- There are two output files for ResNet-50.
+  - `out/resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature
+  - `out/resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`.
 
 ### Section 5B: LAMMPS on NVIDIA GPUs
 We ran REAXC setting within LAMMPS, with inputs sized for max GPU occupancy, while staying within memory limits for a single GPU application. The `src` directory has all packages and `Makefile`s for compiling various LAMMPS binaries, while `reax_benchmark` directory contains scripts for building and running LAMMPS. These scripts are called by `build-all.sh` and `run-all.sh` (See Install and Build). By default, `run-all.sh` runs 2 single-GPU LAMMPS jobs on GPU 0 (device ID 0) and stores the nvprof profiled output to `out/lammps-*.csv`. To make changes to the default input configuration, number of runs, output file etc, edit `sec5b_lammps/lammps_17Jan18/reax_benchmark/run-lammps.sh`

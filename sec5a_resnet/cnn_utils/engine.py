@@ -34,7 +34,7 @@ def train(epoch,
 
             batch_idx = range(0, len(data), args.batch_size)
             for i in batch_idx:
-                # Only conduct 100 iterations to make amount of data collected by nvprof smaller and easier to process
+                # Only conduct 500 iterations to make amount of data collected by nvprof smaller and easier to process
                 if iteration_cnt == 500:
                     break	
                 start_iter = time.perf_counter()
