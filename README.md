@@ -5,8 +5,7 @@ This artifact contains code to reproduce the experiments carried out in "Not All
 ## Table of Contents
 
 - [Experiments](#experiments)
-- [Install and Build](#install-build)
-- [Usage](#usage)
+- [Build and Run](#install-build)
 - [Related Code](#related)
 - [Citation](#citation)
 
@@ -69,18 +68,11 @@ We ran REAXC setting within LAMMPS, with inputs sized for max GPU occupancy, whi
 ### Section 5C: PageRank on NVIDIA GPUs
 We used the PageRank Sparse-matrix Vector Multiplication (SPMV) program available at https://github.com/accel-sim/gpu-app-collection. PageRank is also run as a single-GPU job, with an undirected input graph `rajat30.mtx` sourced from the SuiteSparse Matrix Collection (https://sparse.tamu.edu/Rajat/rajat30). This graph is present within the artifact at `sec5c_pagerank/gpu-app-collection/data_dirs/pannotia/pagerank_spmv/data`
 
-## Install and Build
-
-@Rutwik - work in progress 
-```
-```
-
-## Usage
+## Build and Run
+To reproduce each experiment, we provide per-application containers that will install all dependencies, compile library code and respective application binaries, and run the application. `README.md` in the respective directories provide hardware and driver requirements, and instructions for building and running respective applications. 
 
 ## Related Code
     - Public development project of the LAMMPS MD Software Package
       https://github.com/lammps/lammps
     - Accel-Sim Repo (used for PageRank)
       https://github.com/accel-sim/gpu-app-collection
-
-## Citation
