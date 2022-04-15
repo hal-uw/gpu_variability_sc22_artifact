@@ -54,8 +54,8 @@ We ran the training phase of ResNet-50 CNN. We chose the 50-layer version becaus
 ```
 There are a couple of things to keep in mind: 
 - There is no build script (e.g., `build-resnet.sh`), as the application is written in Python.
-- Before attempting to run the ResNet-50 application, the ImageNet set must be downloaded to your machine. We do not provide the data set in this artifact repo because it is so large. 
-- Before attempting to run the ResNet-50 application, `run-resnet.sh` must be updated. Specifically, update lin 28 to provide the directory where the training data set is located on your machine. 
+- Before attempting to run the ResNet-50 application, the ImageNet set must be downloaded to your machine (use [this link](https://image-net.org/download-images)). We do not provide the data set in this artifact repo because it is so large. 
+- Before attempting to run the ResNet-50 application, `run-resnet.sh` must be updated. Specifically, update line 28 to provide the directory where the training data set is located on your machine. 
 - To adjust configuration parameters (e.g., number of gpus, number of nodes, batch size), update `run-resnet.sh`. 
 - To adjust the number of training iterations (default is 500), change line 38 in `sec5a_resnet/cnn_utils/engine.py`.
 - The `run-resnet.sh` script is called by `run-all.sh` (See [Install and Build](#install-and-build)). If bullets 2 and 3 are not completed, `run-all.sh` will fail.
