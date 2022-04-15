@@ -7,4 +7,4 @@ gen_data: gen_data.cpp
 		g++ -o $@ $<
 
 clean:
-        rm sgemm_nvidia gen_data
+		rm sgemm_nvidia gen_data
