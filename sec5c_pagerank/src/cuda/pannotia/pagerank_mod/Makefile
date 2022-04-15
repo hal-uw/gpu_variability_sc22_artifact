@@ -8,7 +8,7 @@
 #GENCODE_SM62 ?= -gencode=arch=compute_62,code=\"sm_62,compute_62\"
 GENCODE_SM70 ?= -gencode=arch=compute_70,code=\"sm_70,compute_70\"
 
-BINDIR ?= ../../../../bin
+BINDIR ?= .
 CPPSRC = ../graph_parser/util.cpp ../graph_parser/parse.cpp
 CUSRC = 
 BASEEXE = pagerank
