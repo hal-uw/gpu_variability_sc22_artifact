@@ -54,13 +54,24 @@ We have set-up the container configuration to retrieve _rajat30.mtx_ from SuiteS
 ### Build Container Image
 ```
 # Build container image
-docker build -t pagerank_img .
+docker build -t pagerank_image .
 ```
 
 ### Run the application
 ```
 # Run application
-docker run --gpus all pagerank_img
-# Prints the profiling log name <csv_name>, move to local storage
-docker cp pagerank_img:<csv name> .
+docker run --gpus all pagerank_image
+
+# Move data from container to local storage
+docker create -ti --name dummy pagerank_image bash
+<Returns Container ID c_id>
+docker cp c_id:/sec5c/*.csv ../out/.
+docker rm -f dummy
 ```
+
+### Build and Run Without Docker
+```
+./build-pagerank.sh
+./run-pagerank.sh
+```
+

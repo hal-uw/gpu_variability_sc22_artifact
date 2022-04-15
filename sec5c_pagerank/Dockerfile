@@ -1,7 +1,4 @@
-FROM nvcr.io/nvidia/pytorch:22.03-py3
-
-#Uncomment this when trying on a machine with GPU
-#RUN apt-get update && apt-get install -y --no-install-recommends build-essential  cuda-nvprof-10-1
+FROM docker.io/nvidia/cuda:10.1-devel-ubuntu16.04
 
 #Root directory of the container
 ENV ROOT=/sec5c 
