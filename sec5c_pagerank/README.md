@@ -5,7 +5,7 @@
 ### Pre-Requisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed (nvidia-smi)
-* Compilation and launch scripts assume a Volta V100 Class GPU (arch70).
+* Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
 * If your GPU is not a Volta, edit `src/cuda/pannotia/pagerank_mod/Makefile` and uncomment the relevant `GENCODE` line (among lines 0-9 of `Makefile`) based on the table below:
 
 
