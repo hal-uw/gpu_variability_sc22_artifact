@@ -20,8 +20,10 @@ with input matrices of size `25536x25536`. These parameters can be adjusted `run
 
 ## Running SGEMM on NVIDIA GPUs
 
-There are two steps to build and run SGEMM on NVIDIA GPUs:
+There are four steps to build and run SGEMM on NVIDIA GPUs:
 ```
+chmod u+x ./build-sgemm-nvidia.sh
+chmod u+x ./run-sgemm-nvidia.sh
 ./build-sgemm-nvidia.sh
 ./run-sgemm-nvidia.sh
 ```
