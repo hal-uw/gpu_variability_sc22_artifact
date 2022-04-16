@@ -54,7 +54,7 @@ need sudo access on the machine you are doing this work. Otherwise, the containe
 
 There are 5 steps to take to run ResNet-50 successfully. 
 1. Download the ImageNet data set from [this link](https://image-net.org/download-images). We do not provide the data set in this artifact repo because it is so large. 
-2. Update lines 28 and 29 in `run-resent.sh` to provide the directory where the training data set and validation data set is located on your machine.
+2. Update lines 28 and 29 in `run-resnet.sh` to provide the directory where the training data set and validation data set is located on your machine.
 3. Run `docker build -t resnet_image .`
 4. Run `docker run --gpus all resnet_image`
 5. Move data output by profiler (nvprof) from container to local directory in this repository - see below. 
