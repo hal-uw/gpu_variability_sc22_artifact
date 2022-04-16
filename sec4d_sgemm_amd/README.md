@@ -2,19 +2,19 @@
 
 ## Application Overview and Directory Structure
 
-Our application utilizes the SGEMM kerenl in AMD's rocBLAS library to perform matrix multiplication on two matrices containing single-precision floats. 
+Our application utilizes the SGEMM kernel in AMD's rocBLAS library to perform matrix multiplication on two matrices containing single-precision floats. 
 
 For compiling and launching SGEMM on AMD GPUs, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
 
 Below is a breakdown of this directory. 
 ```
 ├── gen_data.cpp: generates two input matrices of a size the user specifies
-├── gputimer.hip.h: 
+├── gputimer.hip.h: header file to create manual timer for CUDA calls
 ├── Makefile: make binaries for `gen_data.cpp` and `sgemm.cu`
 ├── README.md: contains SGEMM specific instructions on running the application and configuring input size
 ├── sgemm_rocblas.hip.cpp: main application that uses matrices generated from gen-data.cpp as inputs
-├── build-sgemm-amd.sh: builds sgemm application for AMD GPUs
-├── run-sgemm-amd.sh: runs sgemm application on AMD GPUs
+├── build-sgemm-amd.sh: script used by the Dockerfile to build sgemm (can be used to run without docker)
+├── run-sgemm-amd.sh: script used by the Dockerfile to run sgemm (can be used to run without docker)
 ├── Dockerfile: docker to compile binary and related packages, and create a container that can run SGEMM directly on AMD GPUs
 ```
 
