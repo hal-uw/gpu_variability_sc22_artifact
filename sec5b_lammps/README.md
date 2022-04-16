@@ -15,7 +15,7 @@ Below is a breakdown of this directory:
 ```
 
 ### Adjusting Input Configurations
-The LAMMPS run is set-up to use an input configuration of 100 timesteps and (x,y,z) = (8,16,16). To change the value of x, y or z, edit the command line in `run-lammps.sh`. To change the value of timestep, update `reax_benchmark/in.reaxc.hns`. 
+Each LAMMPS job is set-up to use an input configuration of 100 timesteps and dimensional scaling factors (x,y,z) = (8,16,16). To change the value of x, y or z, edit the command line in `run-lammps.sh`. To change the value of timestep, update `reax_benchmark/in.reaxc.hns`. 
 
 ### Pre-Requisites
 * Machine with an NVIDIA GPU
