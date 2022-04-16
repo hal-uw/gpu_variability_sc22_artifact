@@ -1,18 +1,17 @@
 # Section 5B: LAMMPS on NVIDIA GPUs
 
-
 ### Application Overview and Directory Structure
-The public development project for LAMMPS MD simulation package is hosted on GitHub at https://github.com/lammps/lammps. We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. To reproduce our experiments as-is, refer to sections _Pre-Requisites_, _Build Container Image_ and _Run the application_ below. Read on to customize runtime options/arguments/input configuration.
+We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image) and [Run the Application](#run-the-application) below. Read on to customize runtime options/arguments/input configuration.
 Below is a breakdown of this directory:
 
 ```
 ├── sec5b_lammps
 │   ├── src: contains Makefiles and code for compiling LAMMPS binary and associated packages
 │   ├── reax_benchmark: contains configuration parameters for the REAXC setting
-│   ├── Dockerfile: docker to compile binary and related packages from srf and create a container that can run LAMMPS directly
-│   ├── build-lammps.sh: Shell script used by the Dockerfile (can be used to run without docker)
-|   ├── run-lammps.sh: Shell script used by the Dockerfile (can be used to run without docker)
-│   ├── README.md: contains  LAMMPs-specific instructions on running the application and adjusting input configurations
+│   ├── Dockerfile: docker to compile binary and related packages, and create a container that can run LAMMPS directly
+│   ├── build-lammps.sh: shell script used by the Dockerfile to build LAMMPS (can be used to run without docker)
+|   ├── run-lammps.sh: shell script used by the Dockerfile to run LAMMPS (can be used to run without docker)
+│   ├── README.md: contains  LAMMPS-specific instructions on running the application and adjusting input configurations
 ```
 
 ### Adjusting Input Configurations
@@ -51,15 +50,31 @@ based on the following table:
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
 
 ### Build Container Image
+Note that to successfully build this docker image and the necessary libraries/packages used for PageRank, you will
+need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
 ```
 # Build container image
-docker build -t lammps_img .
+docker build -t lammps_image .
 ```
 
 ### Run the application
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
 ```
 # Run application
-docker run --gpus all lammps_img
-# Prints the profiling log name <csv_name>, move to local storage
-docker cp lammps_img:<csv name> .
+docker run --gpus all lammps_image
+# Move data output by profiler (nvprof) from container to local directory in this repository
+docker create -ti --name dummy pagerank_image bash
+<Returns Container ID c_id>
+docker cp <c_id>:/sec5b/*.csv ../out/.
+docker rm -f dummy
 ```
+## Build and Run Without Docker
+There are four steps to build and run LAMMPS on NVIDIA GPUs without using a docker:
+```
+chmod u+x ./src/build-lammps.sh
+chmod u+x ./reax_benchmakr/run-lammps.sh
+cd src && ./build-lammps.sh
+cd ../reax_benchmark/ && ./run-lammps.sh
+```
+
+You will find the output csv file from the `nvprof` profiler in the `reax_benchmark` directory.

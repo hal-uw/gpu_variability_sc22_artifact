@@ -9,9 +9,9 @@ Below is a breakdown of this directory:
 ```
 ├── src: a directory containing Makefile and .cu files for compiling the PageRank binary
 ├── data_dirs: directory containing input graphs
-├── Dockerfile: docker to compile binary and related packages and create a container that can run PageRank directly
-├── build-pagerank.sh: script used by the Dockerfile to build pagerank (can be used to run without docker)
-├── run-pagerank.sh: script used by the Dockerfile to run pagerank (can be used to run without docker)
+├── Dockerfile: docker to compile binary and related packages, and create a container that can run PageRank directly
+├── build-pagerank.sh: script used by the Dockerfile to build PageRank (can be used to run without docker)
+├── run-pagerank.sh: script used by the Dockerfile to run PageRank (can be used to run without docker)
 ├── README.md: contains PageRank specific instructions on running the application and adjusting input configurations
 ```
 
