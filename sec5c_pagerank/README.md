@@ -3,7 +3,7 @@
 ## Application Overview and Directory Structure
 We ran PageRank SPMV on input graph _rajat30_ (https://sparse.tamu.edu/Rajat/rajat30), an undirected graph for a circuit simulation problem. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. Because we only use one node, we do not need to use any `mpi` commands. 
 
-For compiling and launching PageRank, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
+For compiling and launching PageRank, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
 Below is a breakdown of this directory:
 
 ```
@@ -18,7 +18,7 @@ Below is a breakdown of this directory:
 ## Adjusting Input Configurations
 We have set-up the container configuration to retrieve _rajat30.mtx_ from SuiteSparse Matrix collection using `wget`. To change the input graph, update line 14 in `Dockerfile` to `wget` any other graph. 
 
-## Pre-Requisites
+## Prerequisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
 * Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).

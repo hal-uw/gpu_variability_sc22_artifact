@@ -4,7 +4,7 @@
 
 Our application utilizes SGEMM kernels in NVIDIA's cuBLAS library to perform matrix multiplication on two matrices containing single-precision floats. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. 
 
-For compiling and launching SGEMM on Nvidia GPUs, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application). Below is a breakdown of this directory.
+For compiling and launching SGEMM on NVIDIA GPUs, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application). Below is a breakdown of this directory.
 ```
 ├── gen_data.cpp: generates two input matrices of a size the user specifies
 ├── gputimer.h: header file to create manual timer for CUDA calls
@@ -21,7 +21,7 @@ For compiling and launching SGEMM on Nvidia GPUs, please see sections [Pre-Requi
 By default, `run-sgemm-nvidia.sh` performs 100 kernels of matrix multiplication on GPU 0 
 with input matrices of size `25536x25536`. These parameters can be adjusted in `run-sgemm-nvidia.sh`. Simply change the value after `NUM_KERN`, `DEVICE_ID` and/or `SIZE` in `run-sgemm-nvidia.sh`. 
 
-## Pre-Requisites
+## Prerequisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
 * Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
@@ -61,7 +61,7 @@ need sudo access on the machine you are doing this work. Otherwise, the containe
 docker build -t sgemm_nv_image .
 ```
 
-## Run the application
+## Run the Application
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
 
 ```
