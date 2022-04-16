@@ -5,17 +5,17 @@ This artifact contains code to reproduce the experiments carried out in "Not All
 ## Table of Contents
 
 - [Experiments](#experiments)
-- [Build and Run](#install-build)
-- [Related Code](#related)
+- [Build and Run](#build-and-run)
+- [Related Code](#related-code)
 
 ## Experiments
 
 There were 5 experiments we ran in our paper: 
-- SGEMM on NVIDIA V100s: an application we wrote that utilizes NVIDIA's cuBLAS library to perform matrix multiplication on two matrices containing single-precision floats 
-- SGEMM on AMD MI60s: we also wrote sgemm with AMD's rocBLAS library
-- ResNet-50 on NVIDIA V100s: a stable CNN application used widely in the HPC community as a benchmark
-- LAMMPS on NVIDIA V100s: a molecular dynamics application widely used for scalable science experiments 
-- PageRank on NVIDIA V100s: a graph analytics benchmark that uses spare matrix vector multiplication
+- **SGEMM on NVIDIA V100s**: an application we wrote that utilizes NVIDIA's cuBLAS library to perform matrix multiplication on two matrices containing single-precision floats 
+- **SGEMM on AMD MI60s**: we also wrote sgemm with AMD's rocBLAS library
+- **ResNet-50 on NVIDIA V100s**: a stable CNN application used widely in the HPC community as a benchmark
+- **LAMMPS on NVIDIA V100s**: a molecular dynamics application widely used for scalable science experiments 
+- **PageRank on NVIDIA V100s**: a graph analytics benchmark that uses spare matrix vector multiplication
 
 For each experiment, there is a corresponding directory in this repository (e.g., SGEMM on NVIDIA: `sec4bc_sgemm_nvidia`). The names of each directory correspond to the sections in our paper.
 
