@@ -50,7 +50,8 @@ with input matrices of size `24576x24576`. These parameters can be adjusted `run
 | RDNA 2  | VAN GOGH LITE    | TBC                   | GFX1040|            
 
 ## Build Container Image
-We used a ROCm 4.0.1 image as the base for our Dockerfile even though it is not state-of-the-art. We did this to ensure faithful reproduction of our experimental setup on Lawrence Livermore National Lab's (LLNL's) Corona cluster, where we ran these experiments.
+We used a ROCm 4.0.1 image as the base for our Dockerfile to ensure faithful reproduction 
+of our experimental setup on Lawrence Livermore National Lab's (LLNL's) Corona cluster.
 
 Note that to successfully build this docker image and the necessary libraries/packages used for SGEMM, you will
 need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
