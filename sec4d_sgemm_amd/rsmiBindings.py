@@ -11,7 +11,6 @@ import os
 
 # Use ROCm installation path if running from standard installation
 path_librocm = os.getenv("ROCM_PATH") + '/lib/librocm_smi64.so'
-# ----------> TODO: Support static libs as well as SO
 
 try:
     cdll.LoadLibrary(path_librocm)
