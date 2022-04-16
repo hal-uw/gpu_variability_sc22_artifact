@@ -26,8 +26,8 @@ with input matrices of size `24576x24576`. These parameters can be adjusted `run
 ## Pre-Requisites
 * Machine with an AMD GPU
 * Relevant GPU drivers installed
-* Compilation and launch scripts assume a Vega 20 MI-60 GPU (`gfx906`).
-* If your GPU is not an MI-60, edit `amdgpu-target` on line 7 of `Makefile` with the following targets, as applicable: 
+* Compilation and launch scripts assume a Vega 20 MI60 GPU (`gfx906`).
+* If your GPU is not an MI60, edit `amdgpu-target` on line 7 of `Makefile` with the following targets, as applicable: 
 
 
 | Graphics Architecture   |	GPU Codename          | Product              |      `amdgpu-target` flag     | 
@@ -35,7 +35,7 @@ with input matrices of size `24576x24576`. These parameters can be adjusted `run
 | GCN 5.0 | VEGA 10 | RX VEGA / Radeon Pro | GFX900 |
 | GCN 5.0 | RAVEN        | Ryzen 2000/3000(G/GE)     | GFX902 |
 | GCN 5.0 | VEGA 12   | Vega Pro 20 (MAC)          | GFX904 |
-| GCN 5.0 | VEGA 20    | Radeon VII / Radeon Pro VII, MI-50 / 60 | GFX906 |
+| GCN 5.0 | VEGA 20    | Radeon VII / Radeon Pro VII, MI50 / 60 | GFX906 |
 | CDNA 1  | ARCTURUS   | Instinct MI100 TBC         | GFX908 |
 | CDNA 2  | TBC | MI200 | GFX90A
 | GCN 5.0 | RAVEN2 	   | TBC                     | GFX909 |
