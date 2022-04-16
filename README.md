@@ -23,11 +23,11 @@ For each experiment, there is a corresponding directory in this repository (e.g.
 To run each of our applications, we provide docker containers in each application directory. These docker containers install all dependencies and compile library code into respective application binaries. Directions to run each application using the docker containers can be found in each application's `README.md` file (in their respective directories). 
 
 ## Related Code
-  - Dockerfile for AMD GPU environment setup
+  - Dockerfile for AMD GPU docker based on publicy available docker from gem5, modified to remove gem5-specific parts
     https://gem5.googlesource.com/public/gem5/+/refs/heads/stable/util/dockerfiles/gcn-gpu/Dockerfile
   - ResNet-50 with KFAC Pytorch
     https://github.com/gpauloski/kfac_pytorch.git
   - Public development project of the LAMMPS MD Software Package
     https://github.com/lammps/lammps
-  - Accel-Sim Repo (used for PageRank)
+  - Accel-Sim Benchmarks Repo (used for PageRank)
     https://github.com/accel-sim/gpu-app-collection
