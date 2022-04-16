@@ -40,7 +40,7 @@ KWARGS+="--lr-decay 30 60 80 "
 # Get timestamp and device number (0, 1, 2, 3) for the node that is running ResNet
 ts=`date '+%s'`
 
-__PREFETCH=off nvprof --print-gpu-trace \
+__PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace \
     --profile-child-processes \
     --system-profiling on --kernel-latency-timestamps on \
     --csv --log-file resnet_%p_${ts}_${HOSTNAME}.csv \

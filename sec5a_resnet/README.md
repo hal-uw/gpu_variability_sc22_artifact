@@ -1,15 +1,17 @@
 # Section 5A: ResNet-50 on NVIDIA GPUs
 
 ## Application Overview and Directory Structure
+We ran the training phase of ResNet-50 CNN. We chose the 50-layer version because it is a stable, commonly used benchmark in the HPC community. Our training set was 1.2 million images from ImageNet and our batch size was 64. We define one training run as 500 iterations. Note that we did not complete training on the entire training set; 500 training iterations was sufficiently long to collect profiling data while training was stable. Our training ran across four GPUs on one node. Because we only use one node, we do not need to use any `mpi` commands. 
+For running ResNet, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
 
-We ran the training phase of ResNet-50 CNN. We chose the 50-layer version because it is a stable, commonly used benchmark in the HPC community. Our training set was 1.2 million images from ImageNet and our batch size was 64. We define one training run as 500 iterations. Note that we did not complete training on the entire training set; 500 training iterations was sufficiently long to collect profiling data while training was stable. Our training ran across four GPUs on one node. Because we only use one node, we do not need to use any `mpi` commands. Below is a breakdown of the this directory. 
+Below is a breakdown of this directory. 
 ```
-├── sec5a_resnet
-│   ├── cnn_utils: a directory containing utility files used in the pytorch resnet implementation
-│   ├── torch_imagenet_resnet.py: main python file called to launch ResNet
-│   ├── utils.py: utility functions imported into torch_imagenet_resnet.py
-│   ├── README.md: contains ResNet-50 specific instructions on running the application and adjusting input configurations
-│   ├── run-resnet.sh: runs ResNet-50 on NVIDIA GPUs (UPDATE BEFORE RUNNING)
+├── cnn_utils: a directory containing utility files used in the pytorch resnet implementation
+├── torch_imagenet_resnet.py: main python file called to launch ResNet
+├── utils.py: utility functions imported into torch_imagenet_resnet.py
+├── README.md: contains ResNet-50 specific instructions on running the application and adjusting input configurations
+├── Dockerfile: 
+├── run-resnet.sh: runs ResNet-50 on NVIDIA GPUs (UPDATE BEFORE RUNNING)
 ```
 
 ## Adjusting Input Configurations
