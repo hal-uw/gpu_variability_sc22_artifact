@@ -1,6 +1,6 @@
 # Section 5D: PageRank on NVIDIA GPUs
 
-### Application Overview and Directory Structure
+## Application Overview and Directory Structure
 We ran PageRank SPMV on input graph _rajat30_ (https://sparse.tamu.edu/Rajat/rajat30), an undirected graph for a circuit simulation problem. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. Because we only use one node, we do not need to use any `mpi` commands. 
 
 For compiling and launching PageRank, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
@@ -15,10 +15,10 @@ Below is a breakdown of this directory:
 ├── README.md: contains PageRank specific instructions on running the application and adjusting input configurations
 ```
 
-### Adjusting Input Configurations
+## Adjusting Input Configurations
 We have set-up the container configuration to retrieve _rajat30.mtx_ from SuiteSparse Matrix collection using `wget`. To change the input graph, update line 14 in `Dockerfile` to `wget` any other graph. 
 
-### Pre-Requisites
+## Pre-Requisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
 * Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
@@ -50,13 +50,15 @@ We have set-up the container configuration to retrieve _rajat30.mtx_ from SuiteS
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                 | `SM_80` `compute_80`                |
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
 
-### Build Container Image
+## Build Container Image
+Note that to successfully build this docker image and the necessary libraries/packages used for PageRank, you will
+need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
 ```
 # Build container image
 docker build -t pagerank_image .
 ```
 
-### Run the Application
+## Run the Application
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
 
 ```
@@ -66,15 +68,18 @@ docker run --gpus all pagerank_image
 # Move data output by profiler (nvprof) from container to local directory in this repository
 docker create -ti --name dummy pagerank_image bash
 <Returns Container ID c_id>
-docker cp c_id:/sec5c/*.csv ../out/.
+docker cp <c_id>:/sec5c/*.csv ../out/.
 docker rm -f dummy
 ```
 
-### Build and Run Without Docker
+## Build and Run Without Docker
+There are four steps to build and run PageRank on NVIDIA GPUs:
 ```
 chmod u+x ./build-pagerank.sh
 chmod u+x ./run-pagerank.sh
 ./build-pagerank.sh
 ./run-pagerank.sh
 ```
+
+You will find the output csv file from the `nvprof` profiler directly in this directory. 
 

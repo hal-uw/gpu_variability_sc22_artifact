@@ -2,15 +2,18 @@
 
 ## Application Overview and Directory Structure
 
-Our application utilizes SGEMM kernels in NVIDIA's cuBLAS library to perform matrix multiplication on two matrices containing single-precision floats. Below is a breakdown of this directory.
+Our application utilizes SGEMM kernels in NVIDIA's cuBLAS library to perform matrix multiplication on two matrices containing single-precision floats. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. 
+
+For compiling and launching PageRank, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application). Below is a breakdown of this directory.
 ```
 ├── gen_data.cpp: generates two input matrices of a size the user specifies
-├── gputimer.h: 
+├── gputimer.h: header file to create manual timer for CUDA calls
 ├── Makefile: make binaries for `gen_data.cpp` and `sgemm.cu`
 ├── README.md: contains SGEMM specific instructions on running the application and configuring input size
 ├── sgemm.cu: main application that uses matrices generated from gen-data.cpp as inputs
-├── build-sgemm-nvidia.sh: builds sgemm application for NVIDIA GPUs
-├── run-sgemm-nvidia.sh: runs sgemm application on NVIDIA GPUs
+├── build-sgemm-nvidia.sh: script used by the Dockerfile to build sgemm (can be used to run without docker)
+├── run-sgemm-nvidia.sh: script used by the Dockerfile to run sgemm (can be used to run without docker)
+├── Dockerfile: docker to compile binary and related packages and create a container that can run SGEMM directly
 ```
 
 ## Adjusting Input Configurations
@@ -18,9 +21,7 @@ Our application utilizes SGEMM kernels in NVIDIA's cuBLAS library to perform mat
 By default, `run-sgemm-nvidia.sh` performs 100 kernels of matrix multiplication on GPU 0 
 with input matrices of size `25536x25536`. These parameters can be adjusted `run-sgemm-nvidia.sh`. Simply change the value after `NUM_KERN`, `DEVICE_ID` and/or `SIZE` in `run-sgemm-nvidia.sh`. 
 
-## Running SGEMM on NVIDIA GPUs
-
-### Pre-Requisites
+## Pre-Requisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
 * Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
@@ -52,13 +53,17 @@ with input matrices of size `25536x25536`. These parameters can be adjusted `run
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                   | `SM_80` `compute_80`                |
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)     | `SM_86` `compute_86`                |
 
-### Build Container Image
+## Build Container Image
+Note that to successfully build this docker image and the necessary libraries/packages used for SGEMM, you will
+need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
 ```
 # Build container image
 docker build -t sgemm_nv_image .
 ```
 
-### Run the application
+## Run the application
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
+
 ```
 # Run application
 docker run --gpus all sgemm_nv_image
@@ -66,11 +71,11 @@ docker run --gpus all sgemm_nv_image
 # Move data from container to local storage
 docker create -ti --name dummy0 sgemm_nv_image bash
 <Returns Container ID c_id>
-docker cp c_id:/sec4bc/*.csv ../out/.
+docker cp <c_id>:/sec4bc/*.csv ../out/.
 docker rm -f dummy0
 ```
 
-### Build and Run Without Docker
+## Build and Run Without Docker
 There are four steps to build and run SGEMM on NVIDIA GPUs:
 ```
 chmod u+x ./build-sgemm-nvidia.sh
@@ -78,4 +83,4 @@ chmod u+x ./run-sgemm-nvidia.sh
 ./build-sgemm-nvidia.sh
 ./run-sgemm-nvidia.sh
 ```
-You will find the outputs from the `nvprof` profiler in `../out/sgemm-nvidia-*.csv`. 
+You will find the output csv file from the `nvprof` profiler directly in this directory. 
