@@ -5,13 +5,12 @@ We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/c
 Below is a breakdown of this directory:
 
 ```
-├── sec5b_lammps
-│   ├── src: contains Makefiles and code for compiling LAMMPS binary and associated packages
-│   ├── reax_benchmark: contains configuration parameters for the REAXC setting
-│   ├── Dockerfile: docker to compile binary and related packages, and create a container that can run LAMMPS directly
-│   ├── build-lammps.sh: script used by the Dockerfile to build LAMMPS (can be used to run without docker)
-|   ├── run-lammps.sh: script used by the Dockerfile to run LAMMPS (can be used to run without docker)
-│   ├── README.md: contains LAMMPS-specific instructions on running the application and adjusting input configurations
+├── src: contains Makefiles and code for compiling LAMMPS binary and associated packages
+├── reax_benchmark: contains configuration parameters for the REAXC setting
+├── Dockerfile: docker to compile binary and related packages, and create a container that can run LAMMPS directly
+├── build-lammps.sh: script used by the Dockerfile to build LAMMPS (can be used to run without docker)
+├── run-lammps.sh: script used by the Dockerfile to run LAMMPS (can be used to run without docker)
+├── README.md: contains LAMMPS-specific instructions on running the application and adjusting input configurations
 ```
 
 ## Adjusting Input Configurations

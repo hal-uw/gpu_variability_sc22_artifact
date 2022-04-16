@@ -2,20 +2,20 @@
 
 ## Application Overview and Directory Structure
 
-Our application utilizes the SGEMM kerenl in AMD's hipBLAS library to perform matrix multiplication on two matrices containing single-precision floats. 
+Our application utilizes the SGEMM kerenl in AMD's rocBLAS library to perform matrix multiplication on two matrices containing single-precision floats. 
 
 For compiling and launching SGEMM on AMD GPUs, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
 
 Below is a breakdown of this directory. 
 ```
-├── sec4d_sgemm_amd
-│   ├── gen_data.cpp: generates two input matrices of a size the user specifies
-│   ├── gputimer.hip.h: 
-│   ├── Makefile: make binaries for `gen_data.cpp` and `sgemm.cu`
-│   ├── README.md: contains SGEMM specific instructions on running the application and configuring input size
-│   ├── sgemm_rocblas.hip.cpp: main application that uses matrices generated from gen-data.cpp as inputs
-│   ├── build-sgemm-amd.sh: builds sgemm application for AMD GPUs
-│   ├── run-sgemm-amd.sh: runs sgemm application on AMD GPUs
+├── gen_data.cpp: generates two input matrices of a size the user specifies
+├── gputimer.hip.h: 
+├── Makefile: make binaries for `gen_data.cpp` and `sgemm.cu`
+├── README.md: contains SGEMM specific instructions on running the application and configuring input size
+├── sgemm_rocblas.hip.cpp: main application that uses matrices generated from gen-data.cpp as inputs
+├── build-sgemm-amd.sh: builds sgemm application for AMD GPUs
+├── run-sgemm-amd.sh: runs sgemm application on AMD GPUs
+├── Dockerfile: docker to compile binary and related packages, and create a container that can run SGEMM directly on AMD GPUs
 ```
 
 ## Adjusting Input Configurations
@@ -37,6 +37,7 @@ with input matrices of size `24576x24576`. These parameters can be adjusted `run
 | GCN 5.0 | VEGA 12   | Vega Pro 20 (MAC)          | GFX904 |
 | GCN 5.0 | VEGA 20    | Radeon VII / Radeon Pro VII, MI-50 / 60 | GFX906 |
 | CDNA 1  | ARCTURUS   | Instinct MI100 TBC         | GFX908 |
+| CDNA 2  | TBC | MI200 | GFX90A
 | GCN 5.0 | RAVEN2 	   | TBC                     | GFX909 |
 | GCN 5.0 | RENOIR 	   | Ryzen 4000(H/U/G)          | GFX909 |
 | RDNA 1  | NAVI 10    | RX 5700/5600(M/XT)         | GFX1010|
@@ -80,4 +81,4 @@ chmod u+x ./run-sgemm-amd.sh
 ./build-sgemm-amd.sh
 ./run-sgemm-amd.sh
 ```
-You will find two output files in `../out`. One will be `../out/sgemm-amd-*.csv` and the other will be `../out/sgemm-amd-*.txt`. The `.csv` file contains kernel runtime information and the `.txt` file contains GPU SM frequency, power, and temperature measurements over the duration of the application run.
+You will find the output csv and txt files from the `rocprof/rocm-smi` profiler directly in this directory. 
