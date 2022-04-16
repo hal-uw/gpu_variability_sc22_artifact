@@ -61,7 +61,7 @@ need sudo access on the machine you are doing this work. Otherwise, the containe
 docker build -t sgemm_nv_image .
 ```
 
-## Run the application
+## Run the Application
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
 
 ```
