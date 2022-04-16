@@ -1,4 +1,4 @@
-# Characterizing Variability in Large-Scale, Accelerator-Rich Systems
+# Experiments Ran in "Characterizing Variability in Large-Scale, Accelerator-Rich Systems" Paper
 
 This artifact contains code to reproduce the experiments carried out in "Not All GPUs Are Created Equal: Characterizing Variability in Large-Scale, Accelerator-Rich Systems". 
 
