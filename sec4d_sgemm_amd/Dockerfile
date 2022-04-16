@@ -59,7 +59,7 @@ WORKDIR /
 RUN apt install rocm-cmake
 RUN git clone -b rocm-4.0.0 \
     https://github.com/ROCmSoftwarePlatform/rocBLAS.git && mkdir rocBLAS/build
-ENV HCC_AMDGPU_TARGET=gfx801
+ENV HCC_AMDGPU_TARGET=gfx906
 WORKDIR rocBLAS
 # rocBLAS needs to be built from source otherwise gfx801 gets an error in HIP
 # about there being no GPU binary available
