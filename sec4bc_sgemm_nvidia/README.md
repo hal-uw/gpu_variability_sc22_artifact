@@ -4,7 +4,7 @@
 
 Our application utilizes SGEMM kernels in NVIDIA's cuBLAS library to perform matrix multiplication on two matrices containing single-precision floats. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. 
 
-For compiling and launching PageRank, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application). Below is a breakdown of this directory.
+For compiling and launching SGEMM on Nvidia GPUs, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application). Below is a breakdown of this directory.
 ```
 ├── gen_data.cpp: generates two input matrices of a size the user specifies
 ├── gputimer.h: header file to create manual timer for CUDA calls
