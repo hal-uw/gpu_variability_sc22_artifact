@@ -19,7 +19,7 @@ For compiling and launching SGEMM on Nvidia GPUs, please see sections [Pre-Requi
 ## Adjusting Input Configurations
 
 By default, `run-sgemm-nvidia.sh` performs 100 kernels of matrix multiplication on GPU 0 
-with input matrices of size `25536x25536`. These parameters can be adjusted `run-sgemm-nvidia.sh`. Simply change the value after `NUM_KERN`, `DEVICE_ID` and/or `SIZE` in `run-sgemm-nvidia.sh`. 
+with input matrices of size `25536x25536`. These parameters can be adjusted in `run-sgemm-nvidia.sh`. Simply change the value after `NUM_KERN`, `DEVICE_ID` and/or `SIZE` in `run-sgemm-nvidia.sh`. 
 
 ## Pre-Requisites
 * Machine with an NVIDIA GPU
