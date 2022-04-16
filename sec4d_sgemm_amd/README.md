@@ -37,6 +37,7 @@ with input matrices of size `24576x24576`. These parameters can be adjusted `run
 | GCN 5.0 | VEGA 12   | Vega Pro 20 (MAC)          | GFX904 |
 | GCN 5.0 | VEGA 20    | Radeon VII / Radeon Pro VII, MI-50 / 60 | GFX906 |
 | CDNA 1  | ARCTURUS   | Instinct MI100 TBC         | GFX908 |
+| CDNA 2  | TBC | MI200 | GFX90A
 | GCN 5.0 | RAVEN2 	   | TBC                     | GFX909 |
 | GCN 5.0 | RENOIR 	   | Ryzen 4000(H/U/G)          | GFX909 |
 | RDNA 1  | NAVI 10    | RX 5700/5600(M/XT)         | GFX1010|
