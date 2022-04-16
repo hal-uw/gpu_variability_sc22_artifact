@@ -1,7 +1,7 @@
 # Section 5B: LAMMPS on NVIDIA GPUs
 
 ### Application Overview and Directory Structure
-We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image) and [Run the Application](#run-the-application) below. Read on to customize runtime options/arguments/input configuration.
+We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application) below. Read on to customize runtime options/arguments/input configuration.
 Below is a breakdown of this directory:
 
 ```
@@ -9,15 +9,15 @@ Below is a breakdown of this directory:
 │   ├── src: contains Makefiles and code for compiling LAMMPS binary and associated packages
 │   ├── reax_benchmark: contains configuration parameters for the REAXC setting
 │   ├── Dockerfile: docker to compile binary and related packages, and create a container that can run LAMMPS directly
-│   ├── build-lammps.sh: shell script used by the Dockerfile to build LAMMPS (can be used to run without docker)
-|   ├── run-lammps.sh: shell script used by the Dockerfile to run LAMMPS (can be used to run without docker)
-│   ├── README.md: contains  LAMMPS-specific instructions on running the application and adjusting input configurations
+│   ├── build-lammps.sh: script used by the Dockerfile to build LAMMPS (can be used to run without docker)
+|   ├── run-lammps.sh: script used by the Dockerfile to run LAMMPS (can be used to run without docker)
+│   ├── README.md: contains LAMMPS-specific instructions on running the application and adjusting input configurations
 ```
 
-### Adjusting Input Configurations
+## Adjusting Input Configurations
 Each LAMMPS job is set-up to use an input configuration of 100 timesteps and dimensional scaling factors (x,y,z) = (8,16,16). To change the value of x, y or z, edit the command line in `run-lammps.sh`. To change the value of timestep, update `reax_benchmark/in.reaxc.hns`. 
 
-### Pre-Requisites
+## Pre-Requisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
 * Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
@@ -49,7 +49,7 @@ based on the following table:
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                 | `SM_80` `compute_80`                |
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
 
-### Build Container Image
+## Build Container Image
 Note that to successfully build this docker image and the necessary libraries/packages used for PageRank, you will
 need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
 ```
@@ -57,7 +57,7 @@ need sudo access on the machine you are doing this work. Otherwise, the containe
 docker build -t lammps_image .
 ```
 
-### Run the application
+## Run the application
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
 ```
 # Run application
