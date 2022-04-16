@@ -3,17 +3,16 @@
 ### Application Overview and Directory Structure
 We ran PageRank SPMV on input graph _rajat30_ (https://sparse.tamu.edu/Rajat/rajat30), an undirected graph for a circuit simulation problem. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. Because we only use one node, we do not need to use any `mpi` commands. 
 
-For compiling and launching PageRank, please see sections _Pre-requisites_, _Build container image_ and _Run the application_
+For compiling and launching PageRank, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
 Below is a breakdown of this directory:
 
 ```
-├── sec5c_pagerank
-│   ├── src: a directory containing Makefile and .cu files for compiling the PageRank binary
-│   ├── Dockerfile: docker to compile binary and related packages and create a container that can run PageRank directly
-│   ├── build-pagerank.sh: Shell script used by the Dockerfile (can be used to run without docker)
-|   ├── run-pagerank.sh: Shell script used by the Dockerfile (can be used to run without docker)
-│   ├── README.md: contains PageRank specific instructions on running the application and adjusting input configurations
-│   ├── run-resnet.sh: runs ResNet-50 on NVIDIA GPUs (UPDATE BEFORE RUNNING)
+├── src: a directory containing Makefile and .cu files for compiling the PageRank binary
+├── data_dirs: directory containing input graphs
+├── Dockerfile: docker to compile binary and related packages and create a container that can run PageRank directly
+├── build-pagerank.sh: script used by the Dockerfile to build pagerank (can be used to run without docker)
+├── run-pagerank.sh: script used by the Dockerfile to run pagerank (can be used to run without docker)
+├── README.md: contains PageRank specific instructions on running the application and adjusting input configurations
 ```
 
 ### Adjusting Input Configurations
@@ -57,12 +56,14 @@ We have set-up the container configuration to retrieve _rajat30.mtx_ from SuiteS
 docker build -t pagerank_image .
 ```
 
-### Run the application
+### Run the Application
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
+
 ```
 # Run application
 docker run --gpus all pagerank_image
 
-# Move data from container to local storage
+# Move data output by profiler (nvprof) from container to local directory in this repository
 docker create -ti --name dummy pagerank_image bash
 <Returns Container ID c_id>
 docker cp c_id:/sec5c/*.csv ../out/.
@@ -71,6 +72,8 @@ docker rm -f dummy
 
 ### Build and Run Without Docker
 ```
+chmod u+x ./build-pagerank.sh
+chmod u+x ./run-pagerank.sh
 ./build-pagerank.sh
 ./run-pagerank.sh
 ```
