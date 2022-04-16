@@ -24,16 +24,29 @@ By default, `run-sgemm-amd.sh` performs 100 kernels of matrix multiplication on 
 with input matrices of size `24576x24576`. These parameters can be adjusted `run-sgemm-amd.sh`. Simply change the value after `NUM_KERN`, `DEVICE_ID` and/or `SIZE` in `run-sgemm-amd.sh`. 
 
 ## Pre-Requisites
-* Machine with an NVIDIA GPU
+* Machine with an AMD GPU
 * Relevant GPU drivers installed
-* Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
-* If your GPU is not a Volta, edit line 4 of `Makefile` with the following compute_/arch_/SM_ tokens as applicable: 
+* Compilation and launch scripts assume a Vega 20 MI-60 GPU (`gfx906`).
+* If your GPU is not an MI-60, edit `amdgpu-target` on line 7 of `Makefile` with the following targets, as applicable: 
 
 
-| AMD Architecture        | Cards                                   | Supported Sm and Gencode Variations |
-|:---------------------------|:----------------------------------------|:------------------------------------|
-| Fermi (CUDA 3.2 until 8)   | GeForce 400, 500, 600, GT-630           | `SM_20` `compute_30`                |
-
+| Graphics Architecture   |	GPU Codename          | Product              |      `amdgpu-target` flag     | 
+|:------------------------|:----------------------|:---------------------|:-------------------|
+| GCN 5.0 | VEGA 10 | RX VEGA / Radeon Pro | GFX900 |
+| GCN 5.0 | RAVEN        | Ryzen 2000/3000(G/GE)     | GFX902 |
+| GCN 5.0 | VEGA 12   | Vega Pro 20 (MAC)          | GFX904 |
+| GCN 5.0 | VEGA 20    | Radeon VII / Radeon Pro VII, MI-50 / 60 | GFX906 |
+| CDNA 1  | ARCTURUS   | Instinct MI100 TBC         | GFX908 |
+| GCN 5.0 | RAVEN2 	   | TBC                     | GFX909 |
+| GCN 5.0 | RENOIR 	   | Ryzen 4000(H/U/G)          | GFX909 |
+| RDNA 1  | NAVI 10    | RX 5700/5600(M/XT)         | GFX1010|
+| RDNA 1  | NAVI 12    | PRO 5600M (MAC)            | GFX1011|
+| RDNA 1  | NAVI 14    | RX 5500 (M/XT)             | GFX1012|
+| RDNA 2  | NAVI 21    | RX 6900(XT) TBC            | GFX1030|
+| RDNA 2  | NAVI 22    | PRO 6600M (MAC) TBC        | GFX1031|
+| RDNA 2  | NAVI 23    | RX 6500 (M/XT) TBC         | GFX1032|
+| RDNA 2  | VAN GOGH   | Ryzen 5000G TBC            | GFX1033|
+| RDNA 2  | VAN GOGH LITE    | TBC                   | GFX1040|            
 
 ## Build Container Image
 Note that to successfully build this docker image and the necessary libraries/packages used for SGEMM, you will
