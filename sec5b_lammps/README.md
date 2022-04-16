@@ -1,7 +1,7 @@
 # Section 5B: LAMMPS on NVIDIA GPUs
 
 ### Application Overview and Directory Structure
-We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS, please see sections [Pre-Requisites](#pre-requisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application) below. Read on to customize runtime options/arguments/input configuration.
+We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application) below. Read on to customize runtime options/arguments/input configuration.
 Below is a breakdown of this directory:
 
 ```
@@ -16,7 +16,7 @@ Below is a breakdown of this directory:
 ## Adjusting Input Configurations
 Each LAMMPS job is set-up to use an input configuration of 100 timesteps and dimensional scaling factors (x,y,z) = (8,16,16). To change the value of x, y or z, edit the command line in `run-lammps.sh`. To change the value of timestep, update `reax_benchmark/in.reaxc.hns`. 
 
-## Pre-Requisites
+## Prerequisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
 * Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
@@ -56,7 +56,7 @@ need sudo access on the machine you are doing this work. Otherwise, the containe
 docker build -t lammps_image .
 ```
 
-## Run the application
+## Run the Application
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
 ```
 # Run application
