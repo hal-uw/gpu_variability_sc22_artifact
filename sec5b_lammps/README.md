@@ -1,7 +1,7 @@
 # Section 5B: LAMMPS on NVIDIA GPUs
 
 ### Application Overview and Directory Structure
-We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application) below. Read on to customize runtime options/arguments/input configuration.
+We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application) below. Read on to customize run time options/arguments/input configuration.
 Below is a breakdown of this directory:
 
 ```
@@ -14,7 +14,7 @@ Below is a breakdown of this directory:
 ```
 
 ## Adjusting Input Configurations
-Each LAMMPS job is set-up to use an input configuration of 100 timesteps and dimensional scaling factors (x,y,z) = (8,16,16). To change the value of x, y or z, edit the command line in `run-lammps.sh`. To change the value of timestep, update `reax_benchmark/in.reaxc.hns`. 
+Each LAMMPS job is set-up to use an input configuration of 100 time steps and dimensional scaling factors (x,y,z) = (8,16,16). To change the value of x, y or z, edit the command line in `run-lammps.sh`. To change the value of time step, update `reax_benchmark/in.reaxc.hns`. 
 
 ## Prerequisites
 * Machine with an NVIDIA GPU
@@ -49,7 +49,7 @@ based on the following table:
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
 
 ## Build Container Image
-Note that to successfully build this docker image and the necessary libraries/packages used for PageRank, you will
+Note that to successfully build this docker image and the necessary libraries/packages used for LAMMPS, you will
 need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
 ```
 # Build container image
