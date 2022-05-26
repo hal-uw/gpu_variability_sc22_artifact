@@ -20,7 +20,7 @@ To adjust configuration parameters, update `run-resnet.sh`. Specifically, update
 ## Prerequisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
-* Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
+* Compilation and launch scripts assume one or more Volta Class GPU (arch_70, compute_70) are available on the compute node, but the scripts also work for any other NVIDIA GPU.
 * If your GPU is not a Volta, edit `CCFLAGS` and `KOKKOS_ARCH` options in `src/MAKE/OPTIONS/Makefile.kokkos_cuda_mpi` and `Dockerfile` based on the following table: 
 
 | NVIDIA Architecture        | Cards                                   | Supported Sm and Gencode Variations |
@@ -55,17 +55,17 @@ need sudo access on the machine you are doing this work. Otherwise, the containe
 There are 5 steps to take to run ResNet-50 successfully. 
 1. Download the ImageNet data set from [this link](https://image-net.org/download-images). We do not provide the data set in this artifact repo because it is so large. 
 2. Update lines 28 and 29 in `run-resnet.sh` to provide the directory where the training data set and validation data set is located on your machine.
-3. Run `docker build -t resnet_image .`
-4. Run `docker run --gpus all resnet_image`
+3. Run `sudo docker build -t resnet_image .`
+4. Run `sudo docker run --gpus all resnet_image`
 5. Move data output by profiler (nvprof) from container to local directory in this repository - see below. 
 
 There will be 4 csv files and 1 txt file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. These files will be stored in the docker container by default. To access these files, you will have to copy them using `docker cp` (step 5) to the directory of your choice (we recommend `../out/`).
 
 ```
-docker create -ti --name dummy resnet_image bash
+sudo docker create -ti --name dummy resnet_image bash
 <Returns Container ID c_id>
-docker cp <c_id>:/sec5a/*.csv ../out/.
-docker rm -f dummy``
+sudo docker cp <c_id>:/sec5a/*.csv ../out/.
+sudo docker rm -f dummy``
 ```
 
 ## Build and Run Without Docker
