@@ -1,6 +1,6 @@
 # Experiments Ran in "Characterizing Variability in Large-Scale, Accelerator-Rich Systems" Paper
 
-This artifact contains code to reproduce the experiments carried out in "Not All GPUs Are Created Equal: Characterizing Variability in Large-Scale, Accelerator-Rich Systems". 
+This artifact contains code to reproduce the experiments carried out in "Not All GPUs Are Created Equal: Characterizing Variability in Large-Scale, Accelerator-Rich Systems". The repository is organized into directories per experiment. See [Experiments] for an overview of the contents in each directory and [Build and Run] for step-wise instructions to reproduce our experiments. 
 
 ## Table of Contents
 
@@ -20,7 +20,24 @@ There were 5 experiments we ran in our paper:
 For each experiment, there is a corresponding directory in this repository (e.g., SGEMM on NVIDIA: `sec4bc_sgemm_nvidia`). The names of each directory correspond to the sections in our paper.
 
 ## Build and Run
-To run each of our applications, we provide docker containers in each application directory. These docker containers install all dependencies and compile library code into respective application binaries. Directions to run each application using the docker containers can be found in each application's `README.md` file (in their respective directories). 
+To run each of our applications, we provide docker containers in each application directory. We used docker version 20.10.16, build aa7e414 (stable version as of 05/26/2022). These docker containers install all dependencies and compile library code into respective application binaries. Directions to run each application using the docker containers can be found in each application's `README.md` file (in their respective directories). 
+
+### Steps to reproduce experiments
+1. Login to a **compute node** with a GPU. All the steps that follow should be run on the compute node. 
+2. Install docker using the instructions at https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository 
+3. Check if Docker is successfully installed by running:
+```
+sudo docker run hello-world
+```
+4. Clone this artifact repository on the compute node:
+```
+git clone https://github.com/hal-uw/gpu_variability_sc22_artifact.git
+```
+5. If the node has an NVIDIA GPU, then you can run experiments corresponding to the following directories - `sec4bc_sgemm_nvidia`, `sec5a_resnet`, `sec45b_lammps` and `sec5c_pagerank`. If the node has an AMD GPU, cd to `sec4d_sgemm_amd` for running the SGEMM application. 
+```
+cd gpu_variability_sc22_artifact/<experiment_specific_directory>
+```
+6. Navigate to the corresponding README.md file inside the experiment-specific directory, and follow the steps mentioned in [Build Container Image] and [Run the Application] sections of each README. 
 
 ## Related Code
   - Dockerfile for AMD GPU docker based on publicy available docker from gem5, modified to remove gem5-specific parts
