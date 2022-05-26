@@ -24,7 +24,7 @@ with input matrices of size `25536x25536`. These parameters can be adjusted in `
 ## Prerequisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
-* Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
+* Compilation and launch scripts assume Volta Class GPU(s) (arch_70, compute_70) are available on the compute node, but they work for any other NVIDIA GPU. 
 * If your GPU is not a Volta, edit line 4 of `Makefile` with the following compute_/arch_/SM_ tokens as applicable: 
 
 
