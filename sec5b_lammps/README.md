@@ -19,7 +19,7 @@ Each LAMMPS job is set-up to use an input configuration of 100 time steps and di
 ## Prerequisites
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
-* Compilation and launch scripts assume a Volta Class GPU (arch_70, compute_70).
+* Compilation and launch scripts assume one or more Volta Class GPUs (arch_70, compute_70) are available on the compute node. However, the scripts also work for non-Volta NVIDIA GPUs. 
 * If your GPU is not a Volta, edit `CCFLAGS` and `KOKKOS_ARCH` options in `src/MAKE/OPTIONS/Makefile.kokkos_cuda_mpi` and `Dockerfile`
 based on the following table: 
 
@@ -53,19 +53,19 @@ Note that to successfully build this docker image and the necessary libraries/pa
 need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
 ```
 # Build container image
-docker build -t lammps_image .
+sudo docker build -t lammps_image .
 ```
 
 ## Run the Application
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
 ```
 # Run application
-docker run --gpus all lammps_image
+sudo docker run --gpus all lammps_image
 # Move data output by profiler (nvprof) from container to local directory in this repository
-docker create -ti --name dummy pagerank_image bash
+sudo docker create -ti --name dummy pagerank_image bash
 <Returns Container ID c_id>
-docker cp <c_id>:/sec5b/*.csv ../out/.
-docker rm -f dummy
+sudo docker cp <c_id>:/sec5b/*.csv ../out/.
+sudo docker rm -f dummy
 ```
 ## Build and Run Without Docker
 There are four steps to build and run LAMMPS on NVIDIA GPUs without using a docker:
