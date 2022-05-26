@@ -1,6 +1,6 @@
 # Experiments Ran in "Characterizing Variability in Large-Scale, Accelerator-Rich Systems" Paper
 
-This artifact contains code to reproduce the experiments carried out in "Not All GPUs Are Created Equal: Characterizing Variability in Large-Scale, Accelerator-Rich Systems". The repository is organized into directories per experiment. See [Experiments](#experiments) for an overview of the contents in each directory and [Build and Run](#build-and-run) for step-wise instructions to reproduce our experiments. 
+This artifact contains code to reproduce the experiments carried out in "Not All GPUs Are Created Equal: Characterizing Variability in Large-Scale, Accelerator-Rich Systems". The repository is organized into directories per experiment. See [Experiments](#experiments) below for an overview of the contents in each directory, and [Build and Run](#build-and-run) for step-wise instructions to reproduce our experiments. 
 
 ## Table of Contents
 
