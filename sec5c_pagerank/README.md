@@ -55,7 +55,7 @@ Note that to successfully build this docker image and the necessary libraries/pa
 need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
 ```
 # Build container image
-docker build -t pagerank_image .
+sudo docker build -t pagerank_image .
 ```
 
 ## Run the Application
@@ -63,13 +63,13 @@ There will be one csv file output by the profiler (nvprof), which contains kerne
 
 ```
 # Run application
-docker run --gpus all pagerank_image
+sudo docker run --gpus all pagerank_image
 
 # Move data output by profiler (nvprof) from container to local directory in this repository
 docker create -ti --name dummy pagerank_image bash
 <Returns Container ID c_id>
-docker cp <c_id>:/sec5c/*.csv ../out/.
-docker rm -f dummy
+sudo docker cp <c_id>:/sec5c/*.csv ../out/.
+sudo docker rm -f dummy
 ```
 
 ## Build and Run Without Docker
