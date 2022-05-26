@@ -58,7 +58,7 @@ Note that to successfully build this docker image and the necessary libraries/pa
 need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
 ```
 # Build container image
-docker build -t sgemm_nv_image .
+sudo docker build -t sgemm_nv_image .
 ```
 
 ## Run the Application
@@ -66,13 +66,13 @@ There will be one csv file output by the profiler (nvprof), which contains kerne
 
 ```
 # Run application
-docker run --gpus all sgemm_nv_image
+sudo docker run --gpus all sgemm_nv_image
 
 # Move data from container to local storage
-docker create -ti --name dummy0 sgemm_nv_image bash
+sudo docker create -ti --name dummy0 sgemm_nv_image bash
 <Returns Container ID c_id>
-docker cp <c_id>:/sec4bc/*.csv ../out/.
-docker rm -f dummy0
+sudo docker cp <c_id>:/sec4bc/*.csv ../out/.
+sudo docker rm -f dummy0
 ```
 
 ## Build and Run Without Docker
