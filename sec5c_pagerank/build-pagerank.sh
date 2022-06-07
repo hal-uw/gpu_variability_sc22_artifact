@@ -4,6 +4,7 @@ echo "cd to src directory for pannotia"
 cd src/cuda/pannotia/pagerank_mod
 make clean
 env VARIANT=SPMV make
+cp pagerank_spmv ../../../../
 cd ../../../../
 echo "Compiled pagerank_spmv binary"
 echo "Getting input graph from Suite Sparse Matrix Collection"
