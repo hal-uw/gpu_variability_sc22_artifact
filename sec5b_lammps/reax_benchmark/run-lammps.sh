@@ -18,5 +18,5 @@ echo out/lammps_${UUID}_run${2}_${ts}.csv
 touch ../../out/lammps_${UUID}_run${2}_${ts}.csv 
 
 export CUDA_LAUNCH_BLOCKING=1
-mpiexec -np 1 -x CUDA_LAUNCH_BLOCKING --bind-to core /usr/local/cuda-11/bin/nvprof  --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file ../../out/lammps_${UUID}_run${2}_${ts}.csv --device-buffer-size 128 --continuous-sampling-interval 1 -f ../src/lmp_kokkos_cuda_mpi -k on g 1 device ${1} -sf kk -pk kokkos neigh half neigh/qeq full newton on -v x 16 -v y 8 -v z 12 -in in.reaxc.hns -nocite
+mpiexec -np 1 --bind-to core /usr/local/cuda-11/bin/nvprof  --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file ../../out/lammps_${UUID}_run${2}_${ts}.csv --device-buffer-size 128 --continuous-sampling-interval 1 -f ../src/lmp_kokkos_cuda_mpi -k on g 1 device ${1} -sf kk -pk kokkos neigh half neigh/qeq full newton on -v x 16 -v y 8 -v z 12 -in in.reaxc.hns -nocite
 
