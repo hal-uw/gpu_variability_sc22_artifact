@@ -70,10 +70,11 @@ sudo docker rm -f dummy
 ## Build and Run Without Docker
 There are four steps to build and run LAMMPS on NVIDIA GPUs without using a docker:
 ```
+sudo apt install mpich
 chmod u+x ./src/build-lammps.sh
 chmod u+x ./reax_benchmakr/run-lammps.sh
 cd src && ./build-lammps.sh
-cd ../reax_benchmark/ && ./run-lammps.sh
+cd ../reax_benchmark/ && ./run-lammps.sh 0 1 0
 ```
 
 You will find the output csv file from the `nvprof` profiler in the `reax_benchmark` directory.
