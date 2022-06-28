@@ -71,7 +71,7 @@ sudo docker rm -f dummy``
 ## Build and Run Without Docker
 There are 4 steps to take to run ResNet-50 using shell scripts:
 1. Download the ImageNet data set from [this link](https://image-net.org/download-images). We do not provide the data set in this artifact repo because it is so large. 
-2. Update lines 28 and 29 in `run-resent.sh` to provide the directory where the training data set and validation data set is located on your machine.
+2. Update lines 28 and 29 in `run-resnet.sh` to provide the directory where the training data set and validation data set is located on your machine.
 3. Run `chmod u+x run-resnet.sh`.
 4. Run `run-resnet.sh`.
 
