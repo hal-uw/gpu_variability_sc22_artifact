@@ -72,7 +72,7 @@ There are four steps to build and run LAMMPS on NVIDIA GPUs without using a dock
 ```
 sudo apt install mpich
 chmod u+x ./src/build-lammps.sh
-chmod u+x ./reax_benchmakr/run-lammps.sh
+chmod u+x ./reax_benchmark/run-lammps.sh
 cd src && ./build-lammps.sh
 cd ../reax_benchmark/ && ./run-lammps.sh 0 1 0
 ```
