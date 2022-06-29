@@ -82,7 +82,7 @@ If there are any errors runnning the above, the following four steps can be run 
 chmod u+x ./build-pagerank.sh
 chmod u+x ./run-pagerank.sh
 ./build-pagerank.sh
-./run-pagerank.sh
+./run-pagerank.sh 0 1 0
 ```
 You will find the output csv file from the `nvprof` profiler directly in the current directory. 
 
