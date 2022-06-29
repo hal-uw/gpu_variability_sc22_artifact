@@ -73,13 +73,16 @@ sudo docker rm -f dummy
 ```
 
 ## Build and Run Without Docker
-There are four steps to build and run PageRank on NVIDIA GPUs:
+To run without a docker container, just run the following shell script (make sure execute permissions are set for the same):
+```
+./run-wo-docker.sh
+```
+If there are any errors runnning the above, the following four steps can be run independently to build and run PageRank on NVIDIA GPUs:
 ```
 chmod u+x ./build-pagerank.sh
 chmod u+x ./run-pagerank.sh
 ./build-pagerank.sh
 ./run-pagerank.sh
 ```
-
-You will find the output csv file from the `nvprof` profiler directly in this directory. 
+You will find the output csv file from the `nvprof` profiler directly in the current directory. 
 
