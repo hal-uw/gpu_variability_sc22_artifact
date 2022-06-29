@@ -78,7 +78,7 @@ There are four steps to build and run PageRank on NVIDIA GPUs:
 chmod u+x ./build-pagerank.sh
 chmod u+x ./run-pagerank.sh
 ./build-pagerank.sh
-./run-pagerank.sh
+./run-pagerank.sh 0 1 0
 ```
 
 You will find the output csv file from the `nvprof` profiler directly in this directory. 
