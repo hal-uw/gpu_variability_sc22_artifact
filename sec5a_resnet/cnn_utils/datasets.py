@@ -55,12 +55,12 @@ def make_sampler_and_loader(args, train_dataset, val_dataset):
     kwargs = {'num_workers': 4, 'pin_memory': True} if args.cuda else {}
 
     train_sampler = torch.utils.data.distributed.DistributedSampler(
-            train_dataset, num_replicas=args.backend.size(), rank=args.backend.rank())
+            train_dataset, num_replicas=dist.get_world_size(), rank=dist.get_rank())
     train_loader = torch.utils.data.DataLoader(
             train_dataset, batch_size=args.batch_size * args.batches_per_allreduce,
             sampler=train_sampler, **kwargs)
     val_sampler = torch.utils.data.distributed.DistributedSampler(
-            val_dataset, num_replicas=args.backend.size(), rank=args.backend.rank())
+            val_dataset, num_replicas=dist.get_world_size(), rank=dist.get_rank())
     val_loader = torch.utils.data.DataLoader(
             val_dataset, batch_size=args.val_batch_size,
             sampler=val_sampler, **kwargs)

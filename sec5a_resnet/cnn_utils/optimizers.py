@@ -1,6 +1,7 @@
 import sys
 import kfac
 import torch.optim as optim
+import torch.distributed as dist
 
 sys.path.append('..')
 from utils import create_lr_schedule
@@ -16,11 +17,11 @@ def get_optimizer(model, args, batch_first=True):
     )
 
     if args.kfac_comm_method == 'comm-opt':
-        comm_method=kfac.CommMethod.COMM_OPT
+        comm_method=kfac.enums.DistributedStrategy.COMM_OPT#kfac.CommMethod.COMM_OPT
     elif args.kfac_comm_method == 'mem-opt':
-        comm_method=kfac.CommMethod.MEM_OPT
+        comm_method=kfac.enums.DistributedStrategy.MEM_OPT#kfac.CommMethod.MEM_OPT
     elif args.kfac_comm_method == 'hybrid-opt':
-        comm_method=kfac.CommMethod.HYBRID_OPT
+        comm_method=args.kfac_grad_worker_fraction#kfac.CommMethod.HYBRID_OPT
     else:
         raise ValueError('Unknwon KFAC Comm Method: {}'.format(
                 args.kfac_comm_method))
@@ -65,7 +66,7 @@ def get_optimizer(model, args, batch_first=True):
         hvd.broadcast_optimizer_state(optimizer, root_rank=0)
         hvd.broadcast_parameters(model.state_dict(), root_rank=0)
 
-    lrs = create_lr_schedule(args.backend.size(), args.warmup_epochs, args.lr_decay)
+    lrs = create_lr_schedule(dist.get_world_size(), args.warmup_epochs, args.lr_decay)
     lr_scheduler = [optim.lr_scheduler.LambdaLR(optimizer, lrs)]
     if use_kfac:
         lr_scheduler.append(optim.lr_scheduler.LambdaLR(preconditioner, lrs))
