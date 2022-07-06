@@ -27,6 +27,7 @@ To run each of our applications, we provide docker containers in each applicatio
 2. Clone this artifact repository on the compute node:
 ```
 git clone https://github.com/hal-uw/gpu_variability_sc22_artifact.git
+cd gpu_variability_sc22_artifact/
 ```
 3. Run `docker-install.sh` to install the latest stable version of the Docker engine (v20.10).
 ```
