@@ -4,16 +4,16 @@
 
 Our application utilizes SGEMM kernels in NVIDIA's cuBLAS library to perform matrix multiplication on two matrices containing single-precision floats. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. 
 
-For compiling and launching SGEMM on NVIDIA GPUs, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application). Below is a breakdown of this directory.
+For compiling and launching SGEMM on NVIDIA GPUs, please see sections [Prerequisites](#prerequisites), [Pull Container Image and Run the Application](#build-container-image-and-run-the-application). Below is a breakdown of this directory.
 ```
 ├── gen_data.cpp: generates two input matrices of a size the user specifies
 ├── gputimer.h: header file to create manual timer for CUDA calls
 ├── Makefile: make binaries for `gen_data.cpp` and `sgemm.cu`
 ├── README.md: contains SGEMM specific instructions on running the application and configuring input size
 ├── sgemm.cu: main application that uses matrices generated from gen-data.cpp as inputs
-├── build-sgemm-nvidia.sh: script used by the Dockerfile to build sgemm (can be used to run without docker)
-├── run-sgemm-nvidia.sh: script used by the Dockerfile to run sgemm (can be used to run without docker)
-├── Dockerfile: docker to compile binary and related packages and create a container that can run SGEMM directly
+├── build-sgemm-nvidia.sh: script used with Singularity container to build sgemm binary (can be used to run without container))
+├── run-sgemm-nvidia.sh: script used with Singularity container to run sgemm (can be used to run without docker)
+├── sgemm-singularity.sh: Top-level shell script that pulls container, compiles binary and related packages and runs SGEMM
 ```
 
 ## Adjusting Input Configurations
@@ -23,7 +23,7 @@ with input matrices of size `25536x25536`. These parameters can be adjusted in `
 
 ## Prerequisites
 * Machine with an NVIDIA GPU
-* Relevant GPU drivers installed
+* Relevant GPU drivers installed (if not, please refer to https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html)
 * Compilation and launch scripts assume Volta Class GPU(s) (arch_70, compute_70) are available on the compute node, but they work for any other NVIDIA GPU. 
 * If your GPU is not a Volta, edit line 4 of `Makefile` with the following compute_/arch_/SM_ tokens as applicable: 
 
@@ -53,27 +53,15 @@ with input matrices of size `25536x25536`. These parameters can be adjusted in `
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                   | `SM_80` `compute_80`                |
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)     | `SM_86` `compute_86`                |
 
-## Build Container Image
-Note that to successfully build this docker image and the necessary libraries/packages used for SGEMM, you will
-need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
+## Pull Container Image and Run the Application
+We use pre-existing Docker images from nvidia/cuda, pulled using Singularity. Steps
+(1) Ensure that singularity is installed/loaded on the compute node. Most HPC clusters have singularity pre-installed as a module that needs to be loaded using cluster-specific commands. Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a)
+(2) Run the top-level script `sgemm-singularity.sh`
 ```
-# Build container image
-sudo docker build -t sgemm_nv_image .
+./sgemm-singularity.sh
 ```
 
-## Run the Application
-There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
-
-```
-# Run application
-sudo docker run --gpus all sgemm_nv_image
-
-# Move data from container to local storage
-sudo docker create -ti --name dummy0 sgemm_nv_image bash
-<Returns Container ID c_id>
-sudo docker cp <c_id>:/sec4bc/*.csv ../out/.
-sudo docker rm -f dummy0
-```
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be present in the current directory. The name of the file is of the format `sgemm_nvidia_25536_100_<UUID>_<DEVICE_ID>_<TIMESTAMP>.csv`, where  
 
 ## Build and Run Without Docker
 There are four steps to build and run SGEMM on NVIDIA GPUs:
