@@ -3,7 +3,7 @@
 ## Application Overview and Directory Structure
 We ran PageRank SPMV on input graph _rajat30_ (https://sparse.tamu.edu/Rajat/rajat30), an undirected graph for a circuit simulation problem. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. Because we only use one node, we do not need to use any `mpi` commands. 
 
-For compiling and launching PageRank, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
+For compiling and launching PageRank, please see sections [Prerequisites](#prerequisites) and [Pull Container Image and Run the Application](#pull-container-image-and-run-the-application).
 Below is a breakdown of this directory:
 
 ```
@@ -16,11 +16,11 @@ Below is a breakdown of this directory:
 ```
 
 ## Adjusting Input Configurations
-We have set-up the container configuration to retrieve _rajat30.mtx_ from SuiteSparse Matrix collection using `wget`. To change the input graph, update line 14 in `Dockerfile` to `wget` any other graph. 
+Before running PageRank, the input graph _rajat30.mtx_ is fetched from SuiteSparse Matrix collection using `wget`. To change the input graph, update line 9 in `fetch-input.sh` to `wget` any other graph. 
 
 ## Prerequisites
 * Machine with an NVIDIA GPU
-* Relevant GPU drivers installed
+* Relevant GPU drivers installed (if not, please refer to https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html)
 * Compilation and launch scripts assume one or more Volta Class GPUs (arch_70, compute_70) are available on the compute node. However, the scripts also work for other NVIDIA GPUs.
 * If your GPU is not a Volta, edit `src/cuda/pannotia/pagerank_mod/Makefile` and uncomment the relevant `GENCODE` line (among lines 0-9 of `Makefile`) based on the table below:
 
@@ -50,27 +50,23 @@ We have set-up the container configuration to retrieve _rajat30.mtx_ from SuiteS
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                 | `SM_80` `compute_80`                |
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
 
-## Build Container Image
-Note that to successfully build this docker image and the necessary libraries/packages used for PageRank, you will
-need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
+## Pull Container Image and Run the Application
+We use pre-existing Docker images from nvidia/cuda, pulled using Singularity. Steps to build and run PageRank using a Singularity container are given below: 
+
+(1) Run `fetch-input.sh` to fetch input graph _rajat30.mtx_.  
 ```
-# Build container image
-sudo docker build -t pagerank_image .
+./fetch-input.sh
+``` 
+
+(2) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. 
+Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a. 
+
+(3) Run the top-level script `pagerank-singularity.sh`. This script pulls the relevant container and runs all compilation and application execution steps to return output. 
+```
+./pagerank-singularity.sh
 ```
 
-## Run the Application
-There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
-
-```
-# Run application
-sudo docker run --gpus all pagerank_image
-
-# Move data output by profiler (nvprof) from container to local directory in this repository
-docker create -ti --name dummy pagerank_image bash
-<Returns Container ID c_id>
-sudo docker cp <c_id>:/sec5c/*.csv ../out/.
-sudo docker rm -f dummy
-```
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be present in the current directory. The name of the file is of the format `pagerank_<UUID>_run0_node<NODE_NUM>_GPU<DEVICE_ID>.csv`, `NODE_NUM` refers to the compute node ID, `UUID` is the unique ID assigned to the GPU being run on, and `DEVICE_ID` is the device ID of the GPU (default 0).
 
 ## Build and Run Without Docker
 To run without a docker container, just run the following shell script (make sure execute permissions are set for the same):

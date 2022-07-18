@@ -4,7 +4,7 @@
 
 Our application utilizes SGEMM kernels in NVIDIA's cuBLAS library to perform matrix multiplication on two matrices containing single-precision floats. We ran it as a single-GPU application using NVIDIA V100 GPUs and allowed the application to run to completion. 
 
-For compiling and launching SGEMM on NVIDIA GPUs, please see sections [Prerequisites](#prerequisites), [Pull Container Image and Run the Application](#build-container-image-and-run-the-application). Below is a breakdown of this directory.
+For compiling and launching SGEMM on NVIDIA GPUs, please see sections [Prerequisites](#prerequisites) and [Pull Container Image and Run the Application](#pull-container-image-and-run-the-application). Below is a breakdown of this directory.
 ```
 ├── gen_data.cpp: generates two input matrices of a size the user specifies
 ├── gputimer.h: header file to create manual timer for CUDA calls
@@ -53,15 +53,18 @@ with input matrices of size `25536x25536`. These parameters can be adjusted in `
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                   | `SM_80` `compute_80`                |
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)     | `SM_86` `compute_86`                |
 
-## Pull Container Image and Run the Application
-We use pre-existing Docker images from nvidia/cuda, pulled using Singularity. Steps
-(1) Ensure that singularity is installed/loaded on the compute node. Most HPC clusters have singularity pre-installed as a module that needs to be loaded using cluster-specific commands. Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a)
-(2) Run the top-level script `sgemm-singularity.sh`
+## Pull Container Image and Run the Application 
+We use pre-existing Docker images from nvidia/cuda, pulled using Singularity. Steps to build and run SGEMM using a Singularity container:
+
+(1) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. 
+Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a. 
+
+(2) Run the top-level script `sgemm-singularity.sh`. This script pulls the relevant container and runs all compilation and application execution steps to return output. 
 ```
 ./sgemm-singularity.sh
 ```
 
-There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be present in the current directory. The name of the file is of the format `sgemm_nvidia_25536_100_<UUID>_<DEVICE_ID>_<TIMESTAMP>.csv`, where  
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be present in the current directory. The name of the file is of the format `sgemm_nvidia_25536_100_<UUID>_<DEVICE_ID>_<TIMESTAMP>.csv`, where `25536` is the input matrix size, `100` refers to the number of matrix multiplication kernels, `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0) and `TIMESTAMP` records the time at which the run started.
 
 ## Build and Run Without Docker
 There are four steps to build and run SGEMM on NVIDIA GPUs:
