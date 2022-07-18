@@ -10,7 +10,7 @@ if [[ "$uarch" == *ppc64le* ]]; then
 else
     singularity pull docker://nvidia/cuda:10.1-devel-ubuntu18.04
     singularity run --nv cuda_10.1-devel-ubuntu18.04.sif ./build-sgemm-nvidia.sh
-    singularity run --nv cuda-ppc64le_10.1-devel-ubuntu18.04.sif ./run-sgemm-nvidia.sh
+    singularity run --nv cuda_10.1-devel-ubuntu18.04.sif ./run-sgemm-nvidia.sh
 fi
 
 
