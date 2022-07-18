@@ -2,6 +2,10 @@
 
 # run-pagerank.sh $gpu_num $num_run $node
 
+export CUDA_HOME=/usr/local/cuda-10.1 
+export PATH=$CUDA_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$CUDA_HOME/lib:$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+
 # Run pagerank with nvprof 
 # ./run-pagerank.sh ${gpu_num} ${run_num} ${node_num}
 #                      ${1}       ${2}       ${3}
@@ -20,4 +24,4 @@ __PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace --event-collect
 
 echo waitingfor nvprof to flush all data to log 
 wait
-echo "end PageRank, now run docker cp containerName:pagerank_${UUID}_run${2}_node${3}_gpu${1}_${ts}.csv ."
+echo "Completed PageRank. Output in pagerank_${UUID}_run${2}_node${3}_gpu${1}_${ts}.csv"
