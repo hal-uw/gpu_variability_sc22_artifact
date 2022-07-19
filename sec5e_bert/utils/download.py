@@ -232,15 +232,11 @@ class WikiCorpusDownloader(DatasetDownloader):
         if os.path.isfile(self.save_path + '/' + filename):
             print('** Download file already exists, skipping download')
         else:
-            cmd = ['wget', url, '--output-document={}'.format(self.save_path + '/' + filename)]
+            cmd = ['wget', url, '--output-document={}'.format(self.save_path + '/' + filename),'--no-check-certificate']
             print('Running:', cmd)
             status = subprocess.run(cmd)
             if status.returncode != 0:
                 raise RuntimeError('Wiki download not successful')
-
-        # Always unzipping since this is relatively fast and will overwrite
-        print('Unzipping:', self.output_files[self.language])
-        subprocess.run('bzip2 -dk ' + self.save_path + '/' + filename, shell=True, check=True)
 
     def extract(self):
         for url, dst in self.download_urls.items():
