@@ -1,8 +1,8 @@
-# Section 5E: BERT-Large on NVIDIA GPUs
+# Section 5E: BERT Pretraining on NVIDIA GPUs
 
 ## Application Overview and Directory Structure
 We ran the pre-training phase of BERT-Large Uncased. Note that we did not complete training on the entire training set. Our training ran across four GPUs on one node. Because we only use one node, we do not need to use any `mpi` commands. 
-For running BERT, please see sections [Prerequisites](#prerequisites) and [Running BERT-Large on NVIDIA GPUs](#run-the-application).
+For running BERT, please see sections [Prerequisites](#prerequisites) and [Running BERT Pretraining on NVIDIA GPUs](#run-the-application).
 
 Below is a breakdown of this directory. 
 ```
@@ -10,8 +10,7 @@ Below is a breakdown of this directory.
 ├── src: a directory containing source files used in the pytorch bert implementation
 ├── utils: a directory containing utility files used in the pytorch bert implementation
 ├── run_pretraining.py: main python file called to launch BERT
-├── README.md: contains BERT-Large specific instructions on running the application and adjusting input configurations
-├── Dockerfile: docker to run BERT-large directly
+├── README.md: contains BERT Pretraining specific instructions on running the application and adjusting input configurations
 ```
 
 ## Adjusting Input Configurations
@@ -68,22 +67,15 @@ sudo docker rm -f dummy``
 ```
 
 ## Build and Run Without Docker
-There are 4 steps to take to run ResNet-50 using shell scripts:
-1. Download the dataset and configuration file by running the `scripts/create-datasets.sh` with the appropriate flags which downloads the Wikipedia English dataset (i.e. scripts/create-datasets.sh). We do not provide the data set in this artifact repo because it is so large.
-Build pretraining dataset using Wikipedia and BooksCorpus and save to `data/`.
+There are the steps to take to run BERT Pretraininge using shell scripts:
+1. Download the dataset and configuration files by running the `scripts/create-datasets.sh` with the appropriate flags which downloads the Wikipedia English dataset (example below). This may take a couple of hours.
 ```
 $ ./scripts/create_datasets.sh --output data --nproc 8 --download --format --encode
 ```
-See `./scripts/create_datasets.sh --help` for all options.
-Downloading can take many hours and the BooksCorpus servers can easily be overloaded when download from scratch so to skip the BooksCorpus, include the `--no-books` flag.
-Formatting and encoding can be made faster by increasing the number of processes used in the script at the cost of more RAM.
-This steps will use a couple hundred GBs of disk space; however the `download` directory and `formatted` directory can be deleted if you do not plan to rebuild the dataset again.
-
-2. Update lines 28 and 29 in `scripts/run-pretraining-lamb.sh --download --format --no-books --encode-type bert` to provide the directory where the training data set and validation data set is located on your machine.
-3. Update line 17 in `config/bert_large_uncased_config.json` to provide the path to the vocab.txt (i.e. "vocab_file": "<DATA_DIR>/download/google_pretrained_weights/uncased_L-24_H-1024_A-16/vocab.txt").
-4. Run `chmod u+x scripts/run-pretraining-lamb.sh`.
+2. Update line 8 in `scripts/run-pretraining-lamb.sh' to provide the directory where the training dataset is located on your machine.
+3. Update line 17 in `config/bert_large_uncased_config.json` to provide the path to the vocab.txt that was also downloaded as part of Step 1 (i.e. "vocab_file": "<DATA_DIR>/download/google_pretrained_weights/uncased_L-24_H-1024_A-16/vocab.txt").
+4. Run `chmod u+x scripts/run-pretraining-lamb.sh scripts/launch-pretraining.sh`.
 5. Run `scripts/run-pretraining-lamb.sh`.
 
 You will find a few output files in `in this directory`:
-  - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
-  - `out/resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
+  - `bert_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
