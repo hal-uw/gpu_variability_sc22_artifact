@@ -18,7 +18,6 @@
 
 import argparse
 import json
-import loggerplus as logger
 import math
 import multiprocessing
 import numpy as np
@@ -119,9 +118,9 @@ def parse_arguments():
     parser.add_argument("--warmup_proportion", default=0.01, type=float,
                         help="Proportion of training to perform linear learning rate "
                              "warmup for. E.g., 0.1 = 10%% of training.")
-    parser.add_argument("--global_batch_size", default=2**16, type=int,
+    parser.add_argument("--global_batch_size", default=16, type=int,
                         help="Global batch size for training.")
-    parser.add_argument("--local_batch_size", default=8, type=int,
+    parser.add_argument("--local_batch_size", default=4, type=int,
                         help="Per-GPU batch size for training.")
     parser.add_argument("--max_steps", default=1000, type=float,
                         help="Total number of training steps to perform.")
@@ -188,24 +187,6 @@ def setup_training(args):
     if is_main_process():
         os.makedirs(args.model_output_dir, exist_ok=True)
 
-    # logger.init(
-    #     handlers=[
-    #         logger.StreamHandler(verbose=is_main_process()),
-    #         logger.FileHandler(
-    #                 os.path.join(args.output_dir, args.log_prefix + '.txt'),
-    #                 overwrite=False, verbose=is_main_process()),
-    #         logger.TorchTensorboardHandler(
-    #                 os.path.join(args.output_dir, 'tensorboard'),
-    #                 verbose=is_main_process()),
-    #         logger.CSVHandler(
-    #                 os.path.join(args.output_dir, args.log_prefix + '_metrics.csv'),
-    #                 overwrite=False, verbose=is_main_process()),
-    #     ]
-    # )
-
-    # logger.info('Torch distributed initialized (world_size={}, backend={})'.format(
-    #         get_world_size(), torch.distributed.get_backend()))
-
     if not TORCH_FP16 and args.fp16:
         raise ValueError('FP16 training enabled but unable to import torch.cuda.amp.'
                          'Is the torch version >= 1.6?')
@@ -251,7 +232,6 @@ def prepare_model(args):
 
         checkpoint_path = os.path.join(
             args.model_output_dir, "ckpt_{}.pt".format(args.resume_step))
-        # logger.info(f'Loading checkpoint {checkpoint_path}')
         checkpoint = torch.load(checkpoint_path, map_location="cpu")
 
         model.load_state_dict(checkpoint['model'], strict=False)
@@ -262,8 +242,6 @@ def prepare_model(args):
                              args.previous_phase_end_step, args.resume_step))
         global_steps = args.resume_step - args.previous_phase_end_step
         
-        # logger.info('Resume from step {} checkpoint'.format(args.resume_step))
-
     model.to(args.device)
     model.checkpoint_activations(args.checkpoint_activations)
 
@@ -351,9 +329,6 @@ def prepare_optimizers(args, model, checkpoint, global_steps):
         if checkpoint is not None and 'preconditioner' in checkpoint:
             preconditioner.load_state_dict(checkpoint['preconditioner'])
 
-        # if is_main_process():
-        #     logger.info(preconditioner)
-
     return optimizer, preconditioner, lr_schedulers, scaler
 
 
@@ -394,11 +369,6 @@ def prepare_dataset(args, checkpoint):
     loader = torch.utils.data.DataLoader(dataset, sampler=sampler,
             batch_size=args.local_batch_size, num_workers=4, pin_memory=True)
 
-    # if is_main_process():
-    #     logger.info('Samples in dataset: {}'.format(len(dataset)))
-    #     logger.info('Samples per device: {}'.format(len(sampler)))
-    #     logger.info('Sampler starting index: {}'.format(sampler.index))
-    #     logger.info('Batches in dataloader: {}'.format(len(loader)))
     return loader, sampler
 
 
@@ -509,8 +479,6 @@ def main(args):
                 )
             ):
                 if is_main_process() and not args.skip_checkpoint:
-                    # logger.info('Saving checkpoint: global_step={}'.format(
-                    #         global_step + args.previous_phase_end_step))
                     model_to_save = model.module if hasattr(model, 'module') else model
                     output_save_file = os.path.join(
                         args.model_output_dir,
@@ -557,17 +525,6 @@ def main(args):
                         model, scaler)
                 global_step += 1
                 optimization_steps += 1
-                # logger.log(
-                #     tag='train',
-                #     step=global_step+args.previous_phase_end_step,
-                #     epoch=epoch,
-                #     average_loss=average_loss,
-                #     step_loss=loss.item() * args.accumulation_steps,
-                #     learning_rate=optimizer.param_groups[0]['lr'],
-                #     samples_per_second=
-                #         samples / (perf_counter() - train_perf_time)
-                #         if samples > 0 else 0
-                # )
                 average_loss = 0
 
         epoch += 1
@@ -592,15 +549,7 @@ if __name__ == "__main__":
     torch.cuda.manual_seed(args.seed + args.local_rank)
 
     args = setup_training(args)
-    # logger.info('TRAINING CONFIG: {}'.format(args))
-    # with open(args.model_config_file) as f:
-    #     logger.info('MODEL CONFIG: {}'.format(json.load(f)))
 
     start_time = perf_counter()
     global_steps, train_time = main(args)
     runtime = perf_counter() - start_time
-
-    # logger.info("runtime: {}  train_time: {}  training_seq_per_sec: {}".format(
-    #         runtime, train_time,
-    #         args.global_batch_size * global_steps / train_time))
-
