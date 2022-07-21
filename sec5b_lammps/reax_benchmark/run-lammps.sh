@@ -22,4 +22,15 @@ echo lammps_${UUID}_run${2}_${ts}.csv
 touch lammps_${UUID}_run${2}_${ts}.csv 
 
 export CUDA_LAUNCH_BLOCKING=1
-mpiexec -np 1 --bind-to core /usr/local/cuda-10.1/bin/nvprof  --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file lammps_${UUID}_run${2}_${ts}.csv --device-buffer-size 128 --continuous-sampling-interval 1 -f ../src/lmp_kokkos_cuda_mpi -k on g 1 device ${1} -sf kk -pk kokkos neigh half neigh/qeq full newton on -v x 16 -v y 8 -v z 12 -in in.reaxc.hns -nocite
+
+if [ -d "/usr/loca/cuda-10.1/bin" ]
+then
+    mpiexec -np 1 --bind-to core /usr/local/cuda-10.1/bin/nvprof  --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file lammps_${UUID}_run${2}_${ts}.csv --device-buffer-size 128 --continuous-sampling-interval 1 -f ../src/lmp_kokkos_cuda_mpi -k on g 1 device ${1} -sf kk -pk kokkos neigh half neigh/qeq full newton on -v x 16 -v y 8 -v z 12 -in in.reaxc.hns -nocite
+elif [ -d "/usr/local/cuda/bin" ]
+then
+    mpiexec -np 1 --bind-to core /usr/local/cuda/bin/nvprof  --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file lammps_${UUID}_run${2}_${ts}.csv --device-buffer-size 128 --continuous-sampling-interval 1 -f ../src/lmp_kokkos_cuda_mpi -k on g 1 device ${1} -sf kk -pk kokkos neigh half neigh/qeq full newton on -v x 16 -v y 8 -v z 12 -in in.reaxc.hns -nocite
+else 
+    echo "Couldn't find CUDA bin directory. Check /usr/local for your CUDA installation and update run-lammps.sh. Aborting."
+fi
+
+
