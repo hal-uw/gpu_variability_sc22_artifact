@@ -30,7 +30,7 @@ echo "Output file name: ${FILE_NAME}"
 # Run application with profiling via nvprof
 echo ""
 echo "Generating 2 matrices of size ${SIZE}. This will take a few minutes."
-#./gen_data ${SIZE}
+./gen_data ${SIZE}
 echo "Completed generating 2 matrices"
 
 echo ""
