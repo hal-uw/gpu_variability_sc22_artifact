@@ -1,0 +1,3 @@
+[submodule "sec5a_resnet/cnn_utils/dataloader"]
+	path = sec5a_resnet/cnn_utils/dataloader
+	url = https://github.com/modestyachts/ImageNetV2_pytorch.git
