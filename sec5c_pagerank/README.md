@@ -75,8 +75,10 @@ To run without a docker container, just run the following shell script (make sur
 ```
 If there are any errors runnning the above, the following four steps can be run independently to build and run PageRank on NVIDIA GPUs:
 ```
+chmod u+x ./fetch-input.sh
 chmod u+x ./build-pagerank.sh
 chmod u+x ./run-pagerank.sh
+./fetch-input.sh
 ./build-pagerank.sh
 ./run-pagerank.sh 0 1 0
 ```

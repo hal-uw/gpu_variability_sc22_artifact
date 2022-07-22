@@ -35,5 +35,17 @@ echo "Completed generating 2 matrices"
 
 echo ""
 echo "Running ${NUM_KERN} kernels of SGEMM on GPU ${DEVICE_ID}. This will takes a few minutes."
-__PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file ${FILE_NAME} --device-buffer-size 128 --continuous-sampling-interval 1 -f ./sgemm_nvidia ${SIZE} ${NUM_KERN} ${DEVICE_ID}
-echo "Completed SGEMM. Outputs in current working directory."
+
+if [ -d "/usr/loca/cuda-10.1/bin" ]
+then
+    __PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file ${FILE_NAME} --device-buffer-size 128 --continuous-sampling-interval 1 -f ./sgemm_nvidia ${SIZE} ${NUM_KERN} ${DEVICE_ID}
+    echo "Completed SGEMM. Outputs in current working directory."
+elif [ -d "/usr/local/cuda/bin" ]
+then
+    __PREFETCH=off /usr/local/cuda/bin/nvprof --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file ${FILE_NAME} --device-buffer-size 128 --continuous-sampling-interval 1 -f ./sgemm_nvidia ${SIZE} ${NUM_KERN} ${DEVICE_ID}
+    echo "Completed SGEMM. Outputs in current working directory."
+else 
+    echo "Couldn't find CUDA bin directory. Check /usr/local for your CUDA installation and update run-sgemm-nvidia.sh. Aborting."
+fi
+
+
