@@ -34,7 +34,7 @@ def get_imagenet(args):
     train_dataset = ImageNetV2Dataset("matched-frequency") # supports matched-frequency, threshold-0.7, top-images variants
     return make_sampler_and_loader(args, train_dataset)
 
-def make_sampler_and_loader(args, train_dataset, val_dataset):
+def make_sampler_and_loader(args, train_dataset):
     torch.set_num_threads(4)
     kwargs = {'num_workers': 4, 'pin_memory': True} if args.cuda else {}
 
