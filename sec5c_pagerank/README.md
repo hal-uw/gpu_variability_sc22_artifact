@@ -9,7 +9,8 @@ Below is a breakdown of this directory:
 ```
 ├── src: a directory containing Makefile and .cu files for compiling the PageRank binary
 ├── data_dirs: directory containing input graphs
-├── Dockerfile: docker to compile binary and related packages, and create a container that can run PageRank directly
+├── fetch-input.sh: script to fetch input graph _rajat30.mtx_ from the SuiteSparse Matrix Collection
+├── pagerank-singularity.sh: script to pull a container image, compile binary and related packages, and run PageRank within the container
 ├── build-pagerank.sh: script used by the Dockerfile to build PageRank (can be used to run without docker)
 ├── run-pagerank.sh: script used by the Dockerfile to run PageRank (can be used to run without docker)
 ├── README.md: contains PageRank specific instructions on running the application and adjusting input configurations
@@ -44,7 +45,7 @@ Before running PageRank, the input graph _rajat30.mtx_ is fetched from SuiteSpar
 |                            | Titan V, Quadro GV100                   |                                     |
 |                            | Jetson AGX Xavier, Drive AGX Pegasus    | `SM_72` `compute_72`                |
 |                            | Xavier NX                               |                                     |
-| Turing (>= CUDA 10)        | GTX 1660, RTX 20X0 (X=6/7/8), Titan RTX|| `SM_75` `compute_75`                |
+| Turing (>= CUDA 10)        | GTX 1660, RTX 20X0 (X=6/7/8), Titan RTX | `SM_75` `compute_75`                |
 |                            | Quadro RTX 4000/5000/6000/8000,         |                                     |
 |                            | Tesla T4                              |                                     |
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                 | `SM_80` `compute_80`                |

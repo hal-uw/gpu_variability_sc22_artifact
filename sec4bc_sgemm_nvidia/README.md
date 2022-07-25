@@ -47,7 +47,7 @@ with input matrices of size `25536x25536`. These parameters can be adjusted in `
 |                            | Titan V, Quadro GV100                   |                                     |
 |                            | Jetson AGX Xavier, Drive AGX Pegasus    | `SM_72` `compute_72`                |
 |                            | Xavier NX                               |                                     |
-| Turing (>= CUDA 10)        | GTX 1660, RTX 20X0 (X=6/7/8), Titan RTX|| `SM_75` `compute_75`                |
+| Turing (>= CUDA 10)        | GTX 1660, RTX 20X0 (X=6/7/8), Titan RTX | `SM_75` `compute_75`                |
 |                            | Quadro RTX 4000/5000/6000/8000,         |                                     |
 |                            | Tesla T4                                |                                     |
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                   | `SM_80` `compute_80`                |
