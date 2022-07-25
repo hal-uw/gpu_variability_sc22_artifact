@@ -7,10 +7,10 @@
 #GENCODE_SM60 ?= -gencode=arch=compute_60,code=\"sm_60,compute_60\"
 #GENCODE_SM62 ?= -gencode=arch=compute_62,code=\"sm_62,compute_62\"
 #GENCODE_SM70 ?= -gencode=arch=compute_70,code=\"sm_70,compute_70\"
-#GENCODE_SM72 ?= -gencode=arch=compute_72,code=\"sm_70,compute_72\"
-GENCODE_SM75 ?= -gencode=arch=compute_75,code=\"sm_70,compute_75\"
-#GENCODE_SM80 ?= -gencode=arch=compute_80,code=\"sm_70,compute_80\"
-#GENCODE_SM86 ?= -gencode=arch=compute_86,code=\"sm_70,compute_86\"
+#GENCODE_SM72 ?= -gencode=arch=compute_72,code=\"sm_72,compute_72\"
+GENCODE_SM75 ?= -gencode=arch=compute_75,code=\"sm_75,compute_75\"
+#GENCODE_SM80 ?= -gencode=arch=compute_80,code=\"sm_80,compute_80\"
+#GENCODE_SM86 ?= -gencode=arch=compute_86,code=\"sm_86,compute_86\"
 
 BINDIR ?= .
 CPPSRC = ../graph_parser/util.cpp ../graph_parser/parse.cpp
