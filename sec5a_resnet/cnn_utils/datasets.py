@@ -31,8 +31,16 @@ def get_cifar(args):
 
 
 def get_imagenet(args): 
-    train_dataset = ImageNetV2Dataset("matched-frequency") # supports matched-frequency, threshold-0.7, top-images variants
-    return make_sampler_and_loader(args, train_dataset)
+    train_dataset = ImageNetV2Dataset("matched-frequency") # supports matched-frequency, threshold-0.7, top-images variants 
+    formatted_dataset = datasets.ImageFolder(
+                "./ImageNetV2-matched-frequency",
+                transform=transforms.Compose([
+                transforms.RandomResizedCrop(224),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                     std=[0.229, 0.224, 0.225])]))
+    return make_sampler_and_loader(args, formatted_dataset)
 
 def make_sampler_and_loader(args, train_dataset):
     torch.set_num_threads(4)
