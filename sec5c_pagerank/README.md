@@ -69,12 +69,12 @@ Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a.
 
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be present in the current directory. The name of the file is of the format `pagerank_<UUID>_run0_node<NODE_NUM>_GPU<DEVICE_ID>.csv`, `NODE_NUM` refers to the compute node ID, `UUID` is the unique ID assigned to the GPU being run on, and `DEVICE_ID` is the device ID of the GPU (default 0).
 
-## Build and Run Without Docker
-To run without a docker container, just run the following shell script (make sure execute permissions are set for the same):
+## Build and Run Without a Container Image
+To run without a container image, just run the following shell script (make sure execute permissions are set for the same):
 ```
 ./run-wo-docker.sh
 ```
-If there are any errors runnning the above, the following four steps can be run independently to build and run PageRank on NVIDIA GPUs:
+If there are any errors running the above, the following four steps can be run independently to build and run PageRank on NVIDIA GPUs:
 ```
 chmod u+x ./fetch-input.sh
 chmod u+x ./build-pagerank.sh

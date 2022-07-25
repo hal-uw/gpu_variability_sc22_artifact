@@ -41,8 +41,8 @@ There will be 4 csv files and 1 txt file output by the profiler (nvprof), which 
   - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
   - `resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
 
-## Build and Run Without Docker
-There are 4 steps to take to run ResNet-50 using shell scripts:
+## Build and Run Without a Container Image
+There are 3 steps to take to run ResNet-50 using shell scripts:
 1. Setup your environment. For our purposes, we setup a Conda environment and separately installed Pytorch 1.9.0. Note that the steps for creating a Conda environment will change depending on the machine and software stack available. Many systems come with PyTorch Conda environments so it is recommended to clone the provided environment and use that instead.
 ```
 $ conda create -n {ENV_NAME} python=3.8
@@ -51,7 +51,7 @@ $ conda env update --name {ENV_NAME} --file environment.yml
 $ pip install -r requirements.txt
 ```
 2. Run `dataloader.sh`. This builds and installs the ImageNetV2_Pytorch library and allows dataset loading dunctions to be used by the ResNet application. 
-4. Run `run-resnet.sh`. 
+3. Run `run-resnet.sh`. 
 
 You will find a few output files in the working directory:
   - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).

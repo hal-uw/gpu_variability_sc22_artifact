@@ -1,15 +1,15 @@
 # Section 5B: LAMMPS on NVIDIA GPUs
 
 ### Application Overview and Directory Structure
-We used the LAMMPS tarball provided by the Coral-2 suite (https://asc.llnl.gov/coral-2-benchmarks) which uses the REAXC setting as a benchmark. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application) below. Read on to customize run time options/arguments/input configuration.
+We used the LAMMPS tarball provided by the [Coral-2 benchmark suite](https://asc.llnl.gov/coral-2-benchmarks) which uses REAXC settings. We ran LAMMPS as a single-GPU experiment. For compiling and launching LAMMPS with default configuration settings, please see sections [Prerequisites](#prerequisites) and [Pull Container Image and Run the Application](#pull-container-image-and-run-the-application) below. Read on to customize run time options/arguments/input configuration.
 Below is a breakdown of this directory:
 
 ```
 ├── src: contains Makefiles and code for compiling LAMMPS binary and associated packages
 ├── reax_benchmark: contains configuration parameters for the REAXC setting
-├── Dockerfile: docker to compile binary and related packages, and create a container that can run LAMMPS directly
-├── build-lammps.sh: script used by the Dockerfile to build LAMMPS (can be used to run without docker)
-├── run-lammps.sh: script used by the Dockerfile to run LAMMPS (can be used to run without docker)
+├── lammps-singularity.sh: top-level script that pulls a container image, compiles the lammps binary and related packages and runs LAMMPS
+├── build-lammps.sh: script used by the Dockerfile to build LAMMPS (can be used to run without container)
+├── run-lammps.sh: script used with the base image to run LAMMPS (can be used to run without container)
 ├── README.md: contains LAMMPS-specific instructions on running the application and adjusting input configurations
 ```
 
@@ -20,7 +20,7 @@ Each LAMMPS job is set-up to use an input configuration of 100 time steps and di
 * Machine with an NVIDIA GPU
 * Relevant GPU drivers installed
 * Compilation and launch scripts assume one or more Volta Class GPUs (arch_70, compute_70) are available on the compute node. However, the scripts also work for non-Volta NVIDIA GPUs. 
-* If your GPU is not a Volta, edit `CCFLAGS` and `KOKKOS_ARCH` options in `src/MAKE/OPTIONS/Makefile.kokkos_cuda_mpi` and `Dockerfile`
+* If your GPU is not a Volta, edit `CCFLAGS` and `KOKKOS_ARCH` options in `src/MAKE/OPTIONS/Makefile.kokkos_cuda_mpi` and `build-lammps.sh`
 based on the following table: 
 
 | NVIDIA Architecture        | Cards                                   | Supported Sm and Gencode Variations |
@@ -48,27 +48,22 @@ based on the following table:
 | Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                 | `SM_80` `compute_80`                |
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
 
-## Build Container Image
-Note that to successfully build this docker image and the necessary libraries/packages used for LAMMPS, you will
-need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
+## Pull Container Image and Run the Application
+We use a pre-existing [container image](https://hub.docker.com/r/pawsey/cuda-mpich-base/tags) for CUDA-aware MPICH applications, pulled using Singularity. The steps here are tested for Volta Class GPUs (Volta70) as well as Turing class GPUs (Turing75), but should work for other GPUs as long as the updates as mentioned in Pre-requisites are done. Steps to build and run SGEMM using a container image pulled using Singularity:
+
+(1) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. 
+Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a. 
+
+(2) Run the top-level script `lammps-singularity.sh`. This script pulls the relevant container image and runs all compilation and application execution steps to return output. 
 ```
-# Build container image
-sudo docker build -t lammps_image .
+./lammps-singularity.sh
 ```
 
-## Run the Application
-There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be stored in the docker container by default. To access this file, you will have to copy it using `docker cp` (shown below) to the directory of your choice (we recommend `../out/`).
-```
-# Run application
-sudo docker run --gpus all lammps_image
-# Move data output by profiler (nvprof) from container to local directory in this repository
-sudo docker create -ti --name dummy pagerank_image bash
-<Returns Container ID c_id>
-sudo docker cp <c_id>:/sec5b/*.csv ../out/.
-sudo docker rm -f dummy
-```
-## Build and Run Without Docker
-There are four steps to build and run LAMMPS on NVIDIA GPUs without using a docker:
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file can be found inside the `reax_benchmark` directory.  The name of the file is of the format `lammps_<UUID>_<DEVICE_ID>_run<RUN_NUM>_<TIMESTAMP>.csv`, where `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0), `RUN_NUM` refers to a user-assigned number for the LAMMPS run (default 1) and `TIMESTAMP` records the time at which the run started.
+
+
+## Build and Run Without Container Image
+The following steps illustrate how to build and run LAMMPS on NVIDIA GPUs without using a container image. Please note that this assumes that CUDA is installed on the machine. 
 ```
 sudo apt install mpich
 chmod u+x ./src/build-lammps.sh
@@ -77,4 +72,4 @@ cd src && ./build-lammps.sh
 cd ../reax_benchmark/ && ./run-lammps.sh 0 1 0
 ```
 
-You will find the output csv file from the `nvprof` profiler in the `reax_benchmark` directory.
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file can be found inside the `reax_benchmark` directory.  The name of the file is of the format `lammps_<UUID>_<DEVICE_ID>_run<RUN_NUM>_<TIMESTAMP>.csv`, where `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0), `RUN_NUM` refers to a user-assigned number for the LAMMPS run (default 1) and `TIMESTAMP` records the time at which the run started.
