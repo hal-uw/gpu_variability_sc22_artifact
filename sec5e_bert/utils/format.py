@@ -8,6 +8,7 @@ import warnings
 
 from pathlib import Path
 from nltk.tokenize import sent_tokenize
+import nltk
 
 
 def get_sentences(lines):
@@ -161,6 +162,10 @@ if __name__ == '__main__':
     parser.add_argument('--shards', type=int, default=64,
                         help='Number of shards for dataset')
     args = parser.parse_args()
+
+    #Download the tokenizer resource before formatting
+    nltk.download('punkt')
+    
 
     print('Formatting {} ({} processes)'.format(args.dataset, args.processes))
     start_time = time.time()
