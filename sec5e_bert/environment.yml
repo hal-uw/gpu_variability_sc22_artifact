@@ -9,9 +9,6 @@ dependencies:
   - numpy
   - tqdm
   - h5py 
-  - magma-cuda110
-  - cudatoolkit=11.0
-  - pytorch=1.7.1
   - tensorboard
   - scikit-learn
   - boto3

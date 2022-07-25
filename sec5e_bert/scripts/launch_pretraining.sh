@@ -65,6 +65,15 @@ echo Launching torch.distributed: nproc_per_node=$NGPUS, nnodes=$NNODES, master_
 ts=`date '+%s'`
 
 if [[ "$NNODES" -eq 1 ]]; then
+    __PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace \
+        --openacc-profiling off \
+        --profile-child-processes \
+        --system-profiling on \
+        --kernel-latency-timestamps on \
+        --device-buffer-size 128 \
+        --continuous-sampling-interval 1 \
+        --csv --log-file bert_%p_${ts}_${HOSTNAME}.csv \
+        --device-buffer-size 128 -f \
         python -m torch.distributed.launch --nproc_per_node=$NGPUS \
         run_pretraining.py $KWARGS
 else

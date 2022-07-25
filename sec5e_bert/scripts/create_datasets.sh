@@ -6,7 +6,7 @@ N_PROCESSES=4
 DOWNLOAD=false
 FORMAT=false
 ENCODE=false
-ENCODE_TYPE="roberta"
+ENCODE_TYPE="bert"
 
 while [[ "$1" == -* ]]; do
     case "$1" in
@@ -109,20 +109,6 @@ fi
 
 
 if [ "$ENCODE" == true ]; then
-    if [ "$ENCODE_TYPE" == "roberta" ]; then
-        # RoBERTa Encoding:
-        #   - no next sequence prediction
-        #   - only use 512 length sequences
-        #   - A single 100 MB formatted text file takes about 4-5 minutes and
-        #     1.5-2 GB of RAM to encode. The entire Wiki+BooksCorpus takes 2-3
-        #     hours to encode using 16 threads.
-        #   - The output files are approximately half the size of the input
-        #     file (because the words are encoded from a string to a single int)
-        python3 utils/encode_data.py \
-            --input_dir $FORMAT_PATH --output_dir $ENCODED_PATH \
-            --vocab $VOCAB_FILE --max_seq_len 512 --short_seq_prob 0.1 \
-            --next_seq_prob 0.0 --processes $N_PROCESSES
-    else
         if [ ! "$ENCODE_TYPE" == "bert" ]; then
             echo "Error finding encoding type \"$ENCODE_TYPE\" in [\"bert\", \"roberta\"]"
             exit 1
@@ -131,12 +117,11 @@ if [ "$ENCODE" == true ]; then
         #   - next sequence prediction
         #   - two training phases (128 and 512 length sequences)
         python3 utils/encode_data.py \
-            --input_dir $FORMAT_PATH --output_dir $ENCODED_PATH \
+            --input_dir $FORMAT_PATH/wikicorpus --output_dir $ENCODED_PATH \
             --vocab $VOCAB_FILE --max_seq_len 128 --short_seq_prob 0.1 \
             --next_seq_prob 0.5 --processes $N_PROCESSES
         python3 utils/encode_data.py \
-            --input_dir $FORMAT_PATH --output_dir $ENCODED_PATH \
+            --input_dir $FORMAT_PATH/wikicorpus --output_dir $ENCODED_PATH \
             --vocab $VOCAB_FILE --max_seq_len 512 --short_seq_prob 0 \
             --next_seq_prob 0.5 --processes $N_PROCESSES
-    fi
 fi
