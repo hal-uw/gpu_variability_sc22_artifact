@@ -3,8 +3,9 @@ import kfac
 import torch
 import torch.distributed as dist
 
+from imagenetv2_pytorch import ImageNetV2Dataset
+from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-
 
 def get_cifar(args):
     transform_train = transforms.Compose([
@@ -29,28 +30,19 @@ def get_cifar(args):
     return make_sampler_and_loader(args, train_dataset, test_dataset)
 
 
-def get_imagenet(args):
-    train_dataset = datasets.ImageFolder(
-            args.train_dir,
-            transform=transforms.Compose([
+def get_imagenet(args): 
+    train_dataset = ImageNetV2Dataset("matched-frequency") # supports matched-frequency, threshold-0.7, top-images variants 
+    formatted_dataset = datasets.ImageFolder(
+                "./ImageNetV2-matched-frequency",
+                transform=transforms.Compose([
                 transforms.RandomResizedCrop(224),
                 transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])]))
-    val_dataset = datasets.ImageFolder(
-            args.val_dir,
-            transform=transforms.Compose([
-                transforms.Resize(256),
-                transforms.CenterCrop(224),
-                transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225])]))
+    return make_sampler_and_loader(args, formatted_dataset)
 
-    return make_sampler_and_loader(args, train_dataset, val_dataset)
-
-
-def make_sampler_and_loader(args, train_dataset, val_dataset):
+def make_sampler_and_loader(args, train_dataset):
     torch.set_num_threads(4)
     kwargs = {'num_workers': 4, 'pin_memory': True} if args.cuda else {}
 
@@ -59,10 +51,5 @@ def make_sampler_and_loader(args, train_dataset, val_dataset):
     train_loader = torch.utils.data.DataLoader(
             train_dataset, batch_size=args.batch_size * args.batches_per_allreduce,
             sampler=train_sampler, **kwargs)
-    val_sampler = torch.utils.data.distributed.DistributedSampler(
-            val_dataset, num_replicas=dist.get_world_size(), rank=dist.get_rank())
-    val_loader = torch.utils.data.DataLoader(
-            val_dataset, batch_size=args.val_batch_size,
-            sampler=val_sampler, **kwargs)
 
-    return train_sampler, train_loader, val_sampler, val_loader
+    return train_sampler, train_loader

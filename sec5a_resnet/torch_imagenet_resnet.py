@@ -7,6 +7,8 @@ import warnings
 import kfac
 import torch
 import torch.distributed as dist
+#from imagenetv2_pytorch import ImageNetV2Dataset
+#from torch.utils.data import DataLoader
 
 import torchvision.models as models
 import cnn_utils.datasets as datasets
@@ -137,7 +139,7 @@ if __name__ == '__main__':
     args.verbose = True if dist.get_rank() == 0 else False
     args.horovod = False
 
-    train_sampler, train_loader, _, val_loader = datasets.get_imagenet(args)
+    train_sampler, train_loader = datasets.get_imagenet(args)
     if args.model.lower() == 'resnet50':
         model = models.resnet50()
     elif args.model.lower() == 'resnet101':
