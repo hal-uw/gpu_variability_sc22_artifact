@@ -67,16 +67,29 @@ sudo docker rm -f dummy``
 ```
 
 ## Build and Run Without Docker
-There are the steps to take to run BERT Pretraininge using shell scripts:
-0. Setup the Pytorch environment
-1. Download the dataset and configuration files by running the `scripts/create-datasets.sh` with the appropriate flags which downloads the Wikipedia English dataset (example below). This may take a couple of hours.
+There are the steps to take to run BERT Pretraining using shell scripts:
+1. Setup your environment. For our purposes we setup a Conda environment and separately installed Pytorch 1.9.0. Note that the steps for creating a Conda environment will change depending on the machine and software stack available. Many systems come with PyTorch Conda environments so it is recommended to clone the provided environment and use that instead.
 ```
-$ ./scripts/create_datasets.sh --output data --nproc 8 --download --format --encode --no-books
+$ conda create -n {ENV_NAME} python=3.8
+$ conda activate {ENV_NAME}
+$ conda env update --name {ENV_NAME} --file environment.yml
+$ pip install -r requirements.txt
 ```
-2. Update line 8 in `scripts/run-pretraining-lamb.sh' to provide the directory where the encoded training dataset is located on your machine.
-3. Update line 17 in `config/bert_large_uncased_config.json` to provide the correct path to the vocab.txt that was also downloaded as part of Step 1 (i.e. "vocab_file": "<DATA_DIR>/download/google_pretrained_weights/uncased_L-24_H-1024_A-16/vocab.txt").
-4. Run `chmod u+x scripts/run-pretraining-lamb.sh scripts/launch-pretraining.sh`.
-5. Run `scripts/run-pretraining-lamb.sh`.
+
+Install NVIDIA APEX. Note this step requires `nvcc` and may fail if done on systems without a GPU (i.e. you may need to install on a compute node).
+```
+$ git clone https://github.com/NVIDIA/apex
+$ cd apex
+$ pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+```
+2. Download the dataset and configuration files by running the `scripts/create-datasets.sh` with the appropriate flags which downloads and encodes the Wikipedia English corpus (example below). This may take a couple of hours.
+```
+$ ./scripts/create_datasets.sh --output <DATA_DIR> --nproc 8 --download --no-books --format --encode --encode-type bert
+```
+3. Update line 8 in `scripts/run-pretraining-lamb.sh' to provide the directory where the encoded training dataset is located on your machine. (e.g. <DATA_DIR>/encoded/sequences_lowercase_max_seq_len_512_next_seq_task_true)
+4. Update line 17 in `config/bert_large_uncased_config.json` to provide the correct path to the vocab.txt that was also downloaded as part of Step 1 (e.g. <DATA_DIR>/download/google_pretrained_weights/uncased_L-24_H-1024_A-16/vocab.txt).
+5. Run `chmod u+x scripts/run-pretraining-lamb.sh scripts/launch-pretraining.sh`.
+6. Run `scripts/run-pretraining-lamb.sh`.
 
 You will find a few output files in `in this directory`:
   - `bert_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
