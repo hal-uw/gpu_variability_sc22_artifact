@@ -11,9 +11,9 @@ For compiling and launching SGEMM on NVIDIA GPUs, please see sections [Prerequis
 ├── Makefile: make binaries for `gen_data.cpp` and `sgemm.cu`
 ├── README.md: contains SGEMM specific instructions on running the application and configuring input size
 ├── sgemm.cu: main application that uses matrices generated from gen-data.cpp as inputs
-├── build-sgemm-nvidia.sh: script used with Singularity container to build sgemm binary (can be used to run without container))
-├── run-sgemm-nvidia.sh: script used with Singularity container to run sgemm (can be used to run without docker)
-├── sgemm-singularity.sh: Top-level shell script that pulls container, compiles binary and related packages and runs SGEMM
+├── build-sgemm-nvidia.sh: script used with Singularity container to build sgemm binary (can be used to run without container)
+├── run-sgemm-nvidia.sh: script used with Singularity container to run sgemm (can be used to run without container)
+├── sgemm-singularity.sh: Top-level shell script that pulls container image, compiles binary and related packages and runs SGEMM
 ```
 
 ## Adjusting Input Configurations

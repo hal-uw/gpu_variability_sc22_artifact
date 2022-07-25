@@ -1,0 +1,32 @@
+name: bert-pytorch
+channels:
+  - pytorch
+  - defaults
+  - conda-forge
+dependencies:
+  - python==3.8.*
+  - pip
+  - numpy
+  - tqdm
+  - h5py 
+  - scikit-learn
+  - boto3
+  - requests
+  - six
+  - nltk
+  - html2text
+  - progressbar
+  - ninja
+  - pyyaml
+  - setuptools
+  - cmake
+  - cffi
+  - typing_extensions
+  - future
+  - six
+  - requests
+  - dataclasses
+  - magma
+  - nccl
+  - pillow
+  - tensorboard=1.15.0

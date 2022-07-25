@@ -10,8 +10,9 @@ Below is a breakdown of this directory.
 ├── torch_imagenet_resnet.py: main python file called to launch ResNet
 ├── utils.py: utility functions imported into torch_imagenet_resnet.py
 ├── README.md: contains ResNet-50 specific instructions on running the application and adjusting input configurations
-├── Dockerfile: docker to run ResNet-50 directly
-├── run-resnet.sh: runs ResNet-50 on NVIDIA GPUs (UPDATE BEFORE RUNNING)
+├── dataloader.sh: script that builds and installs ImagenetV2 for generating the dataset
+├── resnet-singularity.sh: top-level shell script that pulls a container image, compiles binary and related packages and runs ResNet-50
+├── run-resnet.sh: runs ResNet-50 on NVIDIA GPUs by calling torch_imagenet_resnet.py with relevant args
 ```
 
 ## Adjusting Input Configurations
@@ -19,62 +20,39 @@ To adjust configuration parameters, update `run-resnet.sh`. Specifically, update
 
 ## Prerequisites
 * Machine with an NVIDIA GPU
-* Relevant GPU drivers installed
-* Compilation and launch scripts assume one or more Volta Class GPU (arch_70, compute_70) are available on the compute node, but the scripts also work for any other NVIDIA GPU.
-* If your GPU is not a Volta, edit `CCFLAGS` and `KOKKOS_ARCH` options in `src/MAKE/OPTIONS/Makefile.kokkos_cuda_mpi` and `Dockerfile` based on the following table: 
-
-| NVIDIA Architecture        | Cards                                   | Supported Sm and Gencode Variations |
-|:---------------------------|:----------------------------------------|:------------------------------------|
-| Fermi (CUDA 3.2 until 8)   | GeForce 400, 500, 600, GT-630           | `SM_20` `compute_30`                |
-| Kepler(CUDA 5 until 10)    | GeForce 700, GT-730                     | `SM_30` `compute_30`                |
-|                            | Tesla K40                               | `SM_35` `compute_35`                |
-|                            | Tesla K80                               | `SM_37` `compute_37`                |
-| Maxwell (CUDA 6 until 11)  | Tesla/Quadro M                          | `SM_50` `compute_50`                |
-|                            | Quadro M6000, GeForce 900,              | `SM_52` `compute_52`                |
-|                            | GTX-970, GTX-980, GTX Titan-X           |                                     |
-|                            | Jetson TX1/Tegra X1,                    | `SM_53` `compute_53`                |
-|                            | Drive CX/PX, Jetson Nano                |                                     |
-| Pascal (>= CUDA 8)         | Quadro GP100, Tesla P100, DGX-1         | `SM_60` `compute_60`                |
-|                            | GTX 1080/1070/1060/1050/1030/1010       | `SM_61` `compute_61`                |
-|                            | Titan Xp, Tesla P40, Tesla P4           |                                     |
-|                            | iGPU on Drive PX2, Tegra(Jetson) TX2    | `SM_62` `compute_62`                |
-| Volta (>= CUDA 9)          | **Tesla V100**, DGX-1, GTX1180,         | `SM_70` `compute_70`                |
-|                            | Titan V, Quadro GV100                   |                                     |
-|                            | Jetson AGX Xavier, Drive AGX Pegasus    | `SM_72` `compute_72`                |
-|                            | Xavier NX                               |                                     |
-| Turing (>= CUDA 10)        | GTX 1660, RTX 20X0 (X=6/7/8), Titan RTX | `SM_75` `compute_75`                |
-|                            | Quadro RTX 4000/5000/6000/8000,         |                                     |
-|                            | Tesla T4                              |                                     |
-| Ampere (>= CUDA 11.1)      | A100, GA100, DGX-A100                 | `SM_80` `compute_80`                |
-|                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
+* Relevant GPU drivers installed (if not, please refer to https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html)
+* Compilation and launch scripts have been tested with Volta V100 GPUs (arch_70, compute_70) and Quadro RTX 5000 (arch_75, compute_75), but the scripts also work for any other NVIDIA GPU.
+* Machine's underlying architecture must be either `x86_64` or `amd64` (To check, run `uname -m`)
+* The PyTorch NGC container we use requires the host system to have the following installed: [Singularity](https://docs.sylabs.io/guides/3.0/user-guide/installation.html), [NVIDIA GPU Drivers](https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html) and [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html). Please note that these requisites are generally pre-installed/pre-built on GPU compute nodes in supercomputing systems, and likely don't require manual installation.
 
 ## Run the Application
-Note that to successfully build this docker image and the necessary libraries/packages used for PageRank, you will
-need sudo access on the machine you are doing this work. Otherwise, the container image will fail to build.
+For running ResNet-50, we use a PyTorch container provided by Nvidia GPU Cloud (NGC), pulled using Singularity. The container image works only if the underlying architecture is either `x86_64` or `amd64`. Steps to run ResNet-50 using a Singularity container are given below: 
 
-There are 5 steps to take to run ResNet-50 successfully. 
-1. Download the ImageNet data set from [this link](https://image-net.org/download-images). We do not provide the data set in this artifact repo because it is so large. 
-2. Update lines 28 and 29 in `run-resnet.sh` to provide the directory where the training data set and validation data set is located on your machine.
-3. Run `sudo docker build -t resnet_image .`
-4. Run `sudo docker run --gpus all resnet_image`
-5. Move data output by profiler (nvprof) from container to local directory in this repository - see below. 
+(1) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a. 
 
-There will be 4 csv files and 1 txt file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. These files will be stored in the docker container by default. To access these files, you will have to copy them using `docker cp` (step 5) to the directory of your choice (we recommend `../out/`).
-
+(2) Run the top-level script `resnet-singularity.sh`
 ```
-sudo docker create -ti --name dummy resnet_image bash
-<Returns Container ID c_id>
-sudo docker cp <c_id>:/sec5a/*.csv ../out/.
-sudo docker rm -f dummy``
+./resnet-singularity.sh
 ```
+
+This script first pulls the PyTorch NGC container image and generates the Imagenet V2 Dataset using a [PyTorch dataloader](https://github.com/modestyachts/ImageNetV2_pytorch), which is added as a dependency of this repository. It finally runs 500 iterations of training and profiles the kernel information as well as other metrics using _nvprof_.  
+
+There will be 4 csv files and 1 txt file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. They will be present in the current working directory:
+  - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
+  - `resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
 
 ## Build and Run Without Docker
 There are 4 steps to take to run ResNet-50 using shell scripts:
-1. Download the ImageNet data set from [this link](https://image-net.org/download-images). We do not provide the data set in this artifact repo because it is so large. 
-2. Update lines 28 and 29 in `run-resnet.sh` to provide the directory where the training data set and validation data set is located on your machine.
-3. Run `chmod u+x run-resnet.sh`.
-4. Run `run-resnet.sh`.
+1. Setup your environment. For our purposes, we setup a Conda environment and separately installed Pytorch 1.9.0. Note that the steps for creating a Conda environment will change depending on the machine and software stack available. Many systems come with PyTorch Conda environments so it is recommended to clone the provided environment and use that instead.
+```
+$ conda create -n {ENV_NAME} python=3.8
+$ conda activate {ENV_NAME}
+$ conda env update --name {ENV_NAME} --file environment.yml
+$ pip install -r requirements.txt
+```
+2. Run `dataloader.sh`. This builds and installs the ImageNetV2_Pytorch library and allows dataset loading dunctions to be used by the ResNet application. 
+4. Run `run-resnet.sh`. 
 
-You will find a few output files in `../out`:
-  - `out/resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
-  - `out/resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
+You will find a few output files in the working directory:
+  - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
+  - `resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
