@@ -120,8 +120,4 @@ if [ "$ENCODE" == true ]; then
             --input_dir $FORMAT_PATH/wikicorpus --output_dir $ENCODED_PATH \
             --vocab $VOCAB_FILE --max_seq_len 128 --short_seq_prob 0.1 \
             --next_seq_prob 0.5 --processes $N_PROCESSES
-        python3 utils/encode_data.py \
-            --input_dir $FORMAT_PATH/wikicorpus --output_dir $ENCODED_PATH \
-            --vocab $VOCAB_FILE --max_seq_len 512 --short_seq_prob 0 \
-            --next_seq_prob 0.5 --processes $N_PROCESSES
 fi

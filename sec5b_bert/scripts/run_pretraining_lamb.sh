@@ -3,7 +3,7 @@
 # We only run Phase 1 of BERT pretraining
 
 CONFIG=config/bert_pretraining_phase1_config.json
-DATA=data/encoded/sequences_lowercase_max_seq_len_512_next_seq_task_true
+DATA=example/encoded/sequences_lowercase_max_seq_len_128_next_seq_task_true
 
 mkdir -p sbatch_logs
 
