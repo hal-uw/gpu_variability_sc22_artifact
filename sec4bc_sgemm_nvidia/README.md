@@ -66,7 +66,7 @@ Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a.
 
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be present in the current directory. The name of the file is of the format `sgemm_nvidia_25536_100_<UUID>_<DEVICE_ID>_<TIMESTAMP>.csv`, where `25536` is the input matrix size, `100` refers to the number of matrix multiplication kernels, `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0) and `TIMESTAMP` records the time at which the run started.
 
-## Build and Run Without Docker
+## Build and Run Without a Container Image
 There are four steps to build and run SGEMM on NVIDIA GPUs:
 ```
 chmod u+x ./build-sgemm-nvidia.sh
