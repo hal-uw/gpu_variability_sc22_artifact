@@ -1,3 +1,6 @@
 [submodule "sec5a_resnet/cnn_utils/dataloader"]
 	path = sec5a_resnet/cnn_utils/dataloader
 	url = https://github.com/modestyachts/ImageNetV2_pytorch.git
+[submodule "sec5b_bert/utils/apex"]
+	path = sec5b_bert/utils/apex
+	url = https://github.com/NVIDIA/apex.git
