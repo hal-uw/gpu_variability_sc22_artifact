@@ -28,7 +28,7 @@ To adjust configuration parameters, update `run-resnet.sh`. Specifically, update
 ## Run the Application
 For running ResNet-50, we use a PyTorch container provided by Nvidia GPU Cloud (NGC), pulled using Singularity. The container image works only if the underlying architecture is either `x86_64` or `amd64`. Steps to run ResNet-50 using a Singularity container are given below: 
 
-(1) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a. 
+(1) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. 
 
 (2) Run the top-level script `resnet-singularity.sh`
 ```

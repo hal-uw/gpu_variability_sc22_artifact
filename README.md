@@ -20,7 +20,7 @@ There were 5 experiments we ran in our paper:
 For each experiment, there is a corresponding directory in this repository (e.g., SGEMM on NVIDIA: `sec4bc_sgemm_nvidia`). The names of each directory correspond to the sections in our paper.
 
 ## Build and Run
-To run each of our applications, we provide scripts that pull container images in each application directory. We used Singularity version 3.7.2-4.el7a (stable version as of 07/26/2022). These docker containers install all dependencies and compile library code into respective application binaries. Directions to run each application using the docker containers can be found in each application's `README.md` file (in their respective directories). 
+To run each of our applications, we provide scripts that pull container images in each application directory. We used Singularity version 3.7.2-4.el7a (stable version as of 07/26/2022) for testing all scripts. These docker containers install all dependencies and compile library code into respective application binaries. Directions to run each application using the docker containers can be found in each application's `README.md` file (in their respective directories). 
 
 ### Steps to reproduce experiments
 1. Login to a **compute node** with a GPU. All the steps that follow should be run on the compute node.
