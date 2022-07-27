@@ -68,7 +68,7 @@ if [[ "$NNODES" -ne 1 ]]; then
     exit
 fi
 
-if [ -d "/usr/loca/cuda-10.1/bin" ]
+if [ -d "/usr/local/cuda-10.1/bin" ]
 then
     __PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace \
         --openacc-profiling off \
