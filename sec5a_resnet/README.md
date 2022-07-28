@@ -41,6 +41,8 @@ There will be 4 csv files and 1 txt file output by the profiler (nvprof), which 
   - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
   - `resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
 
+PLease refer to [Troubleshooting](#troubleshooting) if you see any errors while running the above steps. 
+
 ## Build and Run Without a Container Image
 There are 3 steps to take to run ResNet-50 using shell scripts:
 1. Setup your environment. For our purposes, we setup a Conda environment and separately installed Pytorch 1.9.0. Note that the steps for creating a Conda environment will change depending on the machine and software stack available. Many systems come with PyTorch Conda environments so it is recommended to clone the provided environment and use that instead.
@@ -56,3 +58,14 @@ $ pip install -r requirements.txt
 You will find a few output files in the working directory:
   - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
   - `resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
+
+## Troubleshooting
+* __python3: can't open file 'setup.py': [Errno 2] No such file or directory__
+  
+  Run the following command:
+  ```
+  git submodule update --init --recursive
+  ```
+  We use an [ImageNetV2_PyTorch](https://github.com/modestyachts/ImageNetV2_pytorch) dataset that is added as a git submodule within `utils/dataloader`. The above command should update `dataloader` directory with the `setup.py` and other files required for generating the ImageNet V2 dataset. 
+
+
