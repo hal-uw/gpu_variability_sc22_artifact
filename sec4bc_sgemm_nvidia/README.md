@@ -66,6 +66,8 @@ Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a.
 
 There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file will be present in the current directory. The name of the file is of the format `sgemm_nvidia_25536_100_<UUID>_<DEVICE_ID>_<TIMESTAMP>.csv`, where `25536` is the input matrix size, `100` refers to the number of matrix multiplication kernels, `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0) and `TIMESTAMP` records the time at which the run started.
 
+If the CSV log has errors such as `ERR_NVGPUCTRPERM`, please refer to the section on [Troubleshooting](#troubleshooting) below
+
 ## Build and Run Without a Container Image
 There are four steps to build and run SGEMM on NVIDIA GPUs:
 ```
@@ -75,3 +77,15 @@ chmod u+x ./run-sgemm-nvidia.sh
 ./run-sgemm-nvidia.sh
 ```
 You will find the output csv file from the `nvprof` profiler directly in this directory. 
+
+## Troubleshooting
+* __ERR_NVGPUCTRPERM: Permission issue with Performance Counters__
+    
+    This error occurs when the GPU setup on the machine prohibits a non-root user from gathering profiling metrics using _nvprof_. You can allow any user to collect performance counter measurements by running the following: 
+    ```
+    echo 'options nvidia "NVreg_RestrictProfilingToAdminUsers=0"' | sudo tee -a /etc/modprobe.d/nvidia.conf
+    sudo update-initramfs -u 
+    sudo reboot
+    ```
+    For more details, please refer to https://developer.nvidia.com/nvidia-development-tools-solutions-err-nvgpuctrperm-nvprof. 
+
