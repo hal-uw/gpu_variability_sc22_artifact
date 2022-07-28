@@ -4,7 +4,7 @@
 
 Our application utilizes the SGEMM kernel in AMD's rocBLAS library to perform matrix multiplication on two matrices containing single-precision floats. 
 
-For compiling and launching SGEMM on AMD GPUs, please see sections [Prerequisites](#prerequisites), [Build Container Image](#build-container-image), and [Run the Application](#run-the-application).
+For compiling and launching SGEMM on AMD GPUs, please see sections [Prerequisites](#prerequisites), [Pull Container Image and Run the Application](#pull-container-image-and-run-the-application).
 
 Below is a breakdown of this directory. 
 ```
@@ -15,7 +15,7 @@ Below is a breakdown of this directory.
 ├── sgemm_rocblas.hip.cpp: main application that uses matrices generated from gen-data.cpp as inputs
 ├── build-sgemm-amd.sh: script used by the Dockerfile to build sgemm (can be used to run without docker)
 ├── run-sgemm-amd.sh: script used by the Dockerfile to run sgemm (can be used to run without docker)
-├── Dockerfile: docker to compile binary and related packages, and create a container that can run SGEMM directly on AMD GPUs
+├── sgemm-singularity.sh: Top-level script that pulls a container image, compiles SGEMM binary and related packages, and runs SGEMM on AMD GPUs
 ```
 
 ## Adjusting Input Configurations
