@@ -122,9 +122,9 @@ def parse_arguments():
                         help="Global batch size for training.")
     parser.add_argument("--local_batch_size", default=4, type=int,
                         help="Per-GPU batch size for training.")
-    parser.add_argument("--max_steps", default=1000, type=float,
+    parser.add_argument("--max_steps", default=250, type=float,
                         help="Total number of training steps to perform.")
-    parser.add_argument("--steps", default=1000, type=float,
+    parser.add_argument("--steps", default=250, type=float,
                         help="Steps to perform this session.")
     parser.add_argument("--previous_phase_end_step", default=0, type=int,
                         help="Final step of previous phase")

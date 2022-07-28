@@ -1,7 +1,7 @@
 # Section 5E: BERT Pretraining on NVIDIA GPUs
 
 ## Application Overview and Directory Structure
-We ran the pre-training phase of BERT-Large Uncased with 1024 hidden layers. We only consider the first phase of pre-training with sequences of length 128. Our training set is the Wikipedia EN corpus. Our training ran across four GPUs on one node with a single run as 1000 iterations. Because we only use one node, we do not need to use any `mpi` commands. 
+We ran the pre-training phase of BERT-Large Uncased with 1024 hidden layers. We only consider the first phase of pre-training with sequences of length 128. Our training set is the Wikipedia EN corpus. Our training ran across four GPUs on one node with a single run as 250 iterations. Because we only use one node, we do not need to use any `mpi` commands. 
 For running BERT, please see sections [Prerequisites](#prerequisites) and [Pull Container Image and Run the Application](#pull-container-image-and-run-the-application).
 
 Below is a breakdown of this directory. 
@@ -33,7 +33,7 @@ For running BERT, we use a PyTorch container provided by Nvidia GPU Cloud (NGC),
 ```
 $ ./bert-singularity.sh
 ```
-This script pulls the PyTorch image and installs dependencies such as `boto3`, `h5py` and `tokenizers`, before running 1000 iterations of BERT training and profiling relevant metrics using _nvprof_. You will find the following output files in the current working directory:
+This script pulls the PyTorch image and installs dependencies such as `boto3`, `h5py` and `tokenizers`, before running 250 iterations of BERT training and profiling relevant metrics using _nvprof_. You will find the following output files in the current working directory:
   - `bert_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
 
 
