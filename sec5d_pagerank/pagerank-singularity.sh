@@ -9,13 +9,11 @@ if [ ! -f data_dirs/pannotia/pagerank_spmv/data/rajat30/rajat30.mtx ]; then
 fi
 
 if [[ "$uarch" == *ppc64le* ]]; then
-    singularity pull docker://nvidia/cuda-ppc64le:10.1-devel-ubuntu18.04
-    singularity run --nv cuda-ppc64le_10.1-devel-ubuntu18.04.sif ./build-pagerank.sh
-    singularity run --nv cuda-ppc64le_10.1-devel-ubuntu18.04.sif ./run-pagerank.sh
+    singularity run --nv docker://nvidia/cuda-ppc64le:10.1-devel-ubuntu18.04 ./build-pagerank.sh
+    singularity run --nv docker://nvidia/cuda-ppc64le:10.1-devel-ubuntu18.04 ./run-pagerank.sh
 else
-    singularity pull docker://nvidia/cuda:10.1-devel-ubuntu18.04
-    singularity run --nv cuda_10.1-devel-ubuntu18.04.sif ./build-pagerank.sh
-    singularity run --nv cuda_10.1-devel-ubuntu18.04.sif ./run-pagerank.sh
+    singularity run --nv docker://nvidia/cuda:10.1-devel-ubuntu18.04 ./build-pagerank.sh
+    singularity run --nv docker://nvidia/cuda:10.1-devel-ubuntu18.04 ./run-pagerank.sh
 fi
 
 
