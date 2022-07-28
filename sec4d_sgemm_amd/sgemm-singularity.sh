@@ -8,6 +8,7 @@ if [[ "$uarch" == *ppc64le* ]]; then
 else
     #singularity pull docker://sunway513/rocm-dev:4.5.2-rocblas-bench
     singularity run --nv docker://sunway513/rocm-dev:4.5.2-rocblas-bench ./build-sgemm-amd.sh
+    sleep 30
     singularity run --nv docker://sunway513/rocm-dev:4.5.2-rocblas-bench ./run-sgemm-amd.sh
 fi
 
