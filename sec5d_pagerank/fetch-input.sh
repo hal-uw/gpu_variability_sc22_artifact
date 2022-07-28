@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [! -x /usr/bin/wget ]; then 
+if [ ! -x /usr/bin/wget ]; then 
     echo "Please install wget or set it in your path. Aborting."
 fi
 

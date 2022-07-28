@@ -21,7 +21,7 @@ touch pagerank_${UUID}_run${2}_node${3}_gpu${1}_${ts}.csv
 
 echo running PageRank on graph: rajat30.mtx : file_format MMTranspose
 
-if [ -d "/usr/loca/cuda-10.1/bin" ]
+if [ -d "/usr/local/cuda-10.1/bin" ]
 then
     __PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file pagerank_${UUID}_run${2}_node${3}_gpu${1}_${ts}.csv --device-buffer-size 128 --continuous-sampling-interval 1 -f ./pagerank_spmv data_dirs/pannotia/pagerank_spmv/data/rajat30/rajat30.mtx 2
     echo waitingfor nvprof to flush all data to log 

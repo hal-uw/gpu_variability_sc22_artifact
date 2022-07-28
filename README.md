@@ -26,17 +26,17 @@ To run each of our applications, we provide scripts that pull container images i
 ### Steps to reproduce experiments
 1. Login to a **compute node** with a GPU. All the steps that follow should be run on the compute node.
 2. Clone this artifact repository on the compute node:
-```
-git clone --recurse-submodules https://github.com/hal-uw/gpu_variability_sc22_artifact.git
-cd gpu_variability_sc22_artifact/
-```
-3.  Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. 
-Note that all steps and scripts in this appendix are tested with Singularity v3.7.2-4.el7a. 
+    ```
+    git clone --recurse-submodules https://github.com/hal-uw/gpu_variability_sc22_artifact.git
+    cd gpu_variability_sc22_artifact/
+    ```
+3.  Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity.   Please refer to this [gist](https://gist.github.com/shivaram/80f4d8a48fb4cdd52348c37508054cee) if you need to install Singularity.  
+  Note that all steps and scripts in this appendix are tested with Singularity v3.7.2-4.el7a. 
 4. For NVIDIA GPUs, check if the command `nvidia-smi` is printing out information associated with the attached GPUs. If not, you will need to install relevant [NVIDIA drivers](https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html) for your Linux distribution and [Nvidia container toolkit](https://docs.nvidia.com/ai-enterprise/deployment-guide/dg-docker.html#enabling-the-docker-repository-and-installing-the-nvidia-container-toolkit). Please note that these requisites are generally pre-installed on GPU compute nodes in supercomputing systems, and likely don't require manual installation.
 5. If the compute node has an NVIDIA GPU, then you can run experiments corresponding to the following directories - `sec4bc_sgemm_nvidia`, `sec5a_resnet`, `sec45b_lammps` and `sec5c_pagerank`. If the node has an AMD GPU, cd to `sec4d_sgemm_amd` for running the SGEMM application. 
-```
-cd gpu_variability_sc22_artifact/<experiment_specific_directory>
-```
+    ```
+    cd gpu_variability_sc22_artifact/<experiment_specific_directory>
+    ```
 6. Navigate to the corresponding `README.md` file inside the experiment-specific directory, and follow the steps mentioned in [Pull Container Image and Run the Application] section of each README. 
 
 ## Related Code

@@ -59,7 +59,7 @@ Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a.
 ./lammps-singularity.sh
 ```
 
-There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file can be found inside the `reax_benchmark` directory.  The name of the file is of the format `lammps_<UUID>_<DEVICE_ID>_run<RUN_NUM>_<TIMESTAMP>.csv`, where `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0), `RUN_NUM` refers to a user-assigned number for the LAMMPS run (default 1) and `TIMESTAMP` records the time at which the run started.
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. __This file can be found inside the `reax_benchmark` directory.__  The name of the file is of the format `lammps_<UUID>_<DEVICE_ID>_run<RUN_NUM>_<TIMESTAMP>.csv`, where `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0), `RUN_NUM` refers to a user-assigned number for the LAMMPS run (default 1) and `TIMESTAMP` records the time at which the run started.
 
 
 ## Build and Run Without Container Image
@@ -72,4 +72,4 @@ cd src && ./build-lammps.sh
 cd ../reax_benchmark/ && ./run-lammps.sh 0 1 0
 ```
 
-There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. This file can be found inside the `reax_benchmark` directory.  The name of the file is of the format `lammps_<UUID>_<DEVICE_ID>_run<RUN_NUM>_<TIMESTAMP>.csv`, where `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0), `RUN_NUM` refers to a user-assigned number for the LAMMPS run (default 1) and `TIMESTAMP` records the time at which the run started.
+There will be one csv file output by the profiler (nvprof), which contains kernel information, GPU SM frequency, power, and temperature. __This file can be found inside the `reax_benchmark` directory.__  The name of the file is of the format `lammps_<UUID>_<DEVICE_ID>_run<RUN_NUM>_<TIMESTAMP>.csv`, where `UUID` is the unique ID assigned to the GPU being run on, `DEVICE_ID` is the device ID of the GPU (default 0), `RUN_NUM` refers to a user-assigned number for the LAMMPS run (default 1) and `TIMESTAMP` records the time at which the run started.
