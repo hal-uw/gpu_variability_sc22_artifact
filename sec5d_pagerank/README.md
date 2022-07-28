@@ -52,7 +52,7 @@ Before running PageRank, the input graph _rajat30.mtx_ is fetched from SuiteSpar
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
 
 ## Pull Container Image and Run the Application
-We use pre-existing Docker images from nvidia/cuda, pulled using Singularity. Steps to build and run PageRank using a Singularity container are given below: 
+We use an existing Docker image from nvidia/cuda, pulled using Singularity. Steps to build and run PageRank using a Singularity container are given below: 
 
 (1) Run `fetch-input.sh` to fetch input graph _rajat30.mtx_.  
 ```

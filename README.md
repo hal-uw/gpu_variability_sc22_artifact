@@ -37,7 +37,7 @@ Note that all steps and scripts in this appendix are tested with Singularity v3.
 ```
 cd gpu_variability_sc22_artifact/<experiment_specific_directory>
 ```
-6. Navigate to the corresponding README.md file inside the experiment-specific directory, and follow the steps mentioned in [Pull Container Image and Run the Application] section of each README. 
+6. Navigate to the corresponding `README.md` file inside the experiment-specific directory, and follow the steps mentioned in [Pull Container Image and Run the Application] section of each README. 
 
 ## Related Code
   - ResNet-50 with KFAC Pytorch

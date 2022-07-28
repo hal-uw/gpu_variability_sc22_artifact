@@ -50,7 +50,7 @@ with input matrices of size `24576x24576`. These parameters can be adjusted `run
 | RDNA 2  | VAN GOGH LITE    | TBC                   | GFX1040|            
 
 ## Pull Container Image and Run the Application
-We use a pre-existing Docker image from the Docker registry, pulled using Singularity. Steps to build and run SGEMM on AMD GPUs using a Singularity container:
+We use an existing Docker image from the Docker registry, pulled using Singularity. Steps to build and run SGEMM on AMD GPUs using a Singularity container:
 
 (1) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. 
 Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a. 

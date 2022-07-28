@@ -50,7 +50,7 @@ $ conda activate {ENV_NAME}
 $ conda env update --name {ENV_NAME} --file environment.yml
 $ pip install -r requirements.txt
 ```
-2. Run `dataloader.sh`. This builds and installs the ImageNetV2_Pytorch library and allows dataset loading dunctions to be used by the ResNet application. 
+2. Run `dataloader.sh`. This builds and installs the ImageNetV2_Pytorch library and allows dataset loading functions to be used by the ResNet application. 
 3. Run `run-resnet.sh`. 
 
 You will find a few output files in the working directory:
