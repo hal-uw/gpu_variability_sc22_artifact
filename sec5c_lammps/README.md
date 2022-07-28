@@ -49,7 +49,7 @@ based on the following table:
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)   | `SM_86` `compute_86`                |
 
 ## Pull Container Image and Run the Application
-We use a pre-existing [container image](https://hub.docker.com/r/pawsey/cuda-mpich-base/tags) for CUDA-aware MPICH applications, pulled using Singularity. The steps here are tested for Volta Class GPUs (Volta70) as well as Turing class GPUs (Turing75), but should work for other GPUs as long as the updates as mentioned in Pre-requisites are done. Steps to build and run SGEMM using a container image pulled using Singularity:
+We use an existing [container image](https://hub.docker.com/r/pawsey/cuda-mpich-base/tags) for CUDA-aware MPICH applications, pulled using Singularity. The steps here are tested for Volta Class GPUs (Volta70) as well as Turing class GPUs (Turing75), but should work for other GPUs as long as the updates as mentioned in Pre-requisites are done. Steps to build and run SGEMM using a container image pulled using Singularity:
 
 (1) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. 
 Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a. 

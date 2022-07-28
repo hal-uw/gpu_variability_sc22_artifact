@@ -54,7 +54,7 @@ with input matrices of size `25536x25536`. These parameters can be adjusted in `
 |                            | GA10X cards, RTX 30X0 (X=5/6/7/8/9)     | `SM_86` `compute_86`                |
 
 ## Pull Container Image and Run the Application 
-We use pre-existing Docker images from nvidia/cuda, pulled using Singularity. Steps to build and run SGEMM using a Singularity container:
+We use an existing Docker image from nvidia/cuda, pulled using Singularity. Steps to build and run SGEMM using a Singularity container:
 
 (1) Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity. 
 Note that these steps and scripts are tested with Singularity v3.7.2-4.el7a. 
