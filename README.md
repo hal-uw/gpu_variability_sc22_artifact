@@ -1,5 +1,7 @@
 # Experiments Ran in "Characterizing Variability in Large-Scale, Accelerator-Rich Systems" Paper
 
+[![DOI](https://zenodo.org/badge/480927770.svg)](https://zenodo.org/badge/latestdoi/480927770)
+
 This artifact contains code to reproduce the experiments carried out in "Not All GPUs Are Created Equal: Characterizing Variability in Large-Scale, Accelerator-Rich Systems". The repository is organized into directories per experiment. See [Experiments](#experiments) below for an overview of the contents in each directory, and [Build and Run](#build-and-run) for step-wise instructions to reproduce our experiments. 
 
 ## Table of Contents
