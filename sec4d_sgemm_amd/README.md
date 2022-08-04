@@ -6,6 +6,8 @@ Our application utilizes the SGEMM kernel in AMD's rocBLAS library to perform ma
 
 For compiling and launching SGEMM on AMD GPUs, please see sections [Prerequisites](#prerequisites), [Pull Container Image and Run the Application](#pull-container-image-and-run-the-application).
 
+Please note that we could not test the Singularity script on an AMD machine, since the nodes with AMD GPUs were taken offline recently.
+
 Below is a breakdown of this directory. 
 ```
 ├── gen_data.cpp: generates two input matrices of a size the user specifies
