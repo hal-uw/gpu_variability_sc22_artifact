@@ -18,8 +18,8 @@ echo $UUID
 ts=`date '+%s'`
 
 # Format of profiling data log - lammps_<GPU-UUID>_run<run-num>_node<node-num>_gpu<device-num>_<timestamp>.csv
-echo lammps_${UUID}_run${2}_${ts}.csv
-touch lammps_${UUID}_run${2}_${ts}.csv 
+echo reax_benchmark/lammps_${UUID}_run${2}_${ts}.csv
+touch reax_benchmark/lammps_${UUID}_run${2}_${ts}.csv 
 
 cd reax_benchmark
 export CUDA_LAUNCH_BLOCKING=1

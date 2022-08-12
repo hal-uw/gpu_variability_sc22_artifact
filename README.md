@@ -32,6 +32,14 @@ To run each of our applications, we provide scripts that pull container images i
     git clone --recurse-submodules https://github.com/hal-uw/gpu_variability_sc22_artifact.git
     cd gpu_variability_sc22_artifact/
     ```
+    
+   <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/triangle-exclamation.svg" width="25" height="25">
+   
+   Since the repository is large (~529MB after pulling dependent submodules), it might be difficult to clone the repository over https. If you see errors such as "remote end hung up unexpectedly" or "recv error (-9): Error decoding the received TLS packet", try pulling the repository contents over ssh instead:
+   ```
+    git clone --recurse-submodules git@github.com:hal-uw/gpu_variability_sc22_artifact.git
+   ```
+
 3.  Ensure that Singularity is installed/loaded on the compute node. Compute nodes on most HPC clusters have singularity pre-installed as a module, which needs to be loaded using cluster-specific commands. For instance, on any Texas Advanced Computing Center (TACC) cluster, `module load tacc-singularity` loads the latest stable version of Singularity.   Please refer to this [gist](https://gist.github.com/shivaram/80f4d8a48fb4cdd52348c37508054cee) if you need to install Singularity.  
   Note that all steps and scripts in this appendix are tested with Singularity v3.7.2-4.el7a. 
 4. For NVIDIA GPUs, check if the command `nvidia-smi` is printing out information associated with the attached GPUs. If not, you will need to install relevant [NVIDIA drivers](https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html) for your Linux distribution and [Nvidia container toolkit](https://docs.nvidia.com/ai-enterprise/deployment-guide/dg-docker.html#enabling-the-docker-repository-and-installing-the-nvidia-container-toolkit). Please note that these requisites are generally pre-installed on GPU compute nodes in supercomputing systems, and likely don't require manual installation.

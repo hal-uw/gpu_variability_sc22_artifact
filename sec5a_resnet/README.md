@@ -56,7 +56,7 @@ $ pip install -r requirements.txt
 3. Run `run-resnet.sh`. 
 
 You will find a few output files in the working directory:
-  - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
+  - `resnet_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. During the profiling process, `nvprof` generates multiple such CSV files, not all of which contain useful information. The number of CSV files with useful information corresponds to the number of GPUs that ResNet is being run on.  
   - `resnet_iterdur_*.txt`: contains iteration durations. Iteration durations are directly printed from line 75 in `sec5a_resnet/cnn_utils/engine.py`. Only one text file. 
 
 ## Troubleshooting

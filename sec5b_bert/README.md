@@ -34,7 +34,7 @@ For running BERT, we use a PyTorch container provided by Nvidia GPU Cloud (NGC),
 $ ./bert-singularity.sh
 ```
 This script pulls the PyTorch image and installs dependencies such as `boto3`, `h5py` and `tokenizers`, before running 250 iterations of BERT training and profiling relevant metrics using _nvprof_. You will find the following output files in the current working directory:
-  - `bert_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
+  - `bert_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. During the profiling process, `nvprof` generates multiple such CSV files, not all of which have useful information. The number of CSV files with useful information corresponds to the number of GPUs that BERT is being run on.  
 
 
 ## Build and Run Without Container Image
@@ -63,4 +63,4 @@ $ ./scripts/create_datasets.sh --output <DATA_DIR> --nproc 8 --download --no-boo
 7. Run `scripts/run-pretraining-lamb.sh`.
 
 You will find a few output files in `in this directory`:
-  - `bert_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. There will be one csv file per GPU (e.g., if you trained on 4 GPUs, there will be 4 csv files).
+  - `bert_*.csv`: contains kernel information, GPU SM frequency, power, and temperature. During the profiling process, `nvprof` generates multiple such CSV files, not all of which have useful information. The number of CSV files with useful information corresponds to the number of GPUs that BERT is being run on.  
