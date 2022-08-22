@@ -24,7 +24,7 @@ touch reax_benchmark/lammps_${UUID}_run${2}_${ts}.csv
 cd reax_benchmark
 export CUDA_LAUNCH_BLOCKING=1
 
-if [ -d "/usr/loca/cuda-10.1/bin" ]
+if [ -d "/usr/local/cuda-10.1/bin" ]
 then
     /usr/local/cuda-10.1/bin/nvprof  --print-gpu-trace --event-collection-mode continuous --system-profiling on --kernel-latency-timestamps on --csv --log-file lammps_${UUID}_run${2}_${ts}.csv --device-buffer-size 128 --continuous-sampling-interval 1 -f ../src/lmp_kokkos_cuda_mpi -k on g 1 device ${1} -sf kk -pk kokkos neigh half neigh/qeq full newton on -v x 16 -v y 8 -v z 12 -in in.reaxc.hns -nocite
 elif [ -d "/usr/local/cuda/bin" ]
