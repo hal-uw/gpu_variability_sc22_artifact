@@ -19,5 +19,5 @@ bash scripts/launch_pretraining.sh  \
     --output_dir results/bert_pretraining \
     --config_file $CONFIG \
     --num_steps_per_checkpoint 200 \
-    --global_batch_size 16 \
-    --local_batch_size 4 
+    --global_batch_size 64 \
+    --local_batch_size 16 
