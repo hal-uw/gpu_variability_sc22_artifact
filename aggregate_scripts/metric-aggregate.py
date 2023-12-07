@@ -380,9 +380,10 @@ def get_iter_dur(path,device=0):
     parameters:
         -trace: path to nvprof trace file
         -app: application of the trace (used to filter kernels)
-    returns:
-        -exec_time: sum of filtered kernel durations (normalized to milliseconds)
-        -kernel_dur_dict: dictionary mapping kernel name to mean duration (normailized to millseconds)
+    returns: 
+        (train_time, average_iter_dur)
+            -train_time: the training time reported at the end of the file [in seconds], default to 0 if not found
+            -averate_iter_dur: the average iteration duration (minus the first iteration) [in seconds]
     '''
     with open(path, 'r') as f:
 
@@ -419,7 +420,7 @@ def get_iter_dur(path,device=0):
         removed_value = iter_dur_vals.pop(0)
         print("Removing {} from iteration calculations".format(removed_value))
 
-        exec_time = sum(iter_dur_vals) #/ len(iter_dur_vals)
+        exec_time = sum(iter_dur_vals) / len(iter_dur_vals)
         final_data.append(exec_time)
         return final_data
 
