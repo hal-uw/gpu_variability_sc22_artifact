@@ -16,7 +16,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import datasets, transforms
 from torchvision.datasets import ImageFolder
 
-URLS = {"matched-frequency" : "https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz",
+URLS = {"matched-frequency" : "https://huggingface.co/datasets/vaishaal/ImageNetV2/resolve/main/imagenetv2-matched-frequency.tar.gz",
         "threshold-0.7" : "https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-threshold0.7.tar.gz",
         "top-images": "https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-top-images.tar.gz",
         "val": "https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenet_validation.tar.gz"}
@@ -30,7 +30,7 @@ V2_DATASET_SIZE = 10000
 def load_imagenet(variant="matched-frequency", location="."):
 #    dataset_root = pathlib.Path(f"{location}/ImageNetV2-{variant}/") #./ImageNetV2-matched-frequency/
     dataset_root = pathlib.Path(f"{location}/{FNAMES[variant]}/") #./imagenetv2-matched-frequency-format-val
-    tar_root = pathlib.Path(f"{location}/ImageNetV2-{variant}.tar.gz")# ./ImageNetV2-matched-frequency.tar.gz/
+    tar_root = pathlib.Path(f"{location}/imagenetv2-{variant}.tar.gz")# ./ImageNetV2-matched-frequency.tar.gz/
     fnames = list(dataset_root.glob("**/*.jpeg"))
     assert variant in URLS, f"unknown V2 Variant: {variant}"
     if not dataset_root.exists() or len(fnames) != V2_DATASET_SIZE:

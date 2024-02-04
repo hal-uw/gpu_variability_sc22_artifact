@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NGPUS=4
+NGPUS=3
 NNODES=1
 MVAPICH=false
 
@@ -10,13 +10,13 @@ else
   LOCAL_RANK=$OMPI_COMM_WORLD_RANK
 fi
 
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=3
 
 echo Launching torch.distributed: nproc_per_node=$NGPUS, nnodes=$NNODES, local_rank=$LOCAL_RANK, using_mvapich=$MVAPICH
 echo ---------------------------------------------------------------------------------------------------------------------------------------
 KWARGS=""
 KWARGS+="--base-lr 0.05 "
-KWARGS+="--batch-size 64 "
+KWARGS+="--batch-size 48 "
 KWARGS+="--kfac-update-freq 0 "
 #KWARGS+="--kfac-update-freq 500 "
 KWARGS+="--kfac-cov-update-freq 50 "
@@ -42,15 +42,19 @@ KWARGS+="--lr-decay 30 60 80 "
 # Get timestamp and device number (0, 1, 2, 3) for the node that is running ResNet
 ts=`date '+%s'`
 
-__PREFETCH=off /usr/local/cuda/bin/nvprof --print-gpu-trace \
-    --profile-child-processes \
-    --system-profiling on --kernel-latency-timestamps on \
-    --csv --log-file resnet_%p_${ts}_${HOSTNAME}.csv \
-    --device-buffer-size 128 \
-    --continuous-sampling-interval 1 \
-    -f python -m torch.distributed.launch \
-    --nproc_per_node=$NGPUS \
-torch_imagenet_resnet.py $KWARGS > resnet_iterdur_${ts}_${HOSTNAME}.txt                                                                                                                                                                                                        
+#__PREFETCH=off /usr/local/cuda/bin/nvprof --print-gpu-trace \
+#    --profile-child-processes \
+#    --system-profiling on --kernel-latency-timestamps on \
+#    --csv --log-file resnet_%p_${ts}_${HOSTNAME}.csv \
+#    --device-buffer-size 128 \
+#    --continuous-sampling-interval 1 \
+#    -f python -m torch.distributed.launch \
+#    --nproc_per_node=$NGPUS \
+
+__PREFETCH=off python -m torch.distributed.launch \
+ --nproc_per_node=$NGPUS \
+torch_imagenet_resnet.py $KWARGS > data/resnet_multi_iterdur_${ts}_${HOSTNAME}_run_${1}.txt
+
 echo resnet_%p_${ts}_${HOSTNAME}.csv
 echo resnet_iterdur_${ts}_${HOSTNAME}.txt
 echo Completed ResNet Run

@@ -9,8 +9,12 @@ else
     #singularity pull docker://nvcr.io/nvidia/pytorch:22.06-py3
     singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 ./dataloader.sh
     echo "Loading dataset and running ResNet within container"
-    echo "Profiling ResNet training"  
-    singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 ./run-resnet.sh
+    echo "Profiling ResNet training"
+    for i in {0..2}; do
+	    for j in {0..5}; do
+            singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 ./run-resnet-single.sh $i $j
+        done
+    done
     echo "ResNet run completed."
 fi
 
