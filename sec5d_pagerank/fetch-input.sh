@@ -6,8 +6,10 @@ fi
 
 echo "Getting input graph from Suite Sparse Matrix Collection"
 cd data_dirs/pannotia/pagerank_spmv/data/
-wget https://suitesparse-collection-website.herokuapp.com/MM/Rajat/rajat30.tar.gz
-tar -xvzf rajat30.tar.gz
+#wget https://suitesparse-collection-website.herokuapp.com/MM/Rajat/rajat30.tar.gz
+#tar -xvzf rajat30.tar.gz
+wget https://suitesparse-collection-website.herokuapp.com/MM/ATandT/pre2.tar.gz 
+tar -xvzf pre2.tar.gz 
 cd ../../../../
 echo "Fetched input graph"
 

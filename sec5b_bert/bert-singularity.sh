@@ -9,8 +9,10 @@ else
     #singularity pull docker://nvcr.io/nvidia/pytorch:22.06-py3
     singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 scripts/install.sh
     echo "Loading dataset and running BERT within container"
-    echo "Profiling BERT"  
-    singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 scripts/run_pretraining_lamb.sh
+    echo "Profiling BERT" 
+    for i in {0..0}; do
+        singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 scripts/run_pretraining_lamb.sh ${i}
+    done
     echo "BERT run completed."
 fi
 
