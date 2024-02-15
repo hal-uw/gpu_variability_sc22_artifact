@@ -1,7 +1,12 @@
 #!/bin/bash
 
+#######################
+# ${1} : Run Number
+# ${2} : NNODES 
+# ${3} : batch_size 
+
 NGPUS=3
-NNODES=1
+NNODES=${2}
 MVAPICH=false
 
 if [ "$MVAPICH" == true ]; then
@@ -16,7 +21,7 @@ echo Launching torch.distributed: nproc_per_node=$NGPUS, nnodes=$NNODES, local_r
 echo ---------------------------------------------------------------------------------------------------------------------------------------
 KWARGS=""
 KWARGS+="--base-lr 0.05 "
-KWARGS+="--batch-size 48 "
+KWARGS+="--batch-size ${3} "
 KWARGS+="--kfac-update-freq 0 "
 #KWARGS+="--kfac-update-freq 500 "
 KWARGS+="--kfac-cov-update-freq 50 "
