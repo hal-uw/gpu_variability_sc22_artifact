@@ -11,7 +11,7 @@ else
     echo "Loading dataset and running ResNet within container"
     echo "Profiling ResNet training"
     for j in {0..5}; do
-        singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 ./run-resnet-multi.sh $j 1 64
+        singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 ./run-resnet-multi.sh $j 2 128
     done
     echo "ResNet run completed."
 fi

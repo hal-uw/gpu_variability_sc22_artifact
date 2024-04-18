@@ -2,6 +2,9 @@
 
 # run-pagerank.sh $gpu_num $num_run $node
 
+module load tacc-apptainer
+module load cuda
+
 export CUDA_HOME=/usr/local/cuda-10.1 
 export PATH=$CUDA_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$CUDA_HOME/lib:$CUDA_HOME/lib64:$LD_LIBRARY_PATH
