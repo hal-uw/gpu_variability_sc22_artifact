@@ -97,7 +97,7 @@ def parse_arguments():
                         help='Disable tqdm progress bar')
     parser.add_argument('--num_steps_per_checkpoint', type=int, default=200,
                         help="Number of update steps between writing checkpoints.")
-    parser.add_argument('--skip_checkpoint', default=False, action='store_true',
+    parser.add_argument('--skip_checkpoint', default=True, action='store_true',
                         help="Whether to save checkpoints")
     parser.add_argument('--checkpoint_activations', default=False, action='store_true',
                         help="Whether to use gradient checkpointing")

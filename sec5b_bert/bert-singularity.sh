@@ -1,5 +1,7 @@
 #!/bin/bash
 
+nvidia-smi -L > uuids/${HOSTNAME}_uuid.txt
+
 uarch=$(uname -m)
 
 if [[ "$uarch" == *ppc64le* ]]; then
@@ -10,7 +12,7 @@ else
     singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 scripts/install.sh
     echo "Loading dataset and running BERT within container"
     echo "Profiling BERT" 
-    for i in {0..0}; do
+    for i in {0..4}; do
         singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 scripts/run_pretraining_lamb.sh ${i}
     done
     echo "BERT run completed."
