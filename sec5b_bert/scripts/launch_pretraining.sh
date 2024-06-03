@@ -5,6 +5,7 @@ NNODES=1
 LOCAL_RANK=""
 MASTER=""
 KWARGS=""
+RUN=-1
 
 while [[ "$1" == -* ]]; do
     case "$1" in
@@ -38,6 +39,10 @@ while [[ "$1" == -* ]]; do
             shift
             KWARGS="$@"
         ;;
+        -r|--run)
+            shift
+            RUN="$1"
+        ;;
         *)
           echo "ERROR: unknown parameter \"$1\""
           exit 1
@@ -68,33 +73,41 @@ if [[ "$NNODES" -ne 1 ]]; then
     exit
 fi
 
-if [ -d "/usr/local/cuda-10.1/bin" ]
-then
-    __PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace \
-        --openacc-profiling off \
-        --profile-child-processes \
-        --system-profiling on \
-        --kernel-latency-timestamps on \
-        --device-buffer-size 128 \
-        --continuous-sampling-interval 1 \
-        --csv --log-file bert_%p_${ts}_${HOSTNAME}.csv \
-        --device-buffer-size 128 -f \
-        python -m torch.distributed.launch --nproc_per_node=$NGPUS \
-        run_pretraining.py $KWARGS
-elif [ -d "/usr/local/cuda/bin" ]
-then
-    echo "WARNING: Could not find cuda-10.1, but found a cuda installation. Power measurements may not be included."
-    __PREFETCH=off /usr/local/cuda/bin/nvprof --print-gpu-trace \
-        --openacc-profiling off \
-        --profile-child-processes \
-        --system-profiling on \
-        --kernel-latency-timestamps on \
-        --device-buffer-size 128 \
-        --continuous-sampling-interval 1 \
-        --csv --log-file bert_%p_${ts}_${HOSTNAME}.csv \
-        --device-buffer-size 128 -f \
-        python -m torch.distributed.launch --nproc_per_node=$NGPUS \
-        run_pretraining.py $KWARGS
-else 
-    echo "Couldn't find CUDA bin directory. Check /usr/local for your CUDA installation and update run-sgemm-nvidia.sh. Aborting."
-fi
+#if [ -d "/usr/local/cuda-10.1/bin" ]
+#then
+#    __PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace \
+#        --openacc-profiling off \
+#        --profile-child-processes \
+#        --system-profiling on \
+#        --kernel-latency-timestamps on \
+#        --device-buffer-size 128 \
+#        --continuous-sampling-interval 1 \
+#        --csv --log-file bert_%p_${ts}_${HOSTNAME}.csv \
+#        --device-buffer-size 128 -f \
+#        python -m torch.distributed.launch --nproc_per_node=$NGPUS \
+#        run_pretraining.py $KWARGS
+#elif [ -d "/usr/local/cuda/bin" ]
+#then
+#    echo "WARNING: Could not find cuda-10.1, but found a cuda installation. Power measurements may not be included."
+#    __PREFETCH=off /usr/local/cuda/bin/nvprof --print-gpu-trace \
+#        --openacc-profiling off \
+#        --profile-child-processes \
+#        --system-profiling on \
+#        --kernel-latency-timestamps on \
+#        --device-buffer-size 128 \
+#        --continuous-sampling-interval 1 \
+#        --csv --log-file bert_%p_${ts}_${HOSTNAME}.csv \
+#        --device-buffer-size 128 -f \
+#        python -m torch.distributed.launch --nproc_per_node=$NGPUS \
+#        run_pretraining.py $KWARGS
+#else 
+
+#    echo "Couldn't find CUDA bin directory. Check /usr/local for your CUDA installation and update run-sgemm-nvidia.sh. Aborting."
+#fi
+
+touch data/bert_multi_iterdur_${ts}_${HOSTNAME}_run_$RUN.txt
+
+__PREFETCH=off python -m torch.distributed.launch \
+ --nproc_per_node=$NGPUS \
+run_pretraining.py $KWARGS > data/bert_multi_iterdur_${ts}_${HOSTNAME}_run_$RUN.txt
+

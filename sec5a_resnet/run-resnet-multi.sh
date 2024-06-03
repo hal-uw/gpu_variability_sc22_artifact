@@ -1,7 +1,12 @@
 #!/bin/bash
 
-NGPUS=3
-NNODES=1
+#######################
+# ${1} : Run Number
+# ${2} : NNODES 
+# ${3} : batch_size 
+
+NGPUS=4
+NNODES=${2}
 MVAPICH=false
 
 if [ "$MVAPICH" == true ]; then
@@ -16,7 +21,7 @@ echo Launching torch.distributed: nproc_per_node=$NGPUS, nnodes=$NNODES, local_r
 echo ---------------------------------------------------------------------------------------------------------------------------------------
 KWARGS=""
 KWARGS+="--base-lr 0.05 "
-KWARGS+="--batch-size 64 "
+KWARGS+="--batch-size ${3} "
 KWARGS+="--kfac-update-freq 0 "
 #KWARGS+="--kfac-update-freq 500 "
 KWARGS+="--kfac-cov-update-freq 50 "
@@ -53,7 +58,7 @@ ts=`date '+%s'`
 
 __PREFETCH=off python -m torch.distributed.launch \
  --nproc_per_node=$NGPUS \
-torch_imagenet_resnet.py $KWARGS > resnet_iterdur_${ts}_${HOSTNAME}.txt
+torch_imagenet_resnet.py $KWARGS > data/resnet_multi_iterdur_${ts}_${HOSTNAME}_nnodes${2}_bsz${3}_run_${1}.txt
 
 echo resnet_%p_${ts}_${HOSTNAME}.csv
 echo resnet_iterdur_${ts}_${HOSTNAME}.txt
