@@ -45,15 +45,18 @@ KWARGS+="--local_rank ${DEVICE_ID}"
 # Get timestamp and device number (0, 1, 2, 3) for the node that is running ResNet
 ts=`date '+%s'`
 
-__PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace \
-  --profile-child-processes \
-  --system-profiling on --kernel-latency-timestamps on \
-  --csv --log-file data/resnet_%p_${ts}_${HOSTNAME}_${DEVICE_ID}_${RUN_NUM}.csv \
-  --device-buffer-size 128 \
-  --continuous-sampling-interval 1 \
-  -f python -m torch.distributed.launch \
-  --nproc_per_node=$NGPUS \
-torch_imagenet_resnet.py $KWARGS > data/resnet_iterdur_${ts}_${HOSTNAME}_${DEVICE_ID}_${RUN_NUM}.txt                                                                                       
+#__PREFETCH=off /usr/local/cuda-10.1/bin/nvprof --print-gpu-trace \
+#  --profile-child-processes \
+#  --system-profiling on --kernel-latency-timestamps on \
+#  --csv --log-file data/resnet_%p_${ts}_${HOSTNAME}_${DEVICE_ID}_${RUN_NUM}.csv \
+#  --device-buffer-size 128 \
+#  --continuous-sampling-interval 1 \
+#  -f python -m torch.distributed.launch \
+#  --nproc_per_node=$NGPUS \
+__PREFETCH=off python -m torch.distributed.launch \
+ --nproc_per_node=$NGPUS \
+ torch_imagenet_resnet.py $KWARGS > data/resnet_iterdur_${ts}_${HOSTNAME}_${DEVICE_ID}_${RUN_NUM}.txt
+
 echo resnet_%p_${ts}_${HOSTNAME}.csv
 echo resnet_iterdur_${ts}_${HOSTNAME}.txt
 echo Completed ResNet Run
