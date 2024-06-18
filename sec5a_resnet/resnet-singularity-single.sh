@@ -7,7 +7,7 @@ if [[ "$uarch" == *ppc64le* ]]; then
 else
     echo "Pulling PyTorch NVIDIA image from Docker registry"
     #singularity pull docker://nvcr.io/nvidia/pytorch:22.06-py3
-    singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 ./dataloader.sh
+    #singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 ./dataloader.sh
     echo "Loading dataset and running ResNet within container"
     echo "Profiling ResNet training"
     for i in {0..2}; do

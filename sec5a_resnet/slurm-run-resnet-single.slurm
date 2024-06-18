@@ -6,7 +6,7 @@
 #SBATCH -N 1                     # Total # of nodes (must be 1 for serial)
 #SBATCH -n 1                     # Total # of mpi tasks (should be 1 for serial)
 #SBATCH -t 02:00:00              # Run time (hh:mm:ss)
-#SBATCH --mail-user=kchen346@wisc.edu
+#SBATCH --mail-user=crhowarth@wisc.edu
 #SBATCH --mail-type=all          # Send email at begin and end of job
 node=$SLURM_JOB_NODELIST
 module load tacc-apptainer

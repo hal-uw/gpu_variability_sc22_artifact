@@ -9,7 +9,7 @@ prefix = """#!/bin/bash
 #SBATCH -N 1                     # Total # of nodes (must be 1 for serial)
 #SBATCH -n 1                     # Total # of mpi tasks (should be 1 for serial)
 #SBATCH -t 02:00:00              # Run time (hh:mm:ss)
-#SBATCH --mail-user=kchen346@wisc.edu
+#SBATCH --mail-user=crhowarth@wisc.edu
 #SBATCH --mail-type=all          # Send email at begin and end of job
 """
 
@@ -39,7 +39,7 @@ def get_slurm_node_names(partition_name):
 
 partition_name = 'gpu-a100'
 node_names = get_slurm_node_names(partition_name)
-exclude_list = ['c302-001', 'c302-002', 'c302-003', 'c302-004', 'c303-001', 'c303-002', 'c303-003', 'c303-004', 'c304-001', 'c305-001', 'c305-002', 'c305-003', 'c305-004', 'c306-001', 'c306-002', 'c306-003', 'c306-004', 'c308-001', 'c308-002', 'c308-003', 'c308-004', 'c309-001', 'c309-002', 'c309-003', 'c309-004', 'c310-001', 'c310-002', 'c310-003', 'c310-004', 'c315-001', 'c315-003', 'c315-004', 'c315-005', 'c315-006', 'c315-007', 'c315-008', 'c315-009', 'c315-010', 'c315-011', 'c315-012']
+exclude_list = []
 visited_nodes = []
 
 for node in node_names:
