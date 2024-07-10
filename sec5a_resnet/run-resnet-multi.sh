@@ -5,7 +5,7 @@
 # ${2} : NNODES 
 # ${3} : batch_size 
 
-NGPUS=4
+NGPUS=3
 NNODES=${2}
 MVAPICH=false
 

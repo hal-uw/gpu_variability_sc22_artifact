@@ -16,8 +16,6 @@ export LD_LIBRARY_PATH=$CUDA_HOME/lib:$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 nvidia-smi -L > uuids/${HOSTNAME}_uuid.txt
 ts=`date '+%s'`
 
-echo pagerank_${UUID}_run${2}_node_${HOSTNAME}_gpu${1}_${ts}.csv
-touch pagerank_${UUID}_run${2}_node_${HOSTNAME}_gpu${1}_${ts}.csv
 
 #echo running PageRank on graph: rajat30.mtx : file_format MMTranspose
 echo running PageRank on graph: pre2.mtx : file_format MMTranspose
