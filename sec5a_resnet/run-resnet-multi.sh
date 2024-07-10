@@ -58,7 +58,7 @@ ts=`date '+%s'`
 
 __PREFETCH=off python -m torch.distributed.launch \
  --nproc_per_node=$NGPUS \
-torch_imagenet_resnet.py $KWARGS > data/resnet_multi_iterdur_${ts}_${HOSTNAME}_nnodes${2}_bsz${3}_run_${1}.txt
+torch_imagenet_resnet.py $KWARGS > data_multi/resnet_multi_iterdur_${ts}_${HOSTNAME}_nnodes${2}_bsz${3}_run_${1}.txt
 
 echo resnet_%p_${ts}_${HOSTNAME}.csv
 echo resnet_iterdur_${ts}_${HOSTNAME}.txt

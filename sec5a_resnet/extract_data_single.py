@@ -29,7 +29,7 @@ def walk_through_files(directory, df):
                 all_data.append(cabinet)
                 all_data.append(int(node))
                 all_data.append(int(device))
-                data_list = get_iter_dur(file, int(device))
+                data_list = get_iter_dur(f"{directory}/{file}", int(device))
                 all_data.extend(data_list)
                 row_to_append = pd.DataFrame(
                     [all_data], columns=df.columns)
@@ -92,7 +92,7 @@ def get_iter_dur(path, device=0):
 
 
 df_data = walk_through_files(
-    '/work/09732/kchen346/ls6/gpu_variability_sc22_artifact/sec5a_resnet/resnet_data', df_data)
+    '/scratch/10009/crhowarth/gpu_variability_sc22_artifact/sec5a_resnet/data', df_data)
 print(df_data)
 df_data.to_csv(path_or_buf="all_data.csv")
 

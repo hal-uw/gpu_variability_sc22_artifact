@@ -30,9 +30,9 @@ def parse_args():
     # General settings
     parser = argparse.ArgumentParser(description='PyTorch ImageNet Example',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--train-dir', default='/tmp/imagenet/ILSVRC2012_img_train/',
+    parser.add_argument('--train-dir', default='/scratch/10009/crhowarth/gpu_variability_sc22_artifact/sec5a_resnet/ILSVRC2012_img_train/',
                         help='path to training data')
-    parser.add_argument('--val-dir', default='/tmp/imagenet/ILSVRC2012_img_val/',
+    parser.add_argument('--val-dir', default='/scratch/10009/crhowarth/gpu_variability_sc22_artifact/sec5a_resnet/ILSVRC2012_img_val/',
                         help='path to validation data')    
     parser.add_argument('--log-dir', default='./logs/torch_imagenet',
                         help='TensorBoard/checkpoint log directory')
