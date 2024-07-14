@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 nvidia-smi -L > uuids/${HOSTNAME}_uuid.txt
@@ -13,8 +14,7 @@ else
     echo "Loading dataset and running BERT within container"
     echo "Profiling BERT" 
     for i in {0..4}; do
-        singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 scripts/run_pretraining_lamb.sh ${i}
+        singularity run --nv docker://nvcr.io/nvidia/pytorch:22.06-py3 scripts/run_pretraining_lamb_single.sh ${i}
     done
     echo "BERT run completed."
 fi
-

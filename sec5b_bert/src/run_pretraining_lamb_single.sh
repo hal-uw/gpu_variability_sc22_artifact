@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # We only run Phase 1 of BERT pretraining
@@ -12,7 +13,7 @@ NODES=1
 PROC_PER_NODE=3
 
 # PHASE 1
-bash scripts/launch_pretraining.sh \
+bash scripts/launch_pretraining_single.sh \
     --run ${1} \
     --ngpus $PROC_PER_NODE --nnodes $NODES --master $MASTER_RANK \
     --kwargs \
@@ -20,5 +21,5 @@ bash scripts/launch_pretraining.sh \
     --output_dir results/bert_pretraining \
     --config_file $CONFIG \
     --num_steps_per_checkpoint 200 \
-    --global_batch_size 45 \
+    --global_batch_size 15 \
     --local_batch_size 15 
