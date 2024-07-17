@@ -26,17 +26,17 @@ print(script_path)
 with open(script_path, 'w') as f:
     f.write(script)
 # submit this file to the sbatch
-result = subprocess.run(['sbatch', script_path],
-                        capture_output=True, text=True)
+#result = subprocess.run(['sbatch', script_path],
+#                        capture_output=True, text=True)
 
 # Check if sbatch command was successful
-if result.returncode == 0:
-    print(f"Job successfully submitted for node")
-else:
-    print(f"Failed to submit job for node. Error: {result.stderr}")
+#if result.returncode == 0:
+#    print(f"Job successfully submitted for node")
+#else:
+#    print(f"Failed to submit job for node. Error: {result.stderr}")
 
-if os.path.exists(script_path):
-    os.remove(script_path)
+#if os.path.exists(script_path):
+#    os.remove(script_path)
 
 print("All jobs have been submitted.")
 

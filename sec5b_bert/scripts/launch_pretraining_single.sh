@@ -24,6 +24,10 @@ while [[ "$1" == -* ]]; do
             shift
             NGPUS="$1"
         ;;
+        -d|--device_id)
+	    shift
+	    GPUID="$1"
+	;;
         -n|--nnodes)
             shift
             NNODES="$1"
@@ -108,7 +112,10 @@ fi
 
 touch data/bert_single_iterdur_device_0_${ts}_${HOSTNAME}_run_$RUN.txt
 
-CUDA_VISIBLE_DEVICES=0 __PREFETCH=off python -m torch.distributed.launch \
- --nproc_per_node=$NGPUS \
-run_pretraining.py $KWARGS > data/bert_single_iterdur_device_0_${ts}_${HOSTNAME}_run_$RUN.txt
+# Run on each GPU successively
+for i in {0..2}; do
+    CUDA_VISIBLE_DEVICES=${i} __PREFETCH=off python -m torch.distributed.launch \
+    --nproc_per_node=$NGPUS \
+    run_pretraining.py $KWARGS > data/bert_single_iterdur_device_${i}_${ts}_${HOSTNAME}_run_$RUN.txt
+done
 
